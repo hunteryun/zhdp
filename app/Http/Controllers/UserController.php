@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\User as UserModel;
 use App\Http\Requests\User\AddUser as AddUserRequests;
-use App\Exceptions\System as SystemExceptions;
 use App\Http\Requests\User\UpdateUser as UpdateUserRequests;
 
 class UserController extends Controller
@@ -43,7 +42,7 @@ class UserController extends Controller
         (new AddUserRequests)->verification($request);
         $addUserStatus = (new UserModel)->addUser($request->all());
         if(!$addUserStatus){
-            throw (new SystemExceptions("服务器内部错误，请及时联系管理员"));
+            return errors(['msg'=>"用户创建失败"]);
         }
         return success(['msg'=>"用户创建成功"]);
     }       
@@ -81,7 +80,7 @@ class UserController extends Controller
         }
         $updateUserStatus = $userModel->updateUser($userInfo, $request->all());
         if(!$updateUserStatus){
-            throw (new SystemExceptions("服务器内部错误，请及时联系管理员"));
+            return errors("用户更新失败");
         }
         return success(['msg'=>"用户更新成功"]);
     }
@@ -102,7 +101,7 @@ class UserController extends Controller
         // 后面可能还会因为删除用户，关联删除他的其他   
         $deleteUserStatus = $userInfo->deleteUser($userInfo);
         if(!$deleteUserStatus){
-            throw (new SystemExceptions("服务器内部错误，请及时联系管理员"));
+            return errors("用户删除失败");
         }
         return success(['msg'=>"用户删除成功"]);
     }
