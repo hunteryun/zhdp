@@ -11,7 +11,7 @@ function success($arr = [], $httpCode = 200){
         $arr['msg'] = '请求成功';
     };
     // 此处必须要返回，不然会导致页面显示为空...
-    return ajaxReturn($arr, $httpCode);
+    return json($arr, $httpCode);
 }
 // 错误返回
 function errors($arr = [], $httpCode = 404){
@@ -23,9 +23,9 @@ function errors($arr = [], $httpCode = 404){
         $arr['msg'] = '请求失败';
     };
     // 此处必须要返回，不然会导致页面显示为空...
-    return ajaxReturn($arr, $httpCode);
+    return json($arr, $httpCode);
 }
 // 返回json
-function ajaxReturn($arr = [], $httpCode){
+function json($arr = [], $httpCode){
     return response()->json($arr, $httpCode);
 }
