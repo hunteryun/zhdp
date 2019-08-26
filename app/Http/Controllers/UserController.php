@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Model\User;
-use App\Http\Requests\AddUser;
+use App\Model\User as UserModel;
+use App\Http\Requests\User\AddUser as AddUserRequests;
+use App\Exceptions\AddUserExceptions;
 
 class UserController extends Controller
 {
@@ -17,7 +18,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $limit = intval($request->input('limit'));
-        return User::paginate($limit);
+        return UserModel::paginate($limit);
     }
 
     /**
@@ -30,7 +31,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        (new AddUser)->verification($request);
+        // 手动进行验证，不使用框架自动验证
+        (new AddUserRequests)->verification($request);
+        $addUserStatus = (new UserModel)->addUser($request->all());
+        if(!$addUserStatus){
+            throw (new AddUserExceptions("服务器内部错误，请及时联系管理员"));
+        }
+        return $this->success(['msg'=>"用户创建成功"]);
     }       
 
     /**
@@ -41,7 +48,11 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return User::find($id);
+        $userInfo = UserModel::find($id);
+        if(!$userInfo){
+            return $this->errors(['msg'=>"用户不存在"]);
+        }
+        return $this->success(['msg' => '用户查询成功','data' => $userInfo]);
     }
 
     /**

@@ -1,12 +1,18 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\User;
+use App\Http\Requests\Base;
 
 class AddUser extends Base
 {
     public $messages = [
         'name.required' => '用户名必填!',
+        'name.unique' => '名字已经存在!',
+        'name.alpha_dash' => '名字只允许字母和数字，以及破折号和下划线!',
+        'name.between' => '名字长度需要在6-30之间!',
         'password.required' => '密码必填!',
+        'password.between' => '密码长度需要在6-20之间!',
+        'password.alpha_dash' => '密码只允许字母和数字，以及破折号和下划线!',
     ];
     /**
      * Determine if the user is authorized to make this request.
@@ -27,8 +33,8 @@ class AddUser extends Base
     public function rules()
     {
         return [
-            'name' => 'required',
-            'password' => 'required',
+            'name' => 'required|unique:user|alpha_dash|between:6,30',
+            'password' => 'required|between:6,20|alpha_dash',   
         ];
     }
 }

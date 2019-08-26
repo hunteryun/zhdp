@@ -36,8 +36,7 @@ class Base extends FormRequest
         if($validator->fails()){
             $error = $validator->errors()->first();
             // 抛出参数验证错误类
-            // 400 错误请求，如语法错误
-            throw (new Parameter($error, 400));
+            throw (new Parameter($error));
         }
     }
 }

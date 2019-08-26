@@ -11,4 +11,11 @@ class User extends Model
     protected $table = 'user';
     // 指定可以批量赋值的字段
     // protected $fillable = ['token', 'name', 'class', 'phone'];
+    // 新增用户
+    public function addUser($userInfo = []){
+        $this->name = $userInfo['name'];
+        $this->password = $userInfo['password'];
+        return $this->save();
+    }
+
 }
