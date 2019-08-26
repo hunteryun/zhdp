@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\User as UserModel;
 use App\Http\Requests\User\AddUser as AddUserRequests;
-use App\Exceptions\AddUserExceptions;
+use App\Exceptions\System as SystemExceptions;
+use App\Http\Requests\User\UpdateUser as UpdateUserRequests;
 
 class UserController extends Controller
 {
@@ -35,7 +36,7 @@ class UserController extends Controller
         (new AddUserRequests)->verification($request);
         $addUserStatus = (new UserModel)->addUser($request->all());
         if(!$addUserStatus){
-            throw (new AddUserExceptions("服务器内部错误，请及时联系管理员"));
+            throw (new SystemExceptions("服务器内部错误，请及时联系管理员"));
         }
         return $this->success(['msg'=>"用户创建成功"]);
     }       
@@ -64,10 +65,18 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        (new UpdateUserRequests)->verification($request);
         //
-        $user = User::find($id);
-        $user->update($request->all());
-        return $user;
+        $userModel = new UserModel;
+        $userInfo = $userModel->find($id);
+        if(!$userInfo){
+            return $this->errors(['msg'=>"用户不存在"]);
+        }
+        $updateUserStatus = $userModel->updateUser($userInfo, $request->all());
+        if(!$updateUserStatus){
+            throw (new SystemExceptions("服务器内部错误，请及时联系管理员"));
+        }
+        return $this->success(['msg'=>"用户更新成功"]);
     }
 
     /**

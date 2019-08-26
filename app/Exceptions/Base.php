@@ -10,7 +10,8 @@ class Base extends Exception
     public $httpCode = 200;
     // 状态 0 正常 1 错误
     public $statusCode = 0;
-    
+    //
+    public $msg = '';
     /**
      * Report the exception.
      *

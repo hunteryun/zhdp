@@ -17,5 +17,11 @@ class User extends Model
         $this->password = $userInfo['password'];
         return $this->save();
     }
+    // 更新用户
+    public function updateUser($userInfo = [], $updateUserInfo = []){
+        $userInfo->name = $updateUserInfo['name'];
+        $userInfo->password = $updateUserInfo['password'];
+        return $userInfo->save();
+    }
 
 }

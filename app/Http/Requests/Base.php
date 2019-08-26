@@ -22,7 +22,7 @@ class Base extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules($request)
     {
         return [
             //
@@ -32,7 +32,7 @@ class Base extends FormRequest
      * 验证
      */
     public function verification($request){
-        $validator = Validator::make($request->all(), $this->rules(), $this->messages);
+        $validator = Validator::make($request->all(), $this->rules($request), $this->messages);
         if($validator->fails()){
             $error = $validator->errors()->first();
             // 抛出参数验证错误类
