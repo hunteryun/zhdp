@@ -31,7 +31,6 @@ class UserController extends Controller
     public function store(Request $request)
     {
         (new AddUser)->verification($request);
-      
     }       
 
     /**

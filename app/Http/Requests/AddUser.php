@@ -15,6 +15,7 @@ class AddUser extends Base
      */
     public function authorize()
     {
+        //false 表示用户无权限，如果要带入控制器设置为true
         return false;
     }
 

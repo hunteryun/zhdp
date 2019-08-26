@@ -8,23 +8,13 @@ use Illuminate\Foundation\Http\FormRequest;
 class Base extends FormRequest
 {
     /**
-     * 验证
-     */
-    public function verification($request){
-        $validator = Validator::make($request->all(), $this->rules(), $this->messages);
-        if($validator->fails()){
-            $error = $validator->errors()->first();
-            throw (new Parameter())->render($error);
-        }
-    }
-    /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -37,5 +27,17 @@ class Base extends FormRequest
         return [
             //
         ];
+    }
+    /**
+     * 验证
+     */
+    public function verification($request){
+        $validator = Validator::make($request->all(), $this->rules(), $this->messages);
+        if($validator->fails()){
+            $error = $validator->errors()->first();
+            // 抛出参数验证错误类
+            // 400 错误请求，如语法错误
+            throw (new Parameter($error, 400));
+        }
     }
 }
