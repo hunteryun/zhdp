@@ -19,7 +19,14 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $limit = intval($request->input('limit'));
-        return UserModel::paginate($limit);
+        $userList = UserModel::paginate($limit)->toArray();
+        $returnData = [];
+        $returnData['msg']              = "查询成功";
+        $returnData['total']            = $userList['total'];
+        $returnData['current_page']     = $userList['current_page'];
+        $returnData['data']             = $userList['data'];
+        return $this->success($returnData);
+        // return 
     }
 
     /**
@@ -87,8 +94,16 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::find($id);
-        $user->delete();
-        return $user;
+        $userModel = new UserModel;
+        $userInfo = $userModel->find($id);
+        if(!$userInfo){
+            return $this->errors(['msg'=>"用户不存在"]);
+        }
+        // 后面可能还会因为删除用户，关联删除他的其他   
+        $deleteUserStatus = $userInfo->deleteUser($userInfo);
+        if(!$deleteUserStatus){
+            throw (new SystemExceptions("服务器内部错误，请及时联系管理员"));
+        }
+        return $this->success(['msg'=>"用户删除成功"]);
     }
 }

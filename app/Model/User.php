@@ -19,9 +19,14 @@ class User extends Model
     }
     // 更新用户
     public function updateUser($userInfo = [], $updateUserInfo = []){
-        $userInfo->name = $updateUserInfo['name'];
+        // 不允许循环赋值，因为有可能存在id,需要更新什么就更新什么
+        $userInfo->name     = $updateUserInfo['name'];
         $userInfo->password = $updateUserInfo['password'];
         return $userInfo->save();
+    }
+    // 删除用户
+    public function deleteUser($userInfo = []){
+        return $userInfo->delete();
     }
 
 }
