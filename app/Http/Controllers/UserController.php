@@ -25,7 +25,7 @@ class UserController extends Controller
         $returnData['total']            = $userList['total'];
         $returnData['current_page']     = $userList['current_page'];
         $returnData['data']             = $userList['data'];
-        return $this->success($returnData);
+        return success($returnData);
         // return 
     }
 
@@ -45,7 +45,7 @@ class UserController extends Controller
         if(!$addUserStatus){
             throw (new SystemExceptions("服务器内部错误，请及时联系管理员"));
         }
-        return $this->success(['msg'=>"用户创建成功"]);
+        return success(['msg'=>"用户创建成功"]);
     }       
 
     /**
@@ -58,9 +58,9 @@ class UserController extends Controller
     {
         $userInfo = UserModel::find($id);
         if(!$userInfo){
-            return $this->errors(['msg'=>"用户不存在"]);
+            return errors(['msg'=>"用户不存在"]);
         }
-        return $this->success(['msg' => '用户查询成功','data' => $userInfo]);
+        return success(['msg' => '用户查询成功','data' => $userInfo]);
     }
 
     /**
@@ -77,13 +77,13 @@ class UserController extends Controller
         $userModel = new UserModel;
         $userInfo = $userModel->find($id);
         if(!$userInfo){
-            return $this->errors(['msg'=>"用户不存在"]);
+            return errors(['msg'=>"用户不存在"]);
         }
         $updateUserStatus = $userModel->updateUser($userInfo, $request->all());
         if(!$updateUserStatus){
             throw (new SystemExceptions("服务器内部错误，请及时联系管理员"));
         }
-        return $this->success(['msg'=>"用户更新成功"]);
+        return success(['msg'=>"用户更新成功"]);
     }
 
     /**
@@ -97,13 +97,13 @@ class UserController extends Controller
         $userModel = new UserModel;
         $userInfo = $userModel->find($id);
         if(!$userInfo){
-            return $this->errors(['msg'=>"用户不存在"]);
+            return errors(['msg'=>"用户不存在"]);
         }
         // 后面可能还会因为删除用户，关联删除他的其他   
         $deleteUserStatus = $userInfo->deleteUser($userInfo);
         if(!$deleteUserStatus){
             throw (new SystemExceptions("服务器内部错误，请及时联系管理员"));
         }
-        return $this->success(['msg'=>"用户删除成功"]);
+        return success(['msg'=>"用户删除成功"]);
     }
 }

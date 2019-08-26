@@ -31,7 +31,7 @@ class Base extends Exception
     public function render($request)
     {
         // code 最前面 msg在他后面
-        return response()->json([
+        return errors([
             'code' => $this->statusCode,
             'msg' => $this->message,
         ], $this->httpCode);
