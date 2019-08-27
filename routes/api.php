@@ -27,6 +27,7 @@ Route::prefix('/user')->group(function(){
 // 字段类型 /index.php/api/field_type
 Route::prefix('/field_type')->group(function(){
     Route::get('', 'FieldTypeController@index'); // 获取列表
+    Route::get('all', 'FieldTypeController@all'); // 获取所有数据
     Route::get('{id}', 'FieldTypeController@show'); // 获取指定id
     Route::post('', 'FieldTypeController@store'); // 新增
     Route::put('{id}', 'FieldTypeController@update'); // 更新

@@ -10,7 +10,7 @@ use App\Http\Requests\FieldType\UpdateFieldType as UpdateFieldTypeRequests;
 class FieldTypeController extends Controller
 {
     /**
-     * 获取字段类型列表 api/user?page=2&limit=2
+     * 获取字段类型列表 api/field_type?page=2&limit=2
      * @param $page 页码
      * @param $limit 数量
      * @return \Illuminate\Http\Response
@@ -18,12 +18,28 @@ class FieldTypeController extends Controller
     public function index(Request $request)
     {
         $limit = intval($request->input('limit'));
-        $userList = FieldTypeModel::paginate($limit)->toArray();
+        $fieldTypeList = FieldTypeModel::paginate($limit)->toArray();
         $returnData = [];
         $returnData['msg']              = "查询成功";
-        $returnData['total']            = $userList['total'];
-        $returnData['current_page']     = $userList['current_page'];
-        $returnData['data']             = $userList['data'];
+        $returnData['total']            = $fieldTypeList['total'];
+        $returnData['current_page']     = $fieldTypeList['current_page'];
+        $returnData['data']             = $fieldTypeList['data'];
+        return success($returnData);
+        // return 
+    }
+
+    /**
+     * 获取所有字段类型 api/field_type/all
+     * @param $page 页码
+     * @param $limit 数量
+     * @return \Illuminate\Http\Response
+     */
+    public function all()
+    {
+        $fieldTypeAll = FieldTypeModel::all();
+        $returnData['msg']              = "查询成功";
+        $returnData['data']             = $fieldTypeAll;
+        $returnData['total']            = $fieldTypeAll->count();
         return success($returnData);
         // return 
     }
