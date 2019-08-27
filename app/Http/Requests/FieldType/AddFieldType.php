@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\FieldType;
 use App\Http\Requests\Base;
-
+// 字段类型
 class AddFieldType extends Base
 {
     public $messages = [

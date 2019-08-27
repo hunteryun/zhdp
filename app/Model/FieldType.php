@@ -3,7 +3,7 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
-
+// 字段类型
 class FieldType extends Model
 {
     // 指定表名

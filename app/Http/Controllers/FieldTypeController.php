@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Model\FieldType as FieldTypeModel;
 use App\Http\Requests\FieldType\AddFieldType as AddFieldTypeRequests;
 use App\Http\Requests\FieldType\UpdateFieldType as UpdateFieldTypeRequests;
-
+// 字段类型
 class FieldTypeController extends Controller
 {
     /**
@@ -30,8 +30,6 @@ class FieldTypeController extends Controller
 
     /**
      * 获取所有字段类型 api/field_type/all
-     * @param $page 页码
-     * @param $limit 数量
      * @return \Illuminate\Http\Response
      */
     public function all()

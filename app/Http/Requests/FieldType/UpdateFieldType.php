@@ -3,7 +3,7 @@
 namespace App\Http\Requests\FieldType;
 use App\Http\Requests\Base;
 use Illuminate\Validation\Rule;
-
+// 字段类型
 class UpdateFieldType extends Base
 {
     public $messages = [
