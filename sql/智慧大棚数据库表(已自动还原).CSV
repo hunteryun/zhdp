@@ -11,6 +11,8 @@ token,token,,,每次登录都会生成的token，用来验证用户身份
 字段,英文名,参数,默认,描述
 id,id,,,
 字段名,name,,,"number,varchar,int,enum等等(设置值的类型,如果是bool 那么就只能设置开关)"
+字段长度,length,,,"0-255个字符,"
+默认值,default,,空字符串,
 字段描述,desc,,,varchar255
 ,,,,
 产品表,product,,,产品由后台设置，用户没有权限设置
