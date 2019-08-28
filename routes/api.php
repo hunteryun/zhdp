@@ -59,3 +59,12 @@ Route::prefix('/product')->group(function(){
     Route::put('{id}', 'ProductController@update'); // 更新
     Route::delete('{id}', 'ProductController@destroy'); // 删除
 });
+// 产品字段 /index.php/api/product_field
+Route::prefix('/product_field')->group(function(){
+    Route::get('', 'ProductFieldController@index'); // 获取列表
+    Route::get('all', 'ProductFieldController@all'); // 获取所有数据
+    Route::get('{id}', 'ProductFieldController@show'); // 获取指定id
+    Route::post('', 'ProductFieldController@store'); // 新增
+    Route::put('{id}', 'ProductFieldController@update'); // 更新
+    Route::delete('{id}', 'ProductFieldController@destroy'); // 删除
+});

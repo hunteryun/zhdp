@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Rules;
-use App\Rules\Base;
-use App\Model\DeviceRegion as DeviceRegionModel;
 
-class DeviceRegionExists extends Base
+use Illuminate\Contracts\Validation\Rule;
+use App\Model\Product as ProductModel;
+class ProductIdExists implements Rule
 {
     /**
      * Create a new rule instance.
@@ -19,14 +19,14 @@ class DeviceRegionExists extends Base
     /**
      * Determine if the validation rule passes.
      *
-     * @param  string  $attribute
-     * @param  mixed  $value
+     * @param  string  $attribute 字段名
+     * @param  mixed  $value 字段值
      * @return bool
      */
     public function passes($attribute, $value)
     {
-        //
-        return DeviceRegionModel::where('id', '=', $value)->exists();
+        // 查询指定区域id是否存在
+        return ProductModel::where('id', '=', $value)->exists();
     }
 
     /**
@@ -36,6 +36,6 @@ class DeviceRegionExists extends Base
      */
     public function message()
     {
-        return '设备区域id不存在';
+        return '产品id不存在';
     }
 }
