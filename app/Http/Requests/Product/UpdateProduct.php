@@ -2,17 +2,17 @@
 
 namespace App\Http\Requests\Product;
 use App\Http\Requests\Base;
-
-class AddProduct extends Base
+use Illuminate\Validation\Rule;
+// 产品
+class UpdateProduct extends Base
 {
     public $messages = [
         'name.required' => '产品名必填!',
         'name.unique' => '名字已经存在!',
         'name.alpha_dash' => '名字只允许字母和数字，以及破折号和下划线!',
-        'name.between' => '名字长度需要在6-30之间!',
-        'password.required' => '密码必填!',
-        'password.between' => '密码长度需要在6-20之间!',
-        'password.alpha_dash' => '密码只允许字母和数字，以及破折号和下划线!',
+        'name.between' => '名字长度需要在1-30之间!',
+        'desc.max' => '描述最多120字符!',
+        
     ];
     /**
      * Determine if the Product is authorized to make this request.
@@ -32,9 +32,16 @@ class AddProduct extends Base
      */
     public function rules()
     {
+        // 看到已经通过接口继承了 request 但是获取数据获取不到，后面再进行优化把 
         return [
-            'name' => 'required|unique:product|alpha_dash|between:6,30',
-            'password' => 'required|between:6,20|alpha_dash',   
+            'name' => [
+                'required',
+                // 验证唯一，除了自己
+                Rule::unique('product')->ignore($this->request->id),
+                'alpha_dash',
+                'between:1,30',
+            ],
+            'desc' => 'max:120',   
         ];
     }
 }

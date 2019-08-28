@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Model\Product as ProductModel;
 use App\Http\Requests\Product\AddProduct as AddProductRequests;
 use App\Http\Requests\Product\UpdateProduct as UpdateProductRequests;
-
+// 产品
 class ProductController extends Controller
 {
     /**

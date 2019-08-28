@@ -4,7 +4,7 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Exceptions\IdNotFound;
-
+// 产品
 class Product extends Model
 {
     // 指定表名
@@ -28,8 +28,8 @@ class Product extends Model
     }
     // 新增产品
     public function addProduct($request){
-        $this->name      = $request->input('name');
-        $this->password    = $request->input('password');
+        $this->name     = $request->input('name');
+        $this->desc     = $request->input('desc');
         return $this->save();
     }
     // 更新产品
@@ -37,7 +37,7 @@ class Product extends Model
         // 不允许循环赋值，因为有可能存在id,需要更新什么就更新什么
         $productInfo            = $this->getFind($id);
         $productInfo->name      = $request->input('name');
-        $productInfo->password    = $request->input('password');
+        $productInfo->desc      = $request->input('desc');
         return $productInfo->save();
     }
     // 删除产品
