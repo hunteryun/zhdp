@@ -10,6 +10,13 @@ class Product extends Model
     // 指定表名
     // laravel自动会+s
     protected $table = 'product';
+    // 设置默认值 desc 字段
+    public function setDescAttribute($value)
+    {
+        if(empty($value)){
+            $this->attributes['desc'] = '';
+        }
+    }
     // 获取分页
     public function getPaginate($request){
         return $this->paginate($request->input('limit'))->toArray();

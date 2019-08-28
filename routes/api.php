@@ -33,7 +33,7 @@ Route::prefix('/field_type')->group(function(){
     Route::put('{id}', 'FieldTypeController@update'); // 更新
     Route::delete('{id}', 'FieldTypeController@destroy'); // 删除
 });
-// 设备区域 /index.php/api/device_region
+// 设备区域 /index.php/api/ 
 Route::prefix('/device_region')->group(function(){
     Route::get('', 'DeviceRegionController@index'); // 获取列表
     Route::get('all', 'DeviceRegionController@all'); // 获取所有数据

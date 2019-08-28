@@ -9,7 +9,14 @@ class DeviceRoom extends Model
 {
     // 指定表名
     // laravel自动会+s
-    protected $table = 'device_region';
+    protected $table = 'device_room';
+    // 设置默认值 desc 字段
+    public function setDescAttribute($value)
+    {
+        if(empty($value)){
+            $this->attributes['desc'] = '';
+        }
+    }
     // 获取分页
     public function getPaginate($request){
         return $this->paginate($request->input('limit'))->toArray();
@@ -28,16 +35,21 @@ class DeviceRoom extends Model
     }
     // 新增设备房间
     public function addDeviceRoom($request){
-        $this->name         = $request->input('name');
-        $this->user_id      = $request->input('user_id');
+        $this->user_id          = $request->input('user_id');
+        $this->device_region_id = $request->input('device_region_id');
+        $this->name             = $request->input('name');
+        $this->desc             = $request->input('desc');
+        $this->token            = getOnlyToken_60(); // token 禁止更新
         return $this->save();
     }
     // 更新设备房间
     public function updateDeviceRoom($request, $id){
         // 不允许循环赋值，因为有可能存在id,需要更新什么就更新什么
-        $deviceRoomInfo               = $this->getFind($id);
-        $deviceRoomInfo->name         = $request->input('name');
-        $deviceRoomInfo->user_id      = $request->input('user_id');
+        $deviceRoomInfo                   = $this->getFind($id);
+        $deviceRoomInfo->user_id          = $request->input('user_id');
+        $deviceRoomInfo->device_region_id = $request->input('device_region_id');
+        $deviceRoomInfo->name             = $request->input('name');
+        $deviceRoomInfo->desc             = $request->input('desc');
         return $deviceRoomInfo->save();
     }
     // 删除设备房间
