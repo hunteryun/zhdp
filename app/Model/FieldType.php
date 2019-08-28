@@ -39,8 +39,8 @@ class FieldType extends Model
     public function addFieldType($request){
         $this->name      = $request->input('name');
         $this->length    = $request->input('length');
-        $this->default   = $request->input('default', '');
-        $this->desc      = $request->input('desc', '');
+        $this->default   = $request->input('default');
+        $this->desc      = $request->input('desc');
         return $this->save();
     }
     // 更新字段类型
@@ -49,8 +49,8 @@ class FieldType extends Model
         $fieldTypeInfo            = $this->getFind($id);
         $fieldTypeInfo->name      = $request->input('name');
         $fieldTypeInfo->length    = $request->input('length');
-        $fieldTypeInfo->default   = $request->input('default', '');
-        $fieldTypeInfo->desc      = $request->input('desc', '');
+        $fieldTypeInfo->default   = $request->input('default');
+        $fieldTypeInfo->desc      = $request->input('desc');
         return $fieldTypeInfo->save();
     }
     // 删除字段类型
