@@ -17,8 +17,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $limit = intval($request->input('limit'));
-        $userList = UserModel::paginate($limit)->toArray();
+        $userList = (new UserModel)->getPaginate($request);
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['total']            = $userList['total'];
@@ -40,7 +39,7 @@ class UserController extends Controller
     {
         // 手动进行验证，不使用框架自动验证
         (new AddUserRequests)->verification($request);
-        $addUserStatus = (new UserModel)->addUser($request->all());
+        $addUserStatus = (new UserModel)->addUser($request);
         if(!$addUserStatus){
             return errors(['msg'=>"用户创建失败"]);
         }
@@ -55,7 +54,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $userInfo = UserModel::find($id);
+        $userInfo = (new UserModel)->getFind($id);
         if(!$userInfo){
             return errors(['msg'=>"用户不存在"]);
         }
@@ -71,14 +70,8 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        (new UpdateUserRequests)->verification($request);
-        //
-        $userModel = new UserModel;
-        $userInfo = $userModel->find($id);
-        if(!$userInfo){
-            return errors(['msg'=>"用户不存在"]);
-        }
-        $updateUserStatus = $userModel->updateUser($userInfo, $request->all());
+        (new UpdateUserRequests)->verification();
+        $updateUserStatus = (new UserModel)->updateUser($request, $id);
         if(!$updateUserStatus){
             return errors("用户更新失败");
         }
@@ -93,13 +86,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $userModel = new UserModel;
-        $userInfo = $userModel->find($id);
-        if(!$userInfo){
-            return errors(['msg'=>"用户不存在"]);
-        }
-        // 后面可能还会因为删除用户，关联删除他的其他   
-        $deleteUserStatus = $userInfo->deleteUser($userInfo);
+        $deleteUserStatus = (new UserModel())->deleteUser($id);
         if(!$deleteUserStatus){
             return errors("用户删除失败");
         }

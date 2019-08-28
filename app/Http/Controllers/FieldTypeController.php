@@ -87,7 +87,7 @@ class FieldTypeController extends Controller
         (new UpdateFieldTypeRequests)->verification();
         $updateFieldTypeStatus = (new FieldTypeModel)->updateFieldType($request, $id);
         if(!$updateFieldTypeStatus){
-            return errors("字段类型不存在");
+            return errors("字段类型更新失败");
         }
         return success(['msg'=>"字段类型更新成功"]);
     }
