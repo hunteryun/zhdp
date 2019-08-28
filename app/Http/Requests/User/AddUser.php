@@ -30,7 +30,7 @@ class AddUser extends Base
      *
      * @return array
      */
-    public function rules($request)
+    public function rules()
     {
         return [
             'name' => 'required|unique:user|alpha_dash|between:6,30',

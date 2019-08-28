@@ -7,6 +7,9 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class Base extends FormRequest
 {
+    public function __construct(){
+        $this->request = request();
+    }
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -22,17 +25,17 @@ class Base extends FormRequest
      *
      * @return array
      */
-    public function rules($request)
+    public function rules()
     {
         return [
             //
         ];
     }
     /**
-     * 验证
+     * 验证[get参数获取不到 需要 key->value 传入]
      */
-    public function verification($request){
-        $validator = Validator::make($request->all(), $this->rules($request), $this->messages);
+    public function verification($request = ""){
+        $validator = Validator::make($this->request->all(), $this->rules(), $this->messages);
         if($validator->fails()){
             $error = $validator->errors()->first();
             // 抛出参数验证错误类

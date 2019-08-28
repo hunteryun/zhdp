@@ -31,13 +31,13 @@ class UpdateDeviceRegion extends Base
      *
      * @return array
      */
-    public function rules($request)
+    public function rules()
     {
         return [
             'name' => [
                 'required',
                 // 验证唯一，除了自己
-                Rule::unique('device_region')->ignore($request->id),
+                Rule::unique('device_region')->ignore($this->request->id),
                 'alpha_dash',
                 'between:1,30',
             ],

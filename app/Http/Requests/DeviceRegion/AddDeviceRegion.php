@@ -30,7 +30,7 @@ class AddDeviceRegion extends Base
      *
      * @return array
      */
-    public function rules($request)
+    public function rules()
     {
         return [
             'name' => 'required|unique:device_region|alpha_dash|between:1,30',

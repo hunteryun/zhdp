@@ -17,24 +17,22 @@ class DeviceRegionController extends Controller
      */
     public function index(Request $request)
     {
-        $limit = intval($request->input('limit'));
-        $deviceRegionList = DeviceRegionModel::paginate($limit)->toArray();
+        $deviceRegionList = (new DeviceRegionModel)->getPaginate($request);
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['total']            = $deviceRegionList['total'];
         $returnData['current_page']     = $deviceRegionList['current_page'];
         $returnData['data']             = $deviceRegionList['data'];
         return success($returnData);
-        // return 
     }
 
     /**
      * 获取所有设备区域 api/device_region/all
      * @return \Illuminate\Http\Response
      */
-    public function all()
+    public function all(Request $request)
     {
-        $deviceRegionAll = DeviceRegionModel::all();
+        $deviceRegionAll = (new DeviceRegionModel)->getAll($request);
         $returnData['msg']              = "查询成功";
         $returnData['data']             = $deviceRegionAll;
         $returnData['total']            = $deviceRegionAll->count();
@@ -52,9 +50,8 @@ class DeviceRegionController extends Controller
      */
     public function store(Request $request)
     {
-        // 手动进行验证，不使用框架自动验证
-        (new AddDeviceRegionRequests)->verification($request);
-        $addDeviceRegion = (new DeviceRegionModel)->addDeviceRegion($request->all());
+        (new AddDeviceRegionRequests)->verification();
+        $addDeviceRegion = (new DeviceRegionModel)->addDeviceRegion($request);
         if(!$addDeviceRegion){
             return errors(['msg'=>"设备区域创建失败"]);
         }
@@ -69,10 +66,7 @@ class DeviceRegionController extends Controller
      */
     public function show($id)
     {
-        $deviceRegionInfo = DeviceRegionModel::find($id);
-        if(!$deviceRegionInfo){
-            return errors(['msg'=>"设备区域不存在"]);
-        }
+        $deviceRegionInfo = (new DeviceRegionModel)->getFind($id);
         return success(['msg' => '设备区域查询成功','data' => $deviceRegionInfo]);
     }
 
@@ -85,14 +79,8 @@ class DeviceRegionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        (new UpdateDeviceRegionRequests)->verification($request);
-        //
-        $deviceRegionModel = new DeviceRegionModel;
-        $deviceRegionInfo = $deviceRegionModel->find($id);
-        if(!$deviceRegionInfo){
-            return errors(['msg'=>"设备区域不存在"]);
-        }
-        $updateDeviceRegionStatus = $deviceRegionModel->updateDeviceRegion($deviceRegionInfo, $request->all());
+        (new UpdateDeviceRegionRequests)->verification();
+        $updateDeviceRegionStatus = (new DeviceRegionModel)->updateDeviceRegion($request, $id);
         if(!$updateDeviceRegionStatus){
             return errors("设备区域更新失败");
         }
@@ -107,12 +95,7 @@ class DeviceRegionController extends Controller
      */
     public function destroy($id)
     {
-        $deviceRegionModel = new DeviceRegionModel;
-        $deviceRegionInfo = $deviceRegionModel->find($id);
-        if(!$deviceRegionInfo){
-            return errors(['msg'=>"设备区域不存在"]);
-        }
-        // 后面可能还会因为删除设备区域，关联删除他的其他   
+        $deviceRegionInfo = (new DeviceRegionModel())->getFind($id);
         $deleteUserStatus = $deviceRegionInfo->deleteDeviceRegion($deviceRegionInfo);
         if(!$deleteUserStatus){
             return errors("设备区域删除失败");

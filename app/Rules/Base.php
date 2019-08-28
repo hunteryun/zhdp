@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Rules;
-use App\Rules\Base;
-use App\Model\DeviceRegion as DeviceRegionModel;
 
-class DeviceRegionExists extends Base
+use Illuminate\Contracts\Validation\Rule;
+
+class Base implements Rule
 {
     /**
      * Create a new rule instance.
@@ -13,7 +13,7 @@ class DeviceRegionExists extends Base
      */
     public function __construct()
     {
-        //
+        $this->request = request();
     }
 
     /**
@@ -26,7 +26,6 @@ class DeviceRegionExists extends Base
     public function passes($attribute, $value)
     {
         //
-        return DeviceRegionModel::where('id', '=', $value)->exists();
     }
 
     /**
@@ -36,6 +35,6 @@ class DeviceRegionExists extends Base
      */
     public function message()
     {
-        return '设备区域id不存在';
+        return 'The validation error message.';
     }
 }
