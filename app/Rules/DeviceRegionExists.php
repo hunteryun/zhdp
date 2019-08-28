@@ -3,8 +3,9 @@
 namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use App\Model\User as UserModel;
-class UserIdExists implements Rule
+use App\Model\DeviceRegion as DeviceRegionModel;
+
+class DeviceRegionExists implements Rule
 {
     /**
      * Create a new rule instance.
@@ -19,14 +20,14 @@ class UserIdExists implements Rule
     /**
      * Determine if the validation rule passes.
      *
-     * @param  string  $attribute 字段名
-     * @param  mixed  $value 字段值
+     * @param  string  $attribute
+     * @param  mixed  $value
      * @return bool
      */
     public function passes($attribute, $value)
     {
-        // 查询指定用户id是否存在
-        return UserModel::where('id', '=', $value)->exists();
+        //
+        return DeviceRegionModel::where('id', '=', $value)->exists();
     }
 
     /**
@@ -36,6 +37,6 @@ class UserIdExists implements Rule
      */
     public function message()
     {
-        return '用户id不存在';
+        return '设备区域id不存在';
     }
 }
