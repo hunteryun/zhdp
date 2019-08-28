@@ -42,6 +42,15 @@ Route::prefix('/device_region')->group(function(){
     Route::put('{id}', 'DeviceRegionController@update'); // 更新
     Route::delete('{id}', 'DeviceRegionController@destroy'); // 删除
 });
+// 设备房间(房间在区域下面) /index.php/api/device_room
+Route::prefix('/device_room')->group(function(){
+    Route::get('', 'DeviceRoomController@index'); // 获取列表
+    Route::get('all', 'DeviceRoomController@all'); // 获取所有数据
+    Route::get('{id}', 'DeviceRoomController@show'); // 获取指定id
+    Route::post('', 'DeviceRoomController@store'); // 新增
+    Route::put('{id}', 'DeviceRoomController@update'); // 更新
+    Route::delete('{id}', 'DeviceRoomController@destroy'); // 删除
+});
 // 产品 /index.php/api/product
 Route::prefix('/product')->group(function(){
     Route::get('', 'ProductController@index'); // 获取列表

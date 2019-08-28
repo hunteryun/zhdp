@@ -35,6 +35,15 @@ id,id,,,
 字段排序,sort,,0,字段显示先后排序(上面的是相同字段排序，这个是产品下字段的排序)
 描述,desc,,,
 ,,,,
+设备房间表,device_room,,,房间属于区域
+字段,英文名,参数,默认,描述
+id,id,,,
+用户id,user_id,,,房间所属用户id
+区域id,device_region_id,,,
+名称,name,,,
+描述,desc,,,
+唯一标识,token,,,用来更新房间下的设备
+,,,,
 设备区域表,device_region,,,用来设置不同地方的大棚等
 字段,英文名,参数,默认,描述
 id,id,,,
@@ -44,7 +53,7 @@ id,id,,,
 设备表,device,,,设备是产品的实例
 字段,英文名,参数,默认,描述
 id,id,,,
-设备区域id,device_region_id,,,
+设备房间id,device_room_id,,,
 唯一标识,token,,,可以通过该标识更新该设备的参数状态(char60)
 用户id,user_id,,,
 所属产品id,product_id,,,
