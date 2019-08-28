@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 // 异常处理基类
 class Handler extends ExceptionHandler
 {
@@ -46,6 +47,14 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        // 捕获 findOrFail 和 firstOrFail 异常
+        // if ($exception instanceof ModelNotFoundException) {
+        //     // code 最前面 msg在他后面
+        //     return errors([
+        //         'code' => 1,
+        //         'msg' => $exception->getMessage(),
+        //     ], 500);
+        // }
         return parent::render($request, $exception);
     }
 }

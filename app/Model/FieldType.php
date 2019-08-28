@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Exceptions\IdNotFound;
 // 字段类型
 class FieldType extends Model
 {
@@ -33,7 +34,11 @@ class FieldType extends Model
     }
     // 获取单个
     public function getFind($id){
-        return $this->findOrFail($id);
+        try{
+            return $this->findOrFail($id);
+        }catch(\Exception $exception){
+            throw new IdNotFound('字段类型Id未找到');
+        }
     }
     // 新增字段类型
     public function addFieldType($request){

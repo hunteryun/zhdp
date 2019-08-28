@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Exceptions\IdNotFound;
 // 设备区域
 class DeviceRegion extends Model
 {
@@ -19,7 +20,11 @@ class DeviceRegion extends Model
     }
     // 获取单个
     public function getFind($id){
-        return $this->findOrFail($id);
+        try{
+            return $this->findOrFail($id);
+        }catch(\Exception $exception){
+            throw new IdNotFound('设备区域Id未找到');
+        }
     }
     // 新增设备区域
     public function addDeviceRegion($request){

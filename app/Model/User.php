@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Exceptions\IdNotFound;
 
 class User extends Model
 {
@@ -21,7 +22,11 @@ class User extends Model
     }
     // 获取单个
     public function getFind($id){
-        return $this->findOrFail($id);
+        try{
+            return $this->findOrFail($id);
+        }catch(\Exception $exception){
+            throw new IdNotFound('用户Id未找到');
+        }
     }
     // 新增用户
     public function addUser($request){

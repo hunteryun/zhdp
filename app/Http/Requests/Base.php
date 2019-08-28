@@ -39,7 +39,7 @@ class Base extends FormRequest
         if($validator->fails()){
             $error = $validator->errors()->first();
             // 抛出参数验证错误类
-            throw (new Parameter($error));
+            throw new Parameter($error);
         }
     }
 }
