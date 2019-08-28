@@ -4,7 +4,6 @@ namespace App\Http\Requests\DeviceRegion;
 use App\Http\Requests\Base;
 use Illuminate\Validation\Rule;
 use App\Rules\UserIdExists; // 引入判断是不是真实的用户id 
-use App\Rules\DeviceRegionExists; // 引入判断设备区域id是否存在
 // 设备区域
 class UpdateDeviceRegion extends Base
 {
@@ -35,9 +34,6 @@ class UpdateDeviceRegion extends Base
     public function rules($request)
     {
         return [
-            'id' => [
-                new DeviceRegionExists
-            ],
             'name' => [
                 'required',
                 // 验证唯一，除了自己

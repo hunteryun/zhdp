@@ -19,7 +19,7 @@ class DeviceRegion extends Model
     public function updateDeviceRegion($deviceRegionInfo = [], $updateDeviceRegion = []){
         // 不允许循环赋值，因为有可能存在id,需要更新什么就更新什么
         $deviceRegionInfo->name         = $updateDeviceRegion['name'];
-        $deviceRegionInfo->user_id                  = $updateDeviceRegion['user_id'];
+        $deviceRegionInfo->user_id      = $updateDeviceRegion['user_id'];
         return $deviceRegionInfo->save();
     }
     // 删除设备区域
