@@ -33,14 +33,14 @@ class UpdateFieldType extends Base
      *
      * @return array
      */
-    public function rules($request)
+    public function rules()
     {
         // 看到已经通过接口继承了 request 但是获取数据获取不到，后面再进行优化把 
         return [
             'name' => [
                 'required',
                 // 验证唯一，除了自己
-                Rule::unique('field_type')->ignore($request->id),
+                Rule::unique('field_type')->ignore($this->request->id),
                 'alpha_dash',
                 'between:1,30',
             ],

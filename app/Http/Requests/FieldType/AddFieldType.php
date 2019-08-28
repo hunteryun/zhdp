@@ -32,7 +32,7 @@ class AddFieldType extends Base
      *
      * @return array
      */
-    public function rules($request)
+    public function rules()
     {
         return [
             'name' => 'required|unique:field_type|alpha_dash|between:1,30',

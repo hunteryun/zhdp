@@ -95,9 +95,8 @@ class DeviceRegionController extends Controller
      */
     public function destroy($id)
     {
-        $deviceRegionInfo = (new DeviceRegionModel())->getFind($id);
-        $deleteUserStatus = $deviceRegionInfo->deleteDeviceRegion($deviceRegionInfo);
-        if(!$deleteUserStatus){
+        $deleteDeviceRegionStatus = (new DeviceRegionModel())->deleteDeviceRegion($id);
+        if(!$deleteDeviceRegionStatus){
             return errors("设备区域删除失败");
         }
         return success(['msg'=>"设备区域删除成功"]);

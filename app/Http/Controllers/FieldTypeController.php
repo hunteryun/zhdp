@@ -17,8 +17,7 @@ class FieldTypeController extends Controller
      */
     public function index(Request $request)
     {
-        $limit = intval($request->input('limit'));
-        $fieldTypeList = FieldTypeModel::paginate($limit)->toArray();
+        $fieldTypeList = (new FieldTypeModel)->getPaginate($request);
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['total']            = $fieldTypeList['total'];
@@ -32,9 +31,9 @@ class FieldTypeController extends Controller
      * 获取所有字段类型 api/field_type/all
      * @return \Illuminate\Http\Response
      */
-    public function all()
+    public function all(Request $request)
     {
-        $fieldTypeAll = FieldTypeModel::all();
+        $fieldTypeAll                   = (new FieldTypeModel)->getAll($request);
         $returnData['msg']              = "查询成功";
         $returnData['data']             = $fieldTypeAll;
         $returnData['total']            = $fieldTypeAll->count();
@@ -54,7 +53,7 @@ class FieldTypeController extends Controller
     {
         // 手动进行验证，不使用框架自动验证
         (new AddFieldTypeRequests)->verification($request);
-        $addFieldType = (new FieldTypeModel)->addFieldType($request->all());
+        $addFieldType = (new FieldTypeModel)->addFieldType($request);
         if(!$addFieldType){
             return errors(['msg'=>"字段类型创建失败"]);
         }
@@ -69,7 +68,7 @@ class FieldTypeController extends Controller
      */
     public function show($id)
     {
-        $fieldTypeInfo = FieldTypeModel::find($id);
+        $fieldTypeInfo = (new FieldTypeModel)->getFind($id);
         if(!$fieldTypeInfo){
             return errors(['msg'=>"字段类型不存在"]);
         }
@@ -85,16 +84,10 @@ class FieldTypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        (new UpdateFieldTypeRequests)->verification($request);
-        //
-        $fieldTypeModel = new FieldTypeModel;
-        $fieldTypeInfo = $fieldTypeModel->find($id);
-        if(!$fieldTypeInfo){
-            return errors(['msg'=>"字段类型不存在"]);
-        }
-        $updateFieldTypeStatus = $fieldTypeModel->updateFieldType($fieldTypeInfo, $request->all());
+        (new UpdateFieldTypeRequests)->verification();
+        $updateFieldTypeStatus = (new FieldTypeModel)->updateFieldType($request, $id);
         if(!$updateFieldTypeStatus){
-            return errors("字段类型更新失败");
+            return errors("字段类型不存在");
         }
         return success(['msg'=>"字段类型更新成功"]);
     }
@@ -107,14 +100,8 @@ class FieldTypeController extends Controller
      */
     public function destroy($id)
     {
-        $fieldTypeModel = new FieldTypeModel;
-        $fieldTypeInfo = $fieldTypeModel->find($id);
-        if(!$fieldTypeInfo){
-            return errors(['msg'=>"字段类型不存在"]);
-        }
-        // 后面可能还会因为删除字段类型，关联删除他的其他   
-        $deleteUserStatus = $fieldTypeInfo->deleteFieldType($fieldTypeInfo);
-        if(!$deleteUserStatus){
+        $deleteFieldTypeStatus = (new FieldTypeModel())->deleteFieldType($id);
+        if(!$deleteFieldTypeStatus){
             return errors("字段类型删除失败");
         }
         return success(['msg'=>"字段类型删除成功"]);

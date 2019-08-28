@@ -22,21 +22,22 @@ class DeviceRegion extends Model
         return $this->findOrFail($id);
     }
     // 新增设备区域
-    public function addDeviceRegion($deviceRegionInfo = []){
-        $this->name     = $deviceRegionInfo['name'];
-        $this->user_id   = $deviceRegionInfo['user_id'];
+    public function addDeviceRegion($request){
+        $this->name         = $request->input('name');
+        $this->user_id      = $request->input('user_id');
         return $this->save();
     }
     // 更新设备区域
     public function updateDeviceRegion($request, $id){
         // 不允许循环赋值，因为有可能存在id,需要更新什么就更新什么
-        $deviceRegionInfo               = $this->findOrFail($id);
+        $deviceRegionInfo               = $this->getFind($id);
         $deviceRegionInfo->name         = $request->input('name');
         $deviceRegionInfo->user_id      = $request->input('user_id');
         return $deviceRegionInfo->save();
     }
     // 删除设备区域
-    public function deleteDeviceRegion($deviceRegionInfo = []){
+    public function deleteDeviceRegion($id){
+        $deviceRegionInfo = $this->getFind($id);
         return $deviceRegionInfo->delete();
     }
 }
