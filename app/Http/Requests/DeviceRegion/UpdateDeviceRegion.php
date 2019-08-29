@@ -37,7 +37,7 @@ class UpdateDeviceRegion extends Base
             'name' => [
                 'required',
                 // 验证唯一，除了自己
-                Rule::unique('device_region')->ignore($this->request->id),
+                Rule::unique('device_region')->where('user_id', $this->request->user_id)->ignore($this->request->id),
                 'alpha_dash',
                 'between:1,30',
             ],

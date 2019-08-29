@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\DeviceRegion;
 use App\Http\Requests\Base;
+use Illuminate\Validation\Rule;
 use App\Rules\UserIdExists; // 引入判断是不是真实的用户id 
 // 设备区域
 class AddDeviceRegion extends Base
@@ -33,7 +34,13 @@ class AddDeviceRegion extends Base
     public function rules()
     {
         return [
-            'name' => 'required|unique:device_region|alpha_dash|between:1,30',
+            // 'name' => 'required|unique:device_region|alpha_dash|between:1,30',
+            'name' => [
+                'required',
+                Rule::unique('device_region')->where('user_id', $this->request->user_id),
+                'alpha_dash',
+                'between:1,30',
+            ],
             'user_id' => [
                 'required',
                 'numeric',
