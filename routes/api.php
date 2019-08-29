@@ -76,3 +76,12 @@ Route::prefix('/device')->group(function(){
     Route::put('{id}', 'DeviceController@update'); // 更新
     Route::delete('{id}', 'DeviceController@destroy'); // 删除
 });
+// 设备字段 /index.php/api/device_field
+Route::prefix('/device_field')->group(function(){
+    Route::get('', 'DeviceFieldController@index'); // 获取列表
+    Route::get('all', 'DeviceFieldController@all'); // 获取所有数据
+    Route::get('{id}', 'DeviceFieldController@show'); // 获取指定id
+    Route::post('', 'DeviceFieldController@store'); // 新增
+    Route::put('{id}', 'DeviceFieldController@update'); // 更新
+    Route::delete('{id}', 'DeviceFieldController@destroy'); // 删除
+});
