@@ -19,7 +19,7 @@
                  <!-- 大屏幕显示区域 -->
                  <ul class="layui-nav layui-layout-left layui-hide-xs">
                      <li class="layui-nav-item"><a class="layui-open-tab" href="http://baidu.com">控制台</a></li>
-                     <li class="layui-nav-item"><a class="layui-open-tab" class="layui-open-tab" href="">商品管理</a></li>
+                     <li class="layui-nav-item"><a class="layui-open-tab" href="">商品管理</a></li>
                      <li class="layui-nav-item"><a class="layui-open-tab" href="">用户</a></li>
                      <li class="layui-nav-item">
                          <a href="javascript:;">其它系统</a>
@@ -132,7 +132,7 @@
          }).resize();
          //  监听tab删除
          element.on('tabDelete(index-tab)', function(data) {
-             var key = 'layId' + $(this).parent().attr("lay-id");
+             var key = $(this).parent().attr("lay-id");
              delete tabList[key];
          });
         //  监听显示侧边栏
