@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\ProductField;
 use App\Http\Requests\Base;
+use Illuminate\Validation\Rule;
 use App\Rules\ProductIdExists; // 引入判断产品id是否存在
 use App\Rules\FieldTypeIdExists; // 引入判断字段类型id是否存在
 // 产品字段
@@ -11,11 +12,11 @@ class AddProductField extends Base
         'product_id.required' => '产品id必填!',
         'product_id.numeric' => '产品id必须是数字!',
         'name.required' => '产品字段名必填!',
-        'name.unique' => '名字已经存在!',
+        'name.unique' => '产品下已存在相同名字!',
         'name.alpha_dash' => '名字只允许字母和数字，以及破折号和下划线!',
         'name.between' => '名字长度需要在1-30之间!',
         'field.required' => '产品字段标识符必填!',
-        'field.unique' => '产品字段标识符已经存在!',
+        'field.unique' => '产品下已存在相同字段标识符!',
         'field.alpha_dash' => '产品字段标识符只允许字母和数字，以及破折号和下划线!',
         'field.between' => '产品字段标识符长度需要在1-30之间!',
         'field_type_id.required' => '字段类型id必填!',
@@ -58,13 +59,15 @@ class AddProductField extends Base
             ],
             'name' => [
                 'required',
-                'unique:product_field',
+                // 'unique:product_field',
+                Rule::unique('product_field')->where('product_id', $this->request->product_id), // 相同产品下不允许存在重复名字
                 'alpha_dash',
                 'between:1,30',
             ],
             'field' => [
                 'required',
-                'unique:product_field',
+                // 'unique:product_field',
+                Rule::unique('product_field')->where('product_id', $this->request->product_id), // 相同产品下不允许存在重复字段标识符
                 'alpha_dash',
                 'between:1,30',
             ],
