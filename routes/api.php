@@ -68,3 +68,11 @@ Route::prefix('/product_field')->group(function(){
     Route::put('{id}', 'ProductFieldController@update'); // 更新
     Route::delete('{id}', 'ProductFieldController@destroy'); // 删除
 });
+// 设备 /index.php/api/device
+Route::prefix('/device')->group(function(){
+    Route::get('', 'DeviceController@index'); // 获取列表
+    Route::get('{id}', 'DeviceController@show'); // 获取指定id
+    Route::post('', 'DeviceController@store'); // 新增
+    Route::put('{id}', 'DeviceController@update'); // 更新
+    Route::delete('{id}', 'DeviceController@destroy'); // 删除
+});
