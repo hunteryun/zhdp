@@ -19,14 +19,14 @@
                  <!-- 大屏幕显示区域 -->
                  <ul class="layui-nav layui-layout-left layui-hide-xs">
                      <li class="layui-nav-item"><a class="layui-open-tab" href="http://baidu.com">控制台</a></li>
-                     <li class="layui-nav-item"><a class="layui-open-tab" href="">商品管理</a></li>
-                     <li class="layui-nav-item"><a href="">用户</a></li>
+                     <li class="layui-nav-item"><a class="layui-open-tab" class="layui-open-tab" href="">商品管理</a></li>
+                     <li class="layui-nav-item"><a class="layui-open-tab" href="">用户</a></li>
                      <li class="layui-nav-item">
                          <a href="javascript:;">其它系统</a>
                          <dl class="layui-nav-child">
-                             <dd><a href="">邮件管理</a></dd>
-                             <dd><a href="">消息管理</a></dd>
-                             <dd><a href="">授权管理</a></dd>
+                             <dd><a class="layui-open-tab" href="">邮件管理</a></dd>
+                             <dd><a class="layui-open-tab" href="">消息管理</a></dd>
+                             <dd><a class="layui-open-tab" href="">授权管理</a></dd>
                          </dl>
                      </li>
                  </ul>
@@ -37,7 +37,7 @@
                              贤心
                          </a>
                          <dl class="layui-nav-child">
-                             <dd><a href="">退出</a></dd>
+                             <dd><a class="layui-open-tab" href="">退出</a></dd>
                          </dl>
                      </li>
                  </ul>
@@ -54,7 +54,7 @@
                              <dd><a href="javascript:;">列表一</a></dd>
                              <dd><a href="javascript:;">列表二</a></dd>
                              <dd><a href="javascript:;">列表三</a></dd>
-                             <dd><a href="">超链接</a></dd>
+                             <dd><a class="layui-open-tab" href="">超链接</a></dd>
                          </dl>
                      </li>
                      <li class="layui-nav-item">
@@ -62,11 +62,11 @@
                          <dl class="layui-nav-child">
                              <dd><a href="javascript:;">列表一</a></dd>
                              <dd><a href="javascript:;">列表二</a></dd>
-                             <dd><a href="">超链接</a></dd>
+                             <dd><a class="layui-open-tab" href="">超链接</a></dd>
                          </dl>
                      </li>
-                     <li class="layui-nav-item"><a href="">云市场</a></li>
-                     <li class="layui-nav-item"><a href="">发布商品</a></li>
+                     <li class="layui-nav-item"><a class="layui-open-tab" href="">云市场</a></li>
+                     <li class="layui-nav-item"><a class="layui-open-tab" href="">发布商品</a></li>
                  </ul>
              </div>
          </div>
