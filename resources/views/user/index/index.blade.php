@@ -78,10 +78,14 @@
                  </ul>
                  <div class="layui-tab-content" style="min-height: 150px; padding: 5px 0 0 0;overflow-y:auto;">
                      <div class="layui-tab-item layui-show">
-                        <iframe src="" style="width: 100%;border: 0"></iframe>
+                         <iframe src="" style="width: 100%;border: 0"></iframe>
                      </div>
                  </div>
              </div>
+         </div>
+         <div class="site-mobile-shade"></div>
+         <div class="site-tree-mobile layui-hide">
+             <i class="layui-icon"></i>
          </div>
          <div class="layui-footer layui-hide-xs">
              <!-- 底部固定区域 -->
@@ -93,7 +97,7 @@
          var $ = layui.jquery,
              layer = layui.layer,
              element = layui.element; // Tab的切换功能，切换事件监听等，需要依赖element模块
-            //  class="layui-open-tab" iframe 打开网页
+         //  class="layui-open-tab" iframe 打开网页
          var tabList = {}; // 记录已经打开的tab
          $(function() {
              $('a[class=layui-open-tab]').each(function(index) {
@@ -103,7 +107,7 @@
                      var id = new Date().getTime();
                      for (var i in tabList) {
                          if (tabList[i] == title) {
-                            element.tabChange('index-tab', i); //切换到：用户管理
+                             element.tabChange('index-tab', i); //切换到：用户管理
                              return false;
                          }
                      }
@@ -111,26 +115,35 @@
                      tabList[key] = title;
                      element.tabAdd('index-tab', {
                          title: title,
-                         content: '<iframe src="'+href+'" style="width:100%;height:'+($('.layui-body').height() - 60)+'px;border:0"></iframe>',
+                         content: '<iframe src="' + href + '" style="width:100%;height:' + ($('.layui-body').height() - 60) + 'px;border:0"></iframe>',
                          id: key
                      });
-                     element.tabChange('index-tab', key);  
+                     element.tabChange('index-tab', key);
                      return false;
                  });
              });
          });
-        // //  响应设置iframe 高度
-        $(window).on('resize', function () {
-            var bodyHeight = $('.layui-body').height();
-            $('.layui-body .layui-tab-content').find('.layui-tab-item').each(function () {
-                $(this).height(bodyHeight - 60);
-            });
-        }).resize();
+         // //  响应设置iframe 高度
+         $(window).on('resize', function() {
+             var bodyHeight = $('.layui-body').height();
+             $('.layui-body .layui-tab-content').find('.layui-tab-item').each(function() {
+                 $(this).height(bodyHeight - 60);
+             });
+         }).resize();
          //  监听tab删除
          element.on('tabDelete(index-tab)', function(data) {
-            var key = 'layId' + $(this).parent().attr("lay-id");
-            delete tabList[key];
+             var key = 'layId' + $(this).parent().attr("lay-id");
+             delete tabList[key];
          });
+        //  监听显示侧边栏
+        var treeMobile = $('.site-tree-mobile'),
+            shadeMobile = $('.site-mobile-shade');
+        treeMobile.on('click', function () {
+            $('body').addClass('site-mobile');
+        });
+        shadeMobile.on('click', function () {
+            $('body').removeClass('site-mobile');
+        });
      </script>
  </body>
 
