@@ -83,7 +83,7 @@
                  </div>
              </div>
          </div>
-         <div class="layui-footer">
+         <div class="layui-footer layui-hide-xs">
              <!-- 底部固定区域 -->
              © layui.com - 底部固定区域
          </div>
