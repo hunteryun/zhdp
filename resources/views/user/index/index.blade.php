@@ -76,7 +76,7 @@
                  <ul class="layui-tab-title">
                      <li class="layui-this" lay-id="1">网站设置</li>
                  </ul>
-                 <div class="layui-tab-content" style="min-height: 150px; padding: 5px 0 0 0;">
+                 <div class="layui-tab-content" style="min-height: 150px; padding: 5px 0 0 0;overflow-y:auto;">
                      <div class="layui-tab-item layui-show">
                         <iframe src="" style="width: 100%;border: 0"></iframe>
                      </div>
@@ -108,10 +108,10 @@
                          }
                      }
                      var key = 'layId' + id;
-                     tabList.key = title;
+                     tabList[key] = title;
                      element.tabAdd('index-tab', {
                          title: title,
-                         content: '<iframe src="'+href+'" style="width:100%;height:100%;border:0"></iframe>',
+                         content: '<iframe src="'+href+'" style="width:100%;height:'+($('.layui-body').height() - 60)+'px;border:0"></iframe>',
                          id: id
                      });
                      element.tabChange('index-tab', id);  
@@ -120,16 +120,16 @@
              });
          });
         // //  响应设置iframe 高度
-        //  $(window).on('resize', function () {
-        //     var $content = $('.admin-nav-card .layui-tab-content');
-        //     $content.height($(this).height() - 160);
-        //     $content.find('iframe').each(function () {
-        //         $(this).height($content.height());
-        //     });
-        // }).resize();
+        $(window).on('resize', function () {
+            var bodyHeight = $('.layui-body').height();
+            $('.layui-body .layui-tab-content').find('.layui-tab-item').each(function () {
+                $(this).height(bodyHeight - 60);
+            });
+        }).resize();
          //  监听tab删除
          element.on('tabDelete(index-tab)', function(data) {
             var key = 'layId' + $(this).parent().attr("lay-id");
+            delete tabList[key];
          });
      </script>
  </body>
