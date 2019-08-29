@@ -11,9 +11,7 @@ class Product extends Model
     // laravel自动会+s
     protected $table = 'product';
     // 关联关系
-    /**
-     * 获取博客文章的评论
-     */
+    // 关联产品下的字段
     public function product_field()
     {
          return $this->hasMany(ProductField::class);

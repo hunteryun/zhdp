@@ -10,10 +10,7 @@ class Device extends Model
     // 指定表名
     // laravel自动会+s
     protected $table = 'device';
-    // 关联关系
-    /**
-     * 获取博客文章的评论
-     */
+    // 关联查询设备下的字段
     public function device_field()
     {
          return $this->hasMany(DeviceField::class);
@@ -28,8 +25,7 @@ class Device extends Model
     }
     // 获取分页
     public function getPaginate($request){
-        // return $this->with('device_field')->paginate($request->input('limit'))->toArray();
-        return $this->paginate($request->input('limit'))->toArray();
+        return $this->with('device_field')->paginate($request->input('limit'))->toArray();
     }
     // 获取所有
     public function getAll($request){
@@ -38,8 +34,7 @@ class Device extends Model
     // 获取单个
     public function getFind($id){
         try{
-            // return $this->with('device_field')->findOrFail($id);
-            return $this->findOrFail($id);
+            return $this->with('device_field')->findOrFail($id);
         }catch(\Exception $exception){
             throw new IdNotFound('设备Id未找到');
         }
