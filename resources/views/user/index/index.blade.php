@@ -103,7 +103,7 @@
                      var id = new Date().getTime();
                      for (var i in tabList) {
                          if (tabList[i] == title) {
-                             console.log("已经打开");
+                            element.tabChange('index-tab', i); //切换到：用户管理
                              return false;
                          }
                      }
@@ -112,9 +112,9 @@
                      element.tabAdd('index-tab', {
                          title: title,
                          content: '<iframe src="'+href+'" style="width:100%;height:'+($('.layui-body').height() - 60)+'px;border:0"></iframe>',
-                         id: id
+                         id: key
                      });
-                     element.tabChange('index-tab', id);  
+                     element.tabChange('index-tab', key);  
                      return false;
                  });
              });
