@@ -10,6 +10,10 @@ class ProductField extends Model
     // 指定表名
     // laravel自动会+s
     protected $table = 'product_field';
+    // 隐藏指定字段
+    // protected $hidden = ['updated_at'];
+    // 只可以显示的字段
+    // protected $visible = ['updated_at'];
     // 设置默认值 length 字段
     public function setLengthAttribute($value)
     {

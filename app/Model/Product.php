@@ -10,6 +10,15 @@ class Product extends Model
     // 指定表名
     // laravel自动会+s
     protected $table = 'product';
+    // 关联关系
+    /**
+     * 获取博客文章的评论
+     */
+    public function product_field()
+    {
+         return $this->hasMany(ProductField::class);
+    }
+    // 自动填充
     // 设置默认值 desc 字段
     public function setDescAttribute($value)
     {
@@ -19,7 +28,7 @@ class Product extends Model
     }
     // 获取分页
     public function getPaginate($request){
-        return $this->paginate($request->input('limit'))->toArray();
+        return $this->with('product_field')->paginate($request->input('limit'))->toArray();
     }
     // 获取所有
     public function getAll($request){
@@ -28,7 +37,7 @@ class Product extends Model
     // 获取单个
     public function getFind($id){
         try{
-            return $this->findOrFail($id);
+            return $this->with('product_field')->findOrFail($id);
         }catch(\Exception $exception){
             throw new IdNotFound('产品Id未找到');
         }
