@@ -85,3 +85,7 @@ Route::prefix('/device_field')->group(function(){
     Route::put('{id}', 'Api\\DeviceFieldController@update'); // 更新
     Route::delete('{id}', 'Api\\DeviceFieldController@destroy'); // 删除
 });
+// 兜底路由
+Route::fallback(function () {
+    throw new App\Exceptions\NotFoundUrl();
+});
