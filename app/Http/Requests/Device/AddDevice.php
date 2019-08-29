@@ -16,7 +16,7 @@ class AddDevice extends Base
         'device_room_id.required' => '设备房间id必填!',
         'device_room_id.numeric' => '设备房间id必须是数字!',
         'name.required' => '设备名必填!',
-        'name.unique' => '名字已经存在!',
+        // 'name.unique' => '名字已经存在!', // 设备名字允许重复
         'name.alpha_dash' => '名字只允许字母和数字，以及破折号和下划线!',
         'name.between' => '名字长度需要在1-30之间!',
         'desc.max' => '描述最多120字符!',
@@ -55,7 +55,8 @@ class AddDevice extends Base
                 'numeric',
                 new DeviceRoomIdExists,
             ],
-            'name' => 'required|unique:device|alpha_dash|between:1,30',
+            // 'name' => 'required|unique:device|alpha_dash|between:1,30',
+            'name' => 'required|alpha_dash|between:1,30',
             'desc' => 'max:120',   
         ];
     }
