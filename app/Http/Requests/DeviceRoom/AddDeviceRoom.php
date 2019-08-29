@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\DeviceRoom;
 use App\Http\Requests\Base;
+use Illuminate\Validation\Rule;
 use App\Rules\UserIdExists; // 引入判断是不是真实的用户id 
 use App\Rules\DeviceRegionIdExists; // 引入判断是不是真实的区域
 // 设备房间
@@ -9,7 +10,7 @@ class AddDeviceRoom extends Base
 {
     public $messages = [
         'name.required' => '设备房间名必填!',
-        'name.unique' => '名字已经存在!',
+        'name.unique' => '区域下已存在相同房间名!',
         'name.alpha_dash' => '名字只允许字母和数字，以及破折号和下划线!',
         'name.between' => '名字长度需要在1-30之间!',
         'user_id.required' => '用户id必填!',
@@ -37,7 +38,13 @@ class AddDeviceRoom extends Base
     public function rules()
     {
         return [
-            'name' => 'required|unique:device_room|alpha_dash|between:1,30',
+            'name' => [
+                'required',
+                // 验证区域下房间名是否唯一
+                Rule::unique('device_room')->where('device_region_id', $this->request->device_region_id),
+                'alpha_dash',
+                'between:1,30',
+            ],
             'user_id' => [
                 'required',
                 'numeric',

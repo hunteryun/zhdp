@@ -37,6 +37,7 @@ class AddDeviceRegion extends Base
             // 'name' => 'required|unique:device_region|alpha_dash|between:1,30',
             'name' => [
                 'required',
+                // 验证用户下的区域名是否唯一
                 Rule::unique('device_region')->where('user_id', $this->request->user_id),
                 'alpha_dash',
                 'between:1,30',

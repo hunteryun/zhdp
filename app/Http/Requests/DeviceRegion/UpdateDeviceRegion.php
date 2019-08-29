@@ -36,7 +36,7 @@ class UpdateDeviceRegion extends Base
         return [
             'name' => [
                 'required',
-                // 验证唯一，除了自己
+                // 验证区域下的房间名是否唯一
                 Rule::unique('device_region')->where('user_id', $this->request->user_id)->ignore($this->request->id),
                 'alpha_dash',
                 'between:1,30',
