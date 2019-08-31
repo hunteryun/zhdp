@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class RegController extends Controller
 {
     // 用户注册
-    public function user()
+    public function index()
     {
-        return view('user/reg');
+        return view('user/reg/index');
     }
 
 }

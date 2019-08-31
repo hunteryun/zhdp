@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class LoginController extends Controller
 {
     // 用户登录
-    public function user()
+    public function index()
     {
-        return view('user/login');
+        return view('user/login/index');
     }
 
 }

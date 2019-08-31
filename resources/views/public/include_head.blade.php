@@ -1,4 +1,4 @@
-<meta charset="utf-8">
+     <meta charset="utf-8">
      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
      <title>物联网后台</title>
      <meta name="renderer" content="webkit">
@@ -8,5 +8,9 @@
      <meta name="apple-mobile-web-app-capable" content="yes">
      <meta name="format-detection" content="telephone=no">
      <meta name="csrf-token" content="{{ csrf_token() }}">
+     <script src="{{asset('/js/layui-v2.5.4/layui.all.js')}}" charset="utf-8"></script>
+     <script>
+        var layerLoad = layer.load(2, {shade: [0.8, '#393D49']});
+     </script>
      <link rel="stylesheet" href="{{asset('/js/layui-v2.5.4/css/layui.css')}}" media="all">
      <link rel="stylesheet" href="{{asset('/js/layui-v2.5.4/css/fly.global.css')}}" media="all">

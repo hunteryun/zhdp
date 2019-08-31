@@ -14,19 +14,10 @@
 Route::get('/', function () {
     return view('welcome');
 });
-
-// 注册 /index.php/reg
-Route::prefix('/reg')->group(function(){
-    Route::get('user', 'RegController@user'); // 用户注册
-});
-
-// 登录 /index.php/login
-Route::prefix('/login')->group(function(){
-    Route::get('user', 'LoginController@user'); // 用户登录
-});
-
 // 用户 /index.php/user
 Route::prefix('/user')->group(function(){
+    Route::get('reg', 'User\\RegController@index'); // 用户注册
+    Route::get('login', 'User\\LoginController@index'); // 用户登录
     // 首页
     Route::prefix('/index')->group(function(){
         Route::get('', 'User\\IndexController@index'); // 首页
