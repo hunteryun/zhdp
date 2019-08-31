@@ -76,9 +76,113 @@
                  <ul class="layui-tab-title">
                      <li class="layui-this" lay-id="1">网站设置</li>
                  </ul>
-                 <div class="layui-tab-content" style="min-height: 150px; padding: 5px 0 0 0;overflow-y:auto;">
+                 <div class="layui-tab-content" style="min-height: 150px; overflow-y:auto;background: #F2F2F2;">
                      <div class="layui-tab-item layui-show">
-                         <iframe src="" style="width: 100%;border: 0"></iframe>
+                        <div class="layui-card">
+                            <div class="layui-card-body">
+                            <table class="layui-table" lay-even="" lay-skin="row">
+                                <colgroup>
+                                    <col width="200">
+                                    <col>
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                    <th>配置名</th>
+                                    <th>值</th>
+                                    </tr> 
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>服务器IP地址</td>
+                                        <td>{{$_SERVER['SERVER_ADDR']}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>服务器域名</td>
+                                        <td>{{$_SERVER['SERVER_NAME']}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>服务器端口</td>
+                                        <td>{{$_SERVER['SERVER_PORT']}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>服务器版本</td>
+                                        <td>{{php_uname('s').php_uname('r')}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>服务器操作系统</td>
+                                        <td>{{php_uname()}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>PHP版本</td>
+                                        <td>{{PHP_VERSION}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>PHP安装路径</td>
+                                        <td>{{DEFAULT_INCLUDE_PATH}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>当前文件绝对路径</td>
+                                        <td>{{__FILE__}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>获取Http请求中Host值</td>
+                                        <td>{{$_SERVER["HTTP_HOST"]}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Zend版本</td>
+                                        <td>{{Zend_Version()}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Laravel版本</td>
+                                        <td>{{app()::VERSION}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>PHP运行方式</td>
+                                        <td>{{php_sapi_name()}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>服务器当前时间</td>
+                                        <td>{{date("Y-m-d H:i:s")}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>最大上传限制</td>
+                                        <td>{{get_cfg_var ("upload_max_filesize")?get_cfg_var ("upload_max_filesize"):"不允许"}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>最大执行时间</td>
+                                        <td>{{get_cfg_var("max_execution_time")."秒 "}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>脚本运行占用最大内存</td>
+                                        <td>{{get_cfg_var ("memory_limit")?get_cfg_var("memory_limit"):"无"}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>服务器解译引擎</td>
+                                        <td>{{$_SERVER['SERVER_SOFTWARE']}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>服务器系统目录</td>
+                                        <td>{{$_SERVER['SystemRoot']}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>服务器域名（主机名）</td>
+                                        <td>{{$_SERVER['SERVER_NAME']}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>服务器语言</td>
+                                        <td>{{$_SERVER['HTTP_ACCEPT_LANGUAGE']}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>服务器Web端口</td>
+                                        <td>{{$_SERVER['SERVER_PORT']}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>请求页面时通信协议的名称和版本</td>
+                                        <td>{{$_SERVER['SERVER_PROTOCOL']}}</td>
+                                    </tr>
+                                </tbody>
+                            </div>
+                        </div>
                      </div>
                  </div>
              </div>

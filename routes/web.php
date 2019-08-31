@@ -20,7 +20,12 @@ Route::prefix('/user')->group(function(){
     // 首页
     Route::prefix('/index')->group(function(){
         Route::get('', 'User\\IndexController@index'); // 首页
+        Route::get('console', 'User\\IndexController@console'); // 控制台
     });
 });
 
+// 兜底路由
+Route::fallback(function () {
+    return view('404');
+});
 
