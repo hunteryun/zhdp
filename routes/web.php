@@ -15,6 +15,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// 登录 /index.php/login
+Route::prefix('/login')->group(function(){
+    Route::get('user', 'LoginController@user'); // 用户登录首页
+});
+
 // 用户 /index.php/user
 Route::prefix('/user')->group(function(){
     // 首页
