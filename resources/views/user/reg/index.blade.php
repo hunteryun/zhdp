@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	@include('public.include_head')
 </head>
+
 <body>
 	@include('public.top')
 	@include('public.menu')
@@ -11,7 +13,7 @@
 		<div class="fly-panel fly-panel-user" pad20>
 			<div class="layui-tab layui-tab-brief" lay-filter="user">
 				<ul class="layui-tab-title">
-					<li><a href="{{url('login/user')}}">登入</a></li>
+					<li><a href="{{url('user/login')}}">登入</a></li>
 					<li class="layui-this">注册</li>
 				</ul>
 				<div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
@@ -19,45 +21,25 @@
 						<div class="layui-form layui-form-pane">
 							<form method="post">
 								<div class="layui-form-item">
-									<label for="L_email" class="layui-form-label">邮箱</label>
+									<label class="layui-form-label">手机号</label>
 									<div class="layui-input-inline">
-										<input type="text" id="L_email" name="email" required lay-verify="email" autocomplete="off" class="layui-input">
-									</div>
-									<div class="layui-form-mid layui-word-aux">将会成为您唯一的登入名</div>
-								</div>
-								<div class="layui-form-item">
-									<label for="L_username" class="layui-form-label">昵称</label>
-									<div class="layui-input-inline">
-										<input type="text" id="L_username" name="username" required lay-verify="required" autocomplete="off" class="layui-input">
+										<input type="text" id="phone" name="phone" required lay-verify="required|phone" autocomplete="off" class="layui-input">
 									</div>
 								</div>
 								<div class="layui-form-item">
-									<label for="L_pass" class="layui-form-label">密码</label>
+									<label class="layui-form-label">密码</label>
 									<div class="layui-input-inline">
-										<input type="password" id="L_pass" name="pass" required lay-verify="required" autocomplete="off" class="layui-input">
-									</div>
-									<div class="layui-form-mid layui-word-aux">6到16个字符</div>
-								</div>
-								<div class="layui-form-item">
-									<label for="L_repass" class="layui-form-label">确认密码</label>
-									<div class="layui-input-inline">
-										<input type="password" id="L_repass" name="repass" required lay-verify="required" autocomplete="off" class="layui-input">
+										<input type="password" id="password" name="password" required lay-verify="required" autocomplete="off" class="layui-input">
 									</div>
 								</div>
 								<div class="layui-form-item">
-									<label for="L_vercode" class="layui-form-label">人类验证</label>
-									<div class="layui-input-inline">
-										<input type="text" id="L_vercode" name="vercode" required lay-verify="required" placeholder="请回答后面的问题" autocomplete="off" class="layui-input">
-									</div>
-									<div class="layui-form-mid">
-										<span style="color: #c00;">@{{d.vercode}}</span>
-									</div>
-								</div>
-								<div class="layui-form-item">
-									<button class="layui-btn" lay-filter="*" lay-submit>立即注册</button>
+									<button class="layui-btn" lay-filter="formSubmit" lay-submit>立即登录</button>
+									<span style="padding-left:20px;">
+										<a href="forget.html">忘记密码？</a>
+									</span>
 								</div>
 								<div class="layui-form-item fly-form-app">
-									<span>或者直接使用社交账号快捷注册</span>
+									<span>或者使用社交账号登入</span>
 									<a href="" onclick="layer.msg('正在通过QQ登入', {icon:16, shade: 0.1, time:0})" class="iconfont icon-qq" title="QQ登入"></a>
 									<a href="" onclick="layer.msg('正在通过微博登入', {icon:16, shade: 0.1, time:0})" class="iconfont icon-weibo" title="微博登入"></a>
 								</div>
@@ -67,9 +49,7 @@
 				</div>
 			</div>
 		</div>
-
 	</div>
-
 	@include('public.foot')
 	@include('public.include_js')
 	<script>
@@ -89,6 +69,29 @@
 		}).extend({
 			fly: 'index'
 		}).use('fly');
+		// 
+		var form = layui.form,
+			layer = layui.layer;
+		//监听提交
+		form.on('submit(formSubmit)', function(formoObj) {
+			var field = formoObj.field;
+			console.log(field);
+			var index = layer.load(1, {
+				shade: [0.8, '#393D49']
+			});
+			$.post('{{url("api/user/reg")}}', {
+					phone: field.phone,
+					password: field.password,
+				}, function(reg) {
+					layer.close(index);
+					console.log(reg);
+					if (reg.code > 0) {
+						return layer.msg(add.msg);
+					}
+				}
+			});
+		return false;
+		});
 	</script>
 </body>
 
