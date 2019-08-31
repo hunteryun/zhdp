@@ -1,7 +1,7 @@
 <div class="fly-header layui-bg-black">
   <div class="layui-container">
     <a class="fly-logo" href="/">
-      <img src="../res/images/logo.png" alt="layui">
+      <img src="{{asset('/js/fly-v3.0/res/images/logo.png')}}" alt="layui">
     </a>
     <ul class="layui-nav fly-nav layui-hide-xs">
       <li class="layui-nav-item layui-this">

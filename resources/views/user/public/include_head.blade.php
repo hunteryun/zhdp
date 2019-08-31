@@ -8,5 +8,5 @@
      <meta name="apple-mobile-web-app-capable" content="yes">
      <meta name="format-detection" content="telephone=no">
      <meta name="csrf-token" content="{{ csrf_token() }}">
-     <link rel="stylesheet" href="/js/layui-v2.5.4/css/layui.css" media="all">
-     <link rel="stylesheet" href="/js/layui-v2.5.4/css/global.css" media="all">
+     <link rel="stylesheet" href="{{asset('/js/layui-v2.5.4/css/layui.css')}}" media="all">
+     <link rel="stylesheet" href="{{asset('/js/layui-v2.5.4/css/global.css')}}" media="all">
