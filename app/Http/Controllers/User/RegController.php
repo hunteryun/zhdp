@@ -11,9 +11,5 @@ class RegController extends Controller
     {
         return view('user/reg/index');
     }
-    // 用户注册验证
-    public function reg_in(Request $request){
-        return success(['data'=>$request]);
-    }
 
 }

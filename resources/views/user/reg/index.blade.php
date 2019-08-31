@@ -80,17 +80,15 @@
 				shade: [0.8, '#393D49']
 			});
 			$.post('{{url("api/user/reg")}}', {
-					phone: field.phone,
-					password: field.password,
+					field
 				}, function(reg) {
 					layer.close(index);
 					console.log(reg);
 					if (reg.code > 0) {
 						return layer.msg(add.msg);
 					}
-				}
-			});
-		return false;
+				})
+			return false;
 		});
 	</script>
 </body>
