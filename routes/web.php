@@ -11,29 +11,13 @@
 |
 */
 // 首页
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/', 'welcome'); 
 // 用户 /index.php/user
 Route::prefix('/user')->group(function(){
-    Route::get('reg', function(){
-        return view('user/reg/index');
-    }); // 用户注册
-    Route::get('login', function(){
-        return view('user/login/index');
-    }); // 用户登录
-    // 首页
-    Route::prefix('/index')->group(function(){
-        Route::get('', function(){
-            return view('user/index/index');
-        }); // 首页
-        Route::get('console', 'User\\IndexController@console'); // 控制台
-    });
-    // 区域管理
-    Route::prefix('/device_region')->group(function(){
-        Route::get('', 'User\\DeviceRegionController@index'); // 首页
-    });
-    
+    Route::view('reg', 'user/reg/index'); // 用户注册
+    Route::view('login', 'user/login/index'); // 用户登录
+    Route::view('index', 'user/index/index'); // 首页
+    Route::view('device_region', 'user/device_region/index'); // 区域管理
 });
 
 // 兜底路由
