@@ -18,8 +18,8 @@
                  <div class="layui-logo">layui 后台布局</div>
                  <!-- 大屏幕显示区域 -->
                  <ul class="layui-nav layui-layout-left layui-hide-xs">
-                     <li class="layui-nav-item"><a class="layui-open-tab" href="http://baidu.com">控制台</a></li>
-                     <li class="layui-nav-item"><a class="layui-open-tab" href="">商品管理</a></li>
+                     <li class="layui-nav-item"><a href="{{url('/')}}">网站首页</a></li>
+                     <!-- <li class="layui-nav-item"><a class="layui-open-tab" href="">商品管理</a></li>
                      <li class="layui-nav-item"><a class="layui-open-tab" href="">用户</a></li>
                      <li class="layui-nav-item">
                          <a href="javascript:;">其它系统</a>
@@ -28,7 +28,7 @@
                              <dd><a class="layui-open-tab" href="">消息管理</a></dd>
                              <dd><a class="layui-open-tab" href="">授权管理</a></dd>
                          </dl>
-                     </li>
+                     </li> -->
                  </ul>
                  <ul class="layui-nav layui-layout-right">
                      <li class="layui-nav-item">
@@ -48,7 +48,10 @@
              <div class="layui-side-scroll">
                  <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
                  <ul class="layui-nav layui-nav-tree" lay-filter="test">
-                     <li class="layui-nav-item layui-nav-itemed">
+                    <li class="layui-nav-item"><a class="layui-open-tab" href="">区域管理</a></li>
+                    <li class="layui-nav-item"><a class="layui-open-tab" href="">房间管理</a></li>
+                    <li class="layui-nav-item"><a class="layui-open-tab" href="">设备管理</a></li>
+                     <!-- <li class="layui-nav-item layui-nav-itemed">
                          <a class="" href="javascript:;">所有商品</a>
                          <dl class="layui-nav-child">
                              <dd><a href="javascript:;">列表一</a></dd>
@@ -66,7 +69,7 @@
                          </dl>
                      </li>
                      <li class="layui-nav-item"><a class="layui-open-tab" href="">云市场</a></li>
-                     <li class="layui-nav-item"><a class="layui-open-tab" href="">发布商品</a></li>
+                     <li class="layui-nav-item"><a class="layui-open-tab" href="">发布商品</a></li> -->
                  </ul>
              </div>
          </div>
