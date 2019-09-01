@@ -10,6 +10,7 @@ class DeviceRegion extends Model
     // 指定表名
     // laravel自动会+s
     protected $table = 'device_region';
+    
     // 获取分页
     public function getPaginate($request){
         return $this->paginate($request->input('limit'))->toArray();

@@ -10,8 +10,11 @@ class User extends Model
     // 指定表名
     // laravel自动会+s
     protected $table = 'user';
-    // 指定可以批量赋值的字段
-    // protected $fillable = ['token', 'name', 'class', 'phone'];
+    // 关联设备区域表
+    public function device_region()
+    {
+         return $this->hasMany(DeviceRegion::class);
+    }
     // 获取分页
     public function getPaginate($request){
         return $this->paginate($request->input('limit'))->toArray();

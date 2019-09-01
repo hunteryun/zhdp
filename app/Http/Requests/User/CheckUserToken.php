@@ -7,9 +7,9 @@ use Illuminate\Validation\Rule;
 class CheckUserToken extends Base
 {
     public $messages = [
-        'name.required' => 'Token必填!',
-        'name.string' => 'Token只允字符串!',
-        'name.size' => 'Token不符合要求!',
+        'token.required' => 'Token必填!',
+        'token.string' => 'Token只允字符串!',
+        'token.size' => 'Token不符合要求!',
     ];
     /**
      * Determine if the user is authorized to make this request.
@@ -30,7 +30,7 @@ class CheckUserToken extends Base
     public function rules()
     {
         return [
-            'name' => [
+            'token' => [
                 'required',
                 'string',
                 'size:60',
