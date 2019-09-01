@@ -49,18 +49,12 @@ class DeviceRegionController extends Controller
         return success(['msg'=>'更新成功']);
     }
 
-    public function destroy(Request $request){
-        // $token = $request->input('token');
-        // $name = $request->input('name');
-        // $user_id = UserModel::where('token', $token)->first(['id'])->id;
-        // $deviceRegionModel = new DeviceRegionModel;
-        // $deviceRegionModel->name = $name;
-        // $deviceRegionModel->user_id = $user_id;
-        // $addDeviceRegion = $deviceRegionModel->save();
-        // if(!$addDeviceRegion){
-        //     return errors(['msg'=>'创建失败']);
-        // }
-        // return success(['msg'=>'创建成功']);
-        return success();
+    public function destroy(Request $request, $id){
+        $token = $request->input('token');
+        $deleteDeviceRegionStatus = UserModel::where('token', $token)->first()->device_region()->where('id', $id)->first()->delete();
+        if(!$deleteDeviceRegionStatus){
+            return errors("设备区域删除失败");
+        }
+        return success(['msg'=>"设备区域删除成功"]);
     }
 }
