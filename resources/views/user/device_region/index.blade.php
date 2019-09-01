@@ -8,24 +8,28 @@
  <body class="layui-layout-body">
      <div class="layui-card">
          <div class="layui-card-body">
-             <table class="layui-table" lay-data="{height:315, url:'{{url('api/device_region')}}', page:true, id:'device_region'}" lay-filter="device_region">
-                 <thead>
-                     <tr>
-                         <th lay-data="{field:'id', width:80, sort: true}">ID</th>
-                         <th lay-data="{field:'username', width:80}">用户名</th>
-                         <th lay-data="{field:'sex', width:80, sort: true}">性别</th>
-                         <th lay-data="{field:'city'}">城市</th>
-                         <th lay-data="{field:'sign'}">签名</th>
-                         <th lay-data="{field:'experience', sort: true}">积分</th>
-                         <th lay-data="{field:'score', sort: true}">评分</th>
-                         <th lay-data="{field:'classify'}">职业</th>
-                         <th lay-data="{field:'wealth', sort: true}">财富</th>
-                     </tr>
-                 </thead>
-             </table>
+            <script type="text/html" id="bar">
+                <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+            </script>
+            <table id="device_region" lay-filter="device_region"></table>
          </div>
      </div>
      @include('user.public.include_js')
+     <script>
+         var table = layui.table;
+           //第一个实例
+            table.render({
+                elem: '#device_region'
+                ,url: '{{url('api/device_region')}}' //数据接口
+                ,page: true //开启分页
+                ,cols: [[ //表头
+                    {field: 'id', title: 'ID', width:80, sort: true, fixed: 'left'}
+                    ,{field: 'name', title: '区域名称'}
+                    ,{fixed: 'right', title:'操作', toolbar: '#bar', width:150}
+                ]]
+            });
+     </script>
  </body>
 
  </html>
