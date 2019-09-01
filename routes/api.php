@@ -30,6 +30,9 @@ Route::prefix('/user')->group(function(){
     // 设备区域
     Route::prefix('/device_region')->group(function(){
         Route::get('', 'Api\\User\\DeviceRegionController@index')->middleware('user.token'); // 设备区域列表
+        Route::post('', 'Api\\User\\DeviceRegionController@store')->middleware('user.token'); // 添加设备区域列表
+        Route::post('{id}', 'Api\\User\\DeviceRegionController@update')->middleware('user.token'); // 更新设备区域列表
+        Route::delete('{id}', 'Api\\User\\DeviceRegionController@destroy')->middleware('user.token'); // 删除设备区域列表
     });
 });
 // 字段类型 /index.php/api/field_type

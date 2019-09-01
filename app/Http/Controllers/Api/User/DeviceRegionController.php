@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\User as UserModel;
+use App\Model\DeviceRegion as DeviceRegionModel;
 // use App\Model\DeviceRegion as DeviceRegionModel;
 // use App\Http\Requests\DeviceRegion\AddDeviceRegion as AddDeviceRegionRequests;
 // use App\Http\Requests\DeviceRegion\UpdateDeviceRegion as UpdateDeviceRegionRequests;
@@ -15,12 +16,51 @@ class DeviceRegionController extends Controller
     {
         $token = $request->input('token');
         $limit = $request->input('limit');
-        $deviceRegionList = (new UserModel)->where('token', $token)->first()->device_region()->paginate($limit)->toArray();
+        $deviceRegionList = UserModel::where('token', $token)->first()->device_region()->paginate($limit)->toArray();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $deviceRegionList['total'];
         $returnData['current_page']     = $deviceRegionList['current_page'];
         $returnData['data']             = $deviceRegionList['data'];
         return success($returnData);
+    }
+    public function store(Request $request){
+        $token = $request->input('token');
+        $name = $request->input('name');
+        $user_id = UserModel::where('token', $token)->first(['id'])->id;
+        $deviceRegionModel = new DeviceRegionModel;
+        $deviceRegionModel->name = $name;
+        $deviceRegionModel->user_id = $user_id;
+        $addDeviceRegion = $deviceRegionModel->save();
+        if(!$addDeviceRegion){
+            return errors(['msg'=>'创建失败']);
+        }
+        return success(['msg'=>'创建成功']);
+    }
+    public function update(Request $request, $id){
+        $token = $request->input('token');
+        $name = $request->input('name');
+        $deviceRegionInfo = UserModel::where('token', $token)->first()->device_region()->where('id', $id)->first();
+        $deviceRegionInfo->name = $name;
+        $updateDeviceRegion = $deviceRegionInfo->save();
+        if(!$updateDeviceRegion){
+            return errors(['msg'=>'更新失败']);
+        }
+        return success(['msg'=>'更新成功']);
+    }
+
+    public function destroy(Request $request){
+        // $token = $request->input('token');
+        // $name = $request->input('name');
+        // $user_id = UserModel::where('token', $token)->first(['id'])->id;
+        // $deviceRegionModel = new DeviceRegionModel;
+        // $deviceRegionModel->name = $name;
+        // $deviceRegionModel->user_id = $user_id;
+        // $addDeviceRegion = $deviceRegionModel->save();
+        // if(!$addDeviceRegion){
+        //     return errors(['msg'=>'创建失败']);
+        // }
+        // return success(['msg'=>'创建成功']);
+        return success();
     }
 }
