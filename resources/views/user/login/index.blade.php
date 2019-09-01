@@ -20,9 +20,9 @@
 						<div class="layui-form layui-form-pane">
 							<form method="post">
 								<div class="layui-form-item">
-									<label class="layui-form-label">手机号</label>
+									<label class="layui-form-label">昵称</label>
 									<div class="layui-input-inline">
-										<input type="text" id="phone" name="phone" required lay-verify="required|phone" autocomplete="off" class="layui-input">
+										<input type="text" id="name" name="name" required lay-verify="required" autocomplete="off" class="layui-input">
 									</div>
 								</div>
 								<div class="layui-form-item">
@@ -74,27 +74,26 @@
 		//监听提交
 		form.on('submit(formSubmit)', function(formoObj) {
 			var field = formoObj.field;
+			var formLoad = layer.load(1, {
+				shade: [0.8, '#393D49']
+			});
 			console.log(field);
+			$.post('{{url("api/user/login")}}', {
+				name: field.name,
+				// phone: field.phone,
+				password: field.password,
+			}, function(reg) {
+				layer.close(formLoad);
+				layer.msg(reg.msg);
+				if (reg.code == 0) {
+					layui.data('user_info', {
+						key: 'token',
+						value: reg.token
+					});
+					window.location.href = "{{url('user/index')}}";
+				}
+			})
 			return false;
-			// var index = layer.load(1, {
-			// 	shade: [0.8, '#393D49']
-			// });
-			// $("#submit").hide();
-			// $("#reset").hide();
-			// $.post('/CurlSearchGoods/SearchGoodsUrlAdd.html', {
-			// 	'data': data.field
-			// }, function(add) {
-			// 	layer.close(index);
-			// 	if (add.code > 0) {
-			// 		layer.msg(add.msg);
-			// 		$("#submit").show();
-			// 		$("#reset").show();
-			// 	} else {
-			// 		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-			// 		parent.layer.close(index); //再执行关闭   
-			// 	}
-			// });
-			// return false;
 		});
 	</script>
 </body>

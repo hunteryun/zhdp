@@ -15,7 +15,7 @@ function success($arr = [], $httpCode = 200)
     return json($arr, $httpCode);
 }
 // 错误返回
-function errors($arr = [], $httpCode = 404)
+function errors($arr = [], $httpCode = 200)
 {
     // code 最前面 msg在他后面
     if (!array_key_exists('code', $arr)) {

@@ -24,7 +24,8 @@ Route::prefix('/user')->group(function(){
     Route::put('{id}', 'Api\\UserController@update'); // 更新
     Route::delete('{id}', 'Api\\UserController@destroy'); // 删除
     // 
-    Route::post('reg', 'Api\\UserRegController@index'); // 用户注册
+    Route::post('reg', 'Api\\User\\RegController@index'); // 注册
+    Route::post('login', 'Api\\User\\LoginController@index'); // 登录
 });
 // 字段类型 /index.php/api/field_type
 Route::prefix('/field_type')->group(function(){

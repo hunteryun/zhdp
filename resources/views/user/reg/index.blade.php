@@ -21,11 +21,17 @@
 						<div class="layui-form layui-form-pane">
 							<form method="post">
 								<div class="layui-form-item">
+									<label class="layui-form-label">昵称</label>
+									<div class="layui-input-inline">
+										<input type="text" id="name" name="name" required lay-verify="required" autocomplete="off" class="layui-input">
+									</div>
+								</div>
+								<!-- <div class="layui-form-item">
 									<label class="layui-form-label">手机号</label>
 									<div class="layui-input-inline">
 										<input type="text" id="phone" name="phone" required lay-verify="required|phone" autocomplete="off" class="layui-input">
 									</div>
-								</div>
+								</div> -->
 								<div class="layui-form-item">
 									<label class="layui-form-label">密码</label>
 									<div class="layui-input-inline">
@@ -75,19 +81,25 @@
 		//监听提交
 		form.on('submit(formSubmit)', function(formoObj) {
 			var field = formoObj.field;
-			console.log(field);
-			var index = layer.load(1, {
+			var formLoad = layer.load(1, {
 				shade: [0.8, '#393D49']
 			});
+			console.log(field);
 			$.post('{{url("api/user/reg")}}', {
-					field
-				}, function(reg) {
-					layer.close(index);
-					console.log(reg);
-					if (reg.code > 0) {
-						return layer.msg(add.msg);
-					}
-				})
+				name: field.name,
+				// phone: field.phone,
+				password: field.password,
+			}, function(reg) {
+				layer.close(formLoad);
+				layer.msg(reg.msg);
+				if (reg.code == 0) {
+					layui.data('user_info', {
+						key: 'token',
+						value: reg.token
+					});
+					window.location.href = "{{url('user/index')}}";
+				}
+			})
 			return false;
 		});
 	</script>
