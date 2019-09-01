@@ -16,7 +16,7 @@ class DeviceRegionController extends Controller
     {
         $token = $request->input('token');
         $limit = $request->input('limit');
-        $deviceRegionList = UserModel::where('token', $token)->first()->device_region()->paginate($limit)->toArray();
+        $deviceRegionList = UserModel::where('token', $token)->firstOrFail()->device_region()->paginate($limit)->toArray();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $deviceRegionList['total'];
@@ -27,7 +27,7 @@ class DeviceRegionController extends Controller
     public function store(Request $request){
         $token = $request->input('token');
         $name = $request->input('name');
-        $user_id = UserModel::where('token', $token)->first(['id'])->id;
+        $user_id = UserModel::where('token', $token)->firstOrFail(['id'])->id;
         $deviceRegionModel = new DeviceRegionModel;
         $deviceRegionModel->name = $name;
         $deviceRegionModel->user_id = $user_id;
@@ -40,7 +40,7 @@ class DeviceRegionController extends Controller
     public function update(Request $request, $id){
         $token = $request->input('token');
         $name = $request->input('name');
-        $deviceRegionInfo = UserModel::where('token', $token)->first()->device_region()->where('id', $id)->first();
+        $deviceRegionInfo = UserModel::where('token', $token)->firstOrFail()->device_region()->where('id', $id)->firstOrFail();
         $deviceRegionInfo->name = $name;
         $updateDeviceRegion = $deviceRegionInfo->save();
         if(!$updateDeviceRegion){
@@ -51,7 +51,7 @@ class DeviceRegionController extends Controller
 
     public function destroy(Request $request, $id){
         $token = $request->input('token');
-        $deleteDeviceRegionStatus = UserModel::where('token', $token)->first()->device_region()->where('id', $id)->first()->delete();
+        $deleteDeviceRegionStatus = UserModel::where('token', $token)->firstOrFail()->device_region()->where('id', $id)->firstOrFail()->delete();
         if(!$deleteDeviceRegionStatus){
             return errors("设备区域删除失败");
         }
