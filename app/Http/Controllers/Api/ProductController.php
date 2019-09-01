@@ -21,7 +21,7 @@ class ProductController extends Controller
         $productList = (new ProductModel)->getPaginate($request);
         $returnData = [];
         $returnData['msg']              = "查询成功";
-        $returnData['total']            = $productList['total'];
+        $returnData['count']            = $productList['total'];
         $returnData['current_page']     = $productList['current_page'];
         $returnData['data']             = $productList['data'];
         return success($returnData);

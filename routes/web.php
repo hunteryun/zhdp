@@ -17,7 +17,12 @@ Route::prefix('/user')->group(function(){
     Route::view('reg', 'user/reg/index'); // 用户注册
     Route::view('login', 'user/login/index'); // 用户登录
     Route::view('index', 'user/index/index'); // 首页
-    Route::view('device_region', 'user/device_region/index'); // 区域管理
+    // 区域管理
+    Route::prefix('/device_region')->group(function(){
+        Route::view('', 'user/device_region/index'); // 区域列表
+        Route::view('add', 'user/device_region/add'); // 区域添加
+        Route::view('edit', 'user/device_region/edit'); // 区域编辑
+    });
 });
 
 // 兜底路由

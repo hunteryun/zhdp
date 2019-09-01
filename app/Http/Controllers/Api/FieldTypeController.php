@@ -21,7 +21,7 @@ class FieldTypeController extends Controller
         $fieldTypeList = (new FieldTypeModel)->getPaginate($request);
         $returnData = [];
         $returnData['msg']              = "查询成功";
-        $returnData['total']            = $fieldTypeList['total'];
+        $returnData['count']            = $fieldTypeList['total'];
         $returnData['current_page']     = $fieldTypeList['current_page'];
         $returnData['data']             = $fieldTypeList['data'];
         return success($returnData);

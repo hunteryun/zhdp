@@ -21,7 +21,7 @@ class DeviceRegionController extends Controller
         $deviceRegionList = (new DeviceRegionModel)->getPaginate($request);
         $returnData = [];
         $returnData['msg']              = "查询成功";
-        $returnData['total']            = $deviceRegionList['total'];
+        $returnData['count']            = $deviceRegionList['total'];
         $returnData['current_page']     = $deviceRegionList['current_page'];
         $returnData['data']             = $deviceRegionList['data'];
         return success($returnData);

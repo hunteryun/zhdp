@@ -21,7 +21,7 @@ class DeviceController extends Controller
         $deviceList = (new DeviceModel)->getPaginate($request);
         $returnData = [];
         $returnData['msg']              = "查询成功";
-        $returnData['total']            = $deviceList['total'];
+        $returnData['count']            = $deviceList['total'];
         $returnData['current_page']     = $deviceList['current_page'];
         $returnData['data']             = $deviceList['data'];
         return success($returnData);

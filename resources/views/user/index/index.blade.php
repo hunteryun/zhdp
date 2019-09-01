@@ -48,7 +48,7 @@
              <div class="layui-side-scroll">
                  <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
                  <ul class="layui-nav layui-nav-tree" lay-filter="test">
-                    <li class="layui-nav-item"><a class="layui-open-tab" href="">区域管理</a></li>
+                    <li class="layui-nav-item"><a class="layui-open-tab" href="{{url('user/device_region')}}">区域管理</a></li>
                     <li class="layui-nav-item"><a class="layui-open-tab" href="">房间管理</a></li>
                     <li class="layui-nav-item"><a class="layui-open-tab" href="">设备管理</a></li>
                      <!-- <li class="layui-nav-item layui-nav-itemed">

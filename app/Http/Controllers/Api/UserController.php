@@ -21,7 +21,7 @@ class UserController extends Controller
         $userList = (new UserModel)->getPaginate($request);
         $returnData = [];
         $returnData['msg']              = "查询成功";
-        $returnData['total']            = $userList['total'];
+        $returnData['count']            = $userList['total'];
         $returnData['current_page']     = $userList['current_page'];
         $returnData['data']             = $userList['data'];
         return success($returnData);

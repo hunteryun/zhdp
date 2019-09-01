@@ -21,7 +21,7 @@ class ProductFieldController extends Controller
         $productFieldList = (new ProductFieldModel)->getPaginate($request);
         $returnData = [];
         $returnData['msg']              = "查询成功";
-        $returnData['total']            = $productFieldList['total'];
+        $returnData['count']            = $productFieldList['total'];
         $returnData['current_page']     = $productFieldList['current_page'];
         $returnData['data']             = $productFieldList['data'];
         return success($returnData);

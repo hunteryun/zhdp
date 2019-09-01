@@ -21,7 +21,7 @@ class DeviceRoomController extends Controller
         $deviceRoomList = (new DeviceRoomModel)->getPaginate($request);
         $returnData = [];
         $returnData['msg']              = "查询成功";
-        $returnData['total']            = $deviceRoomList['total'];
+        $returnData['count']            = $deviceRoomList['total'];
         $returnData['current_page']     = $deviceRoomList['current_page'];
         $returnData['data']             = $deviceRoomList['data'];
         return success($returnData);

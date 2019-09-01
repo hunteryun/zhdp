@@ -21,7 +21,7 @@ class DeviceFieldController extends Controller
         $deviceFieldList = (new DeviceFieldModel)->getPaginate($request);
         $returnData = [];
         $returnData['msg']              = "查询成功";
-        $returnData['total']            = $deviceFieldList['total'];
+        $returnData['count']            = $deviceFieldList['total'];
         $returnData['current_page']     = $deviceFieldList['current_page'];
         $returnData['data']             = $deviceFieldList['data'];
         return success($returnData);
