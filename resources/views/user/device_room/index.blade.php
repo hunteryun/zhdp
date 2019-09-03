@@ -33,59 +33,49 @@
                 ,cols: [[ 
                     {field: 'id', title: 'ID', width:80, sort: true, fixed: 'left'}
                     ,{field: 'name', title: '房间名称'}
+                    ,{field: 'device_region_name', title: '区域名称', templet : function (d){
+                        return d.device_region.name;
+                    }}
+                    ,{field: 'desc', title: '房间描述'}
                     ,{fixed: 'right', title:'操作', toolbar: '#bar', width:150}
                 ]]
             });
             table.on('tool(device_room)', function(obj){
                 var data = obj.data;
                 if(obj.event === 'del'){
-                ajaxLoad = layer.load(1, {
-                    shade: [0.8, '#393D49']
-                });
-                layer.confirm('真的删除行么', function(index){
-                    $.ajax({ 
-                        type: "POST",
-                        url: '{{url("api/user/device_room")}}/'+ data.id,
-                        data: {
-                            '_method': 'DELETE',
-                            'name': data.value,
-                        },
-                        success: function(result){
-                            layer.close(ajaxLoad);
-                            layer.msg(result.msg);
-                            if (result.code == 0) {
-                                table.reload('device_room');
-                            }
-                        }
+                    ajaxLoad = layer.load(1, {
+                        shade: [0.8, '#393D49']
                     });
-                    layer.close(index);
-                });
-                } else if(obj.event === 'edit'){
-                    layer.prompt({
-                        title: '修改房间名称'
-                        ,formType: 0
-                        ,value: data.name
-                    }, function(value, index){
-                        ajaxLoad = layer.load(1, {
-                            shade: [0.8, '#393D49']
-                        });
+                    layer.confirm('真的删除行么', function(index){
                         $.ajax({ 
                             type: "POST",
                             url: '{{url("api/user/device_room")}}/'+ data.id,
                             data: {
-                                'name': value,
+                                '_method': 'DELETE',
+                                'name': data.value,
                             },
                             success: function(result){
-                                layer.close(ajaxLoad);
                                 layer.msg(result.msg);
                                 if (result.code == 0) {
-                                    obj.update({
-                                        name: value
-                                    });
+                                    table.reload('device_room');
                                 }
                             }
                         });
                         layer.close(index);
+                    });
+                    layer.close(ajaxLoad);
+                } else if(obj.event === 'edit'){
+                    window.edit_device_room_info = data;
+                    layer.open({
+                        type:2,
+                        title:'修改设备房间',
+                        shadeClose:true,
+                        shade:0.8,
+                        area:['100%','100%'],
+                        content:'{{url("user/device_room/edit")}}',
+                        end:function(){
+                            table.reload('device_room');
+                        }
                     });
                 }
             });

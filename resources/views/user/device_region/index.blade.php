@@ -73,6 +73,7 @@
                             type: "POST",
                             url: '{{url("api/user/device_region")}}/'+ data.id,
                             data: {
+                                '_method': 'PUT',
                                 'name': value,
                             },
                             success: function(result){

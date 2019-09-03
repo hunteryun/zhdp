@@ -26,6 +26,7 @@ Route::prefix('/user')->group(function(){
     Route::prefix('/device_room')->group(function(){
         Route::view('', 'user/device_room/index'); // 房间列表
         Route::view('add', 'user/device_room/add'); // 房间添加
+        Route::view('edit', 'user/device_room/edit'); // 房间添加
     });
 });
 

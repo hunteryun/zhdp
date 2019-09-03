@@ -10,11 +10,18 @@ class DeviceRoom extends Model
     // 指定表名
     // laravel自动会+s
     protected $table = 'device_room';
+    // 关联查询所属区域
+    public function device_region()
+    {
+         return $this->belongsTo(DeviceRegion::class);
+    }
     // 设置默认值 desc 字段
     public function setDescAttribute($value)
     {
         if(empty($value)){
             $this->attributes['desc'] = '';
+        }else{
+            $this->attributes['desc'] = $value;
         }
     }
     // 获取分页
