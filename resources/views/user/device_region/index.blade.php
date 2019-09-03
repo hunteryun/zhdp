@@ -69,14 +69,14 @@
                     layer.close(index);
                 });
                 } else if(obj.event === 'edit'){
-                    ajaxLoad = layer.load(1, {
-                        shade: [0.8, '#393D49']
-                    });
                     layer.prompt({
                         title: '修改区域名称'
                         ,formType: 0
                         ,value: data.name
                     }, function(value, index){
+                        ajaxLoad = layer.load(1, {
+                            shade: [0.8, '#393D49']
+                        });
                         $.ajax({ 
                             type: "POST",
                             url: '{{url("api/user/device_region")}}/'+ data.id,
