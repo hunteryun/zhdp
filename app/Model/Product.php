@@ -20,8 +20,10 @@ class Product extends Model
     // 设置默认值 desc 字段
     public function setDescAttribute($value)
     {
-        if(empty($value)){
+        if(is_null($value)){
             $this->attributes['desc'] = '';
+        }else{
+            $this->attributes['desc'] = $value;
         }
     }
     // 获取分页

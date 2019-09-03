@@ -10,6 +10,11 @@ class User extends Model
     // 指定表名
     // laravel自动会+s
     protected $table = 'user';
+    // 关联产品表
+    public function product()
+    {
+         return $this->hasMany(Product::class);
+    }
     // 关联设备区域表
     public function device_region()
     {
