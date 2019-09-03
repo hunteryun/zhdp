@@ -10,6 +10,6 @@ class Base extends Controller
      * @return string;
      */
     public function user_token(){
-        return request()->header('token');
+        return request()->header('authorization');
     }
 }

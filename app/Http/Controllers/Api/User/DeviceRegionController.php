@@ -20,6 +20,15 @@ class DeviceRegionController extends Base
         $returnData['data']             = $deviceRegionList['data'];
         return success($returnData);
     }
+    public function all()
+    {
+        $deviceRegionAll = UserModel::where('token', $this->user_token())->firstOrFail()->device_region()->get();
+        $returnData = [];
+        $returnData['msg']              = "查询成功";
+        $returnData['count']            = $deviceRegionAll->count();
+        $returnData['data']             = $deviceRegionAll->toArray();
+        return success($returnData);
+    }
     public function store(Request $request){
         
         $name = $request->input('name');

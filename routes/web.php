@@ -22,6 +22,11 @@ Route::prefix('/user')->group(function(){
         Route::view('', 'user/device_region/index'); // 区域列表
         Route::view('add', 'user/device_region/add'); // 区域添加
     });
+    // 房间管理
+    Route::prefix('/device_room')->group(function(){
+        Route::view('', 'user/device_room/index'); // 房间列表
+        Route::view('add', 'user/device_room/add'); // 房间添加
+    });
 });
 
 // 兜底路由

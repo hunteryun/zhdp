@@ -5,27 +5,23 @@
      @include('user.public.include_head')
  </head>
 
- <body class="layui-layout-body">
-
-
-     <div class="layui-tab-content page-tab-content">
-         <div class="layui-tab-item layui-show">
-             <form class="layui-form layui-form-pane" method="post">
-                 <div class="layui-form-item">
-                     <label class="layui-form-label">区域名称</label>
-                     <div class="layui-input-inline">
-                         <input type="text" class="layui-input" name="name" lay-verify="required" autocomplete="off" placeholder="区域名称">
-                     </div>
-                 </div>
-                 <div class="layui-form-item">
-                     <div class="layui-input-block">
-                         <button type="submit" id="submit" class="layui-btn" lay-submit="" lay-filter="formSubmit">提交</button>
-                         <button type="reset" id="reset" class="layui-btn layui-btn-primary">重置</button>
-                     </div>
-                 </div>
-             </form>
-         </div>
-     </div>
+ <body>
+    <div class="layui-container" style="padding:15px">
+        <form class="layui-form layui-form-pane" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">区域名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" name="name" lay-verify="required" autocomplete="off" placeholder="区域名称">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="submit" id="submit" class="layui-btn" lay-submit="" lay-filter="formSubmit">提交</button>
+                    <button type="reset" id="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
      @include('user.public.include_js')
      <script>
        
