@@ -201,9 +201,6 @@
      </div>
      @include('user.public.include_js')
      <script>
-         var $ = layui.jquery,
-             layer = layui.layer,
-             element = layui.element; // Tab的切换功能，切换事件监听等，需要依赖element模块
          //  class="layui-open-tab" iframe 打开网页
          var tabList = {}; // 记录已经打开的tab
          $(function() {

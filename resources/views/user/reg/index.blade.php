@@ -76,8 +76,6 @@
 			fly: 'index'
 		}).use('fly');
 		// 
-		var form = layui.form,
-			layer = layui.layer;
 		//监听提交
 		form.on('submit(formSubmit)', function(formoObj) {
 			var field = formoObj.field;
@@ -88,9 +86,6 @@
 			$.ajax({ 
 				type: "POST",
                 url: "{{url('api/user/reg')}}",
-				// beforeSend: function(xhr) { 
-			    //    	xhr.setRequestHeader("Authorization", );  
-				// },
 				data: {
 					name: field.name,
 					password: field.password,

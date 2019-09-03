@@ -28,9 +28,7 @@
      </div>
      @include('user.public.include_js')
      <script>
-         var $ = layui.jquery,
-             form = layui.form,
-             layer = layui.layer;
+       
          //监听提交
          form.on('submit(formSubmit)', function(data) {
              formLoad = layer.load(1, {
@@ -39,9 +37,6 @@
              $.ajax({ 
                 type: "POST",
                 url: '{{url("api/user/device_region")}}',
-                beforeSend: function(xhr) { 
-                    xhr.setRequestHeader("Authorization", layui.data('user_info').token);  
-                },
                 data: {
                     'name': data.field.name,
                 },

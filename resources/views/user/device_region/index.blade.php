@@ -26,14 +26,9 @@
      </div>
      @include('user.public.include_js')
      <script>
-         var table = layui.table,
-             form = layui.form;
             table.render({
                 elem: '#device_region'
                 ,url: '{{url('api/user/device_region')}}' 
-                ,headers: {
-                    Authorization: layui.data('user_info').token
-                }
                 ,page: true 
                 ,cols: [[ 
                     {field: 'id', title: 'ID', width:80, sort: true, fixed: 'left'}
@@ -51,9 +46,6 @@
                     $.ajax({ 
                         type: "POST",
                         url: '{{url("api/user/device_region")}}/'+ data.id,
-                        beforeSend: function(xhr) { 
-                           	xhr.setRequestHeader("Authorization", layui.data('user_info').token);  
-                        },
                         data: {
                             '_method': 'DELETE',
                             'name': data.value,
@@ -80,9 +72,6 @@
                         $.ajax({ 
                             type: "POST",
                             url: '{{url("api/user/device_region")}}/'+ data.id,
-                            beforeSend: function(xhr) { 
-                                xhr.setRequestHeader("Authorization", layui.data('user_info').token);  
-                            },
                             data: {
                                 'name': value,
                             },
