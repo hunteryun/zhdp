@@ -32,22 +32,4 @@ function json($arr = [], $httpCode)
 {
     return response()->json($arr, $httpCode);
 }
-// 生成唯一token
-function getOnlyToken_60()
-{
-    // $stime=microtime(true); 
-    $yCode = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
-    $yCount = count($yCode);
-    $token =
-    $yCode[date('Y') % $yCount] . 
-    $yCode[date('Ymd') % $yCount] . 
-    $yCode[date('His') % $yCount] . 
-    $yCode[date('i') % $yCount] . 
-    $yCode[date('s') % $yCount] . 
-    strtoupper(dechex(date('m'))) . date('d') . substr(time(), -5) . substr(microtime(), 2, 5) . 
-    sprintf('%02d', rand(0, 99)) .
-    strtoupper(sha1(microtime(true).$yCode[date('s') % $yCount]));
-    // $etime=microtime(true);
-    // dd( '耗时'.(($etime-$stime)* 1000).'秒<br>');
-    return $token;
-}
+

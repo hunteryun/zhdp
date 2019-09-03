@@ -14,7 +14,7 @@ class RegController extends Base
         // 手动进行验证，不使用框架自动验证
         (new AddUserRequests)->verification($request);
         $userModel = new UserModel;
-        $userToken = getOnlyToken_60();
+        $userToken = str_random(60);
         $userModel->name        = $request->input('name');
         // $userModel->phone       = $request->input('phone');
         $userModel->password    = $request->input('password');

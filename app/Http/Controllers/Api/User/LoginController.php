@@ -22,7 +22,7 @@ class LoginController extends Base
         }catch(\Exception $exception){
             throw new ModelNotFound('用户密码或账号错误');
         }
-        $userToken = getOnlyToken_60();
+        $userToken = str_random(60);
         $userInfo->token = $userToken;
         $addUserStatus = $userInfo->save();
         if(!$addUserStatus){

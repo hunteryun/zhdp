@@ -30,7 +30,7 @@ class DeviceRoomController extends Base
         $deviceRoomModel->device_region_id = $request->input('device_region_id');
         $deviceRoomModel->name             = $request->input('name');
         $deviceRoomModel->desc             = $request->input('desc');
-        $deviceRoomModel->token            = getOnlyToken_60(); // token 禁止更新
+        $deviceRoomModel->token            = str_random(60); // token 禁止更新
         $addDeviceRoom = $deviceRoomModel->save();
         if(!$addDeviceRoom){
             return errors(['msg'=>"设备房间创建失败"]);

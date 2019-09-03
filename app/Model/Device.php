@@ -46,7 +46,7 @@ class Device extends Model
         $this->device_room_id   = $request->input('device_room_id');
         $this->name             = $request->input('name');
         $this->desc             = $request->input('desc');
-        $this->token            = getOnlyToken_60();
+        $this->token            = str_random(60);
         return $this->save();
     }
     // 更新设备

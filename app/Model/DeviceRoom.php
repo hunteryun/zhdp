@@ -39,7 +39,7 @@ class DeviceRoom extends Model
         $this->device_region_id = $request->input('device_region_id');
         $this->name             = $request->input('name');
         $this->desc             = $request->input('desc');
-        $this->token            = getOnlyToken_60(); // token 禁止更新
+        $this->token            = str_random(60); // token 禁止更新
         return $this->save();
     }
     // 更新设备房间
