@@ -78,21 +78,25 @@
 				shade: [0.8, '#393D49']
 			});
 			console.log(field);
-			$.post('{{url("api/user/login")}}', {
-				name: field.name,
-				// phone: field.phone,
-				password: field.password,
-			}, function(reg) {
-				layer.close(formLoad);
-				layer.msg(reg.msg);
-				if (reg.code == 0) {
-					layui.data('user_info', {
-						key: 'token',
-						value: reg.token
-					});
-					window.location.href = "{{url('user/index')}}";
-				}
-			})
+			$.ajax({ 
+				type: "POST",
+                url: "{{url('api/user/login')}}",
+				data: {
+					name: field.name,
+					password: field.password,
+				},
+				success: function(result){
+					layer.close(formLoad);
+					layer.msg(result.msg);
+					if (result.code == 0) {
+						layui.data('user_info', {
+							key: 'token',
+							value: result.token
+						});
+						window.location.href = "{{url('user/index')}}";
+					}
+		    	}
+			});
 			return false;
 		});
 	</script>

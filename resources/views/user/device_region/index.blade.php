@@ -31,7 +31,9 @@
             table.render({
                 elem: '#device_region'
                 ,url: '{{url('api/user/device_region')}}' 
-                ,where: {token: layui.data('user_info').token}
+                ,headers: {
+                    Authorization: layui.data('user_info').token
+                }
                 ,page: true 
                 ,cols: [[ 
                     {field: 'id', title: 'ID', width:80, sort: true, fixed: 'left'}
@@ -46,14 +48,22 @@
                     shade: [0.8, '#393D49']
                 });
                 layer.confirm('真的删除行么', function(index){
-                    $.post('{{url("api/user/device_region")}}/'+ data.id, {
-                        '_method': 'DELETE',
-                        'token': layui.data('user_info').token,
-                    }, function(del) {
-                        layer.close(ajaxLoad);
-                        layer.msg(del.msg);
-                        if (del.code == 0) {
-                            table.reload('device_region');
+                    $.ajax({ 
+                        type: "POST",
+                        url: '{{url("api/user/device_region")}}/'+ data.id,
+                        beforeSend: function(xhr) { 
+                           	xhr.setRequestHeader("Authorization", layui.data('user_info').token);  
+                        },
+                        data: {
+                            '_method': 'DELETE',
+                            'name': data.value,
+                        },
+                        success: function(result){
+                            layer.close(ajaxLoad);
+                            layer.msg(result.msg);
+                            if (result.code == 0) {
+                                table.reload('device_region');
+                            }
                         }
                     });
                     layer.close(index);
@@ -67,16 +77,23 @@
                         ,formType: 0
                         ,value: data.name
                     }, function(value, index){
-                        $.post('{{url("api/user/device_region")}}/'+ data.id, {
-                            'name': value,
-                            'token': layui.data('user_info').token,
-                        }, function(update) {
-                            layer.close(ajaxLoad);
-                            layer.msg(update.msg);
-                            if (update.code == 0) {
-                                obj.update({
-                                    name: value
-                                });
+                        $.ajax({ 
+                            type: "POST",
+                            url: '{{url("api/user/device_region")}}/'+ data.id,
+                            beforeSend: function(xhr) { 
+                                xhr.setRequestHeader("Authorization", layui.data('user_info').token);  
+                            },
+                            data: {
+                                'name': value,
+                            },
+                            success: function(result){
+                                layer.close(ajaxLoad);
+                                layer.msg(result.msg);
+                                if (result.code == 0) {
+                                    obj.update({
+                                        name: value
+                                    });
+                                }
                             }
                         });
                         layer.close(index);

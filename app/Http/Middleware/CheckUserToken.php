@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use App\Model\User as UserModel;
-use App\Http\Requests\User\CheckUserToken as CheckUserTokenRequests;
+use App\Exceptions\UserTokenExpired as UserTokenExpired;
 class CheckUserToken
 {
     /**
@@ -16,10 +16,9 @@ class CheckUserToken
      */
     public function handle($request, Closure $next)
     {
-        (new CheckUserTokenRequests)->verification($request);
-        $token = $request->input('token');
+        $token = $request->header('authorization');
         try{
-            UserModel::where('token', '=', $token)->firstOrFail();
+            UserModel::where('token', '=', $token)->whereNotNull('token')->firstOrFail();
         }catch(\Exception $exception){
             throw new UserTokenExpired('登录已过期');
         }

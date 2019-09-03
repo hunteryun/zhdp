@@ -36,18 +36,25 @@
              formLoad = layer.load(1, {
                  shade: [0.8, '#393D49']
              });
-             $.post('{{url("api/user/device_region")}}', {
-                 'name': data.field.name,
-                 'token': layui.data('user_info').token,
-             }, function(add) {
-                 layer.close(formLoad);
-                 if (add.code > 0) {
-                     layer.msg(add.msg);
-                 } else {
-                     var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                     parent.layer.close(index); //再执行关闭   
-                 }
-             });
+             $.ajax({ 
+                type: "POST",
+                url: '{{url("api/user/device_region")}}',
+                beforeSend: function(xhr) { 
+                    xhr.setRequestHeader("Authorization", layui.data('user_info').token);  
+                },
+                data: {
+                    'name': data.field.name,
+                },
+                success: function(result){
+                    layer.close(formLoad);
+                    if (result.code > 0) {
+                        layer.msg(result.msg);
+                    } else {
+                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        parent.layer.close(index); //再执行关闭   
+                    }
+                }
+            });
              return false;
          });
      </script>
