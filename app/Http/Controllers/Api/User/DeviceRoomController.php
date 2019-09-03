@@ -11,6 +11,7 @@ use App\Http\Requests\DeviceRoom\UpdateDeviceRoom as UpdateDeviceRoomRequests;
 // 设备房间
 class DeviceRoomController extends Base
 {
+    // 获取列表
     public function index(Request $request)
     {
         $limit = $request->input('limit');
@@ -22,6 +23,7 @@ class DeviceRoomController extends Base
         $returnData['data']             = $deviceRegionList['data'];
         return success($returnData);
     }
+    // 新增
      public function store(Request $request)
     {
         (new AddDeviceRoomRequests)->verification();
@@ -37,12 +39,14 @@ class DeviceRoomController extends Base
             return errors(['msg'=>"设备房间创建失败"]);
         }
         return success(['msg'=>"设备房间创建成功"]);
-    }       
+    }      
+    // 获取指定id 
       public function show($id)
     {
         $deviceRoomInfo = UserModel::where('token', $this->user_token())->firstOrFail()->device_room()->where('id', $id)->with('device_region')->firstOrFail();
         return success(['msg' => '设备房间查询成功','data' => $deviceRoomInfo]);
     }
+    // 更新
     public function update(Request $request, $id){
         (new UpdateDeviceRoomRequests)->verification();
         $deviceRoomInfo = UserModel::where('token', $this->user_token())->firstOrFail()->device_room()->where('id', $id)->firstOrFail();
@@ -55,6 +59,7 @@ class DeviceRoomController extends Base
         }
         return success(['msg'=>'更新成功']);
     }
+    // 删除
     public function destroy(Request $request, $id){
         
         $deleteDeviceRegionStatus = UserModel::where('token', $this->user_token())->firstOrFail()->device_room()->where('id', $id)->firstOrFail()->delete();

@@ -9,6 +9,7 @@ use App\Model\DeviceRegion as DeviceRegionModel;
 // 设备区域
 class DeviceRegionController extends Base
 {
+    // 获取列表
     public function index(Request $request)
     {
         $limit = $request->input('limit');
@@ -20,6 +21,7 @@ class DeviceRegionController extends Base
         $returnData['data']             = $deviceRegionList['data'];
         return success($returnData);
     }
+    // 获取所有
     public function all()
     {
         $deviceRegionAll = UserModel::where('token', $this->user_token())->firstOrFail()->device_region()->get();
@@ -29,6 +31,7 @@ class DeviceRegionController extends Base
         $returnData['data']             = $deviceRegionAll->toArray();
         return success($returnData);
     }
+    // 新增
     public function store(Request $request){
         
         $name = $request->input('name');
@@ -42,6 +45,7 @@ class DeviceRegionController extends Base
         }
         return success(['msg'=>'创建成功']);
     }
+    // 更新
     public function update(Request $request, $id){
         
         $name = $request->input('name');
@@ -53,7 +57,7 @@ class DeviceRegionController extends Base
         }
         return success(['msg'=>'更新成功']);
     }
-
+    // 删除
     public function destroy(Request $request, $id){
         
         $deleteDeviceRegionStatus = UserModel::where('token', $this->user_token())->firstOrFail()->device_region()->where('id', $id)->firstOrFail()->delete();
