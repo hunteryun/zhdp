@@ -13,7 +13,7 @@ class FieldType extends Model
     // 设置默认值 default字段
     public function setDefaultAttribute($value)
     {
-        if(empty($value)){
+        if(is_null($value)){
             $this->attributes['default'] = '';
         }else{
             $this->attributes['default'] = $value;
@@ -22,7 +22,7 @@ class FieldType extends Model
     // 设置默认值 desc字段
     public function setDescAttribute($value)
     {
-        if(empty($value)){
+        if(is_null($value)){
             $this->attributes['desc'] = '';
         }else{
             $this->attributes['desc'] = $value;

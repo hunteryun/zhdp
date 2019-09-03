@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\User;
 use App\Http\Controllers\Api\User\Base;
 use Illuminate\Http\Request;
 use App\Model\FieldType as FieldTypeModel;
+use App\Http\Requests\FieldType\AddFieldType as AddFieldTypeRequests;
+use App\Http\Requests\FieldType\UpdateFieldType as UpdateFieldTypeRequests;
 // 字段类型
 class FieldTypeController extends Base
 {
@@ -32,7 +34,7 @@ class FieldTypeController extends Base
     }
     // 新增
     public function store(Request $request){
-        
+        (new AddFieldTypeRequests)->verification($request);
         $fieldTypeModel = new FieldTypeModel;
         $fieldTypeModel->name = $request->input('name');
         $fieldTypeModel->length = $request->input('length');
@@ -46,8 +48,7 @@ class FieldTypeController extends Base
     }
     // 更新
     public function update(Request $request, $id){
-        
-        $name = $request->input('name');
+        (new UpdateFieldTypeRequests)->verification();
         $fieldTypeInfo = FieldTypeModel::where('id', $id)->firstOrFail();
         $fieldTypeInfo->name = $request->input('name');
         $fieldTypeInfo->length = $request->input('length');
