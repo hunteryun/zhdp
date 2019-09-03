@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Api\User;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\User\Base;
 use Illuminate\Http\Request;
 use App\Model\User as UserModel;
 use App\Http\Requests\User\AddUser as AddUserRequests;
-use App\Http\Requests\User\UpdateUser as UpdateUserRequests;
-class RegController extends Controller
+class RegController extends Base
 {
     // 用户注册
     public function index(Request $request)

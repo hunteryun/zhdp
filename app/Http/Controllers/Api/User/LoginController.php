@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api\User;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\User\Base;
 use Illuminate\Http\Request;
 use App\Model\User as UserModel;
 use App\Http\Requests\User\LoginUser as LoginUserRequests;
 use App\Exceptions\ModelNotFound;
-class LoginController extends Controller
+class LoginController extends Base
 {
     // 用户登录
     public function index(Request $request)
