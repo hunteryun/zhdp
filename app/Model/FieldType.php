@@ -15,6 +15,8 @@ class FieldType extends Model
     {
         if(empty($value)){
             $this->attributes['default'] = '';
+        }else{
+            $this->attributes['default'] = $value;
         }
     }
     // 设置默认值 desc字段
@@ -22,6 +24,8 @@ class FieldType extends Model
     {
         if(empty($value)){
             $this->attributes['desc'] = '';
+        }else{
+            $this->attributes['desc'] = $value;
         }
     }
     // 获取分页

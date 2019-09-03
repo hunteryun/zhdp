@@ -27,6 +27,15 @@ Route::prefix('/user')->group(function(){
     // 
     Route::post('reg', 'Api\\User\\RegController@index'); // 注册
     Route::post('login', 'Api\\User\\LoginController@index'); // 登录
+    // 字段类型 /index.php/api/field_type
+    Route::prefix('/field_type')->group(function(){
+        Route::get('', 'Api\\User\\FieldTypeController@index'); // 获取列表
+        Route::get('all', 'Api\\User\\FieldTypeController@all'); // 获取所有数据
+        Route::get('{id}', 'Api\\User\\FieldTypeController@show'); // 获取指定id
+        Route::post('', 'Api\\User\\FieldTypeController@store'); // 新增
+        Route::put('{id}', 'Api\\User\\FieldTypeController@update'); // 更新
+        Route::delete('{id}', 'Api\\User\\FieldTypeController@destroy'); // 删除
+    });
     // 设备区域
     Route::prefix('/device_region')->group(function(){
         Route::get('', 'Api\\User\\DeviceRegionController@index')->middleware('user.token'); // 设备区域列表
@@ -43,6 +52,7 @@ Route::prefix('/user')->group(function(){
         Route::put('{id}', 'Api\\User\\DeviceRoomController@update')->middleware('user.token'); // 更新设备房间列表
         Route::delete('{id}', 'Api\\User\\DeviceRoomController@destroy')->middleware('user.token'); // 删除设备房间列表
     });
+    
 });
 // 字段类型 /index.php/api/field_type
 Route::prefix('/field_type')->group(function(){

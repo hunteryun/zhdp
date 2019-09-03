@@ -50,7 +50,11 @@
                  <ul class="layui-nav layui-nav-tree" lay-filter="test">
                     <li class="layui-nav-item"><a class="layui-open-tab" href="{{url('user/device_region')}}">区域管理</a></li>
                     <li class="layui-nav-item"><a class="layui-open-tab" href="{{url('user/device_room')}}">房间管理</a></li>
-                    <li class="layui-nav-item"><a class="layui-open-tab" href="">设备管理</a></li>
+
+                    <li class="layui-nav-item"><a class="layui-open-tab" href="{{url('user/field_type')}}">字段类型管理</a></li>
+                    <li class="layui-nav-item"><a class="layui-open-tab" href="{{url('user/product')}}">产品管理</a></li>
+
+                    <li class="layui-nav-item"><a class="layui-open-tab" href="{{url('user/device')}}">设备管理</a></li>
                      <!-- <li class="layui-nav-item layui-nav-itemed">
                          <a class="" href="javascript:;">所有商品</a>
                          <dl class="layui-nav-child">
