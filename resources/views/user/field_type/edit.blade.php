@@ -17,7 +17,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">类型长度</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" name="length" value="1" lay-verify="required" autocomplete="off" placeholder="类型长度">
+                    <input type="text" class="layui-input" name="field_type_length" value="1" lay-verify="required" autocomplete="off" placeholder="类型长度">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -47,7 +47,7 @@
         var field_type_info =  window.parent.edit_field_type_info;
         //  初始化input
         $("input[name='name']").val(field_type_info.name);
-        $("input[name='length']").val(field_type_info.length);
+        $("input[name='field_type_length']").val(field_type_info.field_type_length);
         $("input[name='default']").val(field_type_info.default);
         $("textarea[name='desc']").val(field_type_info.desc);
          //监听提交
@@ -61,7 +61,7 @@
                 data: {
                     '_method': 'PUT',
                     'name': data.field.name,
-                    'length': data.field.length,
+                    'field_type_length': data.field.field_type_length,
                     'default': data.field.default,
                     'desc': data.field.desc,
                 },

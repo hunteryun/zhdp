@@ -33,7 +33,7 @@
                 ,cols: [[ 
                     {field: 'id', title: 'ID', width:80, sort: true, fixed: 'left'}
                     ,{field: 'name', title: '类型名称'}
-                    ,{field: 'length', title: '类型长度'}
+                    ,{field: 'field_type_length', title: '类型长度'}
                     ,{field: 'default', title: '类型默认值'}
                     ,{field: 'desc', title: '类型描述'}
                     ,{fixed: 'right', title:'操作', toolbar: '#bar', width:150}

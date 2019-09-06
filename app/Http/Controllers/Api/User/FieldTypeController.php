@@ -37,7 +37,7 @@ class FieldTypeController extends Base
         (new AddFieldTypeRequests)->verification($request);
         $fieldTypeModel = new FieldTypeModel;
         $fieldTypeModel->name = $request->input('name');
-        $fieldTypeModel->length = $request->input('length');
+        $fieldTypeModel->field_type_length = $request->input('field_type_length');
         $fieldTypeModel->default = $request->input('default');
         $fieldTypeModel->desc = $request->input('desc');
         $addFieldType = $fieldTypeModel->save();
@@ -51,7 +51,7 @@ class FieldTypeController extends Base
         (new UpdateFieldTypeRequests)->verification();
         $fieldTypeInfo = FieldTypeModel::where('id', $id)->firstOrFail();
         $fieldTypeInfo->name = $request->input('name');
-        $fieldTypeInfo->length = $request->input('length');
+        $fieldTypeInfo->field_type_length = $request->input('field_type_length');
         $fieldTypeInfo->default = $request->input('default');
         $fieldTypeInfo->desc = $request->input('desc');
         $updateFieldType = $fieldTypeInfo->save();

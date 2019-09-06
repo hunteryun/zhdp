@@ -47,7 +47,7 @@ class FieldType extends Model
     // 新增字段类型
     public function addFieldType($request){
         $this->name      = $request->input('name');
-        $this->length    = $request->input('length');
+        $this->field_type_length    = $request->input('field_type_length');
         $this->default   = $request->input('default');
         $this->desc      = $request->input('desc');
         return $this->save();
@@ -57,7 +57,7 @@ class FieldType extends Model
         // 不允许循环赋值，因为有可能存在id,需要更新什么就更新什么
         $fieldTypeInfo            = $this->getFind($id);
         $fieldTypeInfo->name      = $request->input('name');
-        $fieldTypeInfo->length    = $request->input('length');
+        $fieldTypeInfo->field_type_length    = $request->input('field_type_length');
         $fieldTypeInfo->default   = $request->input('default');
         $fieldTypeInfo->desc      = $request->input('desc');
         return $fieldTypeInfo->save();

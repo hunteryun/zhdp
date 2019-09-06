@@ -11,9 +11,9 @@ class UpdateFieldType extends Base
         'name.unique' => '名字已经存在!',
         'name.alpha_dash' => '名字只允许字母和数字，以及破折号和下划线!',
         'name.between' => '名字长度需要在1-30之间!',
-        'length.required' => '字段长度必填!',
-        'length.numeric' => '字段长度必须是数字!',
-        'length.between' => '字段长度需要在1-255之间!',
+        'field_type_length.required' => '字段长度必填!',
+        'field_type_length.numeric' => '字段长度必须是数字!',
+        'field_type_length.between' => '字段长度需要在1-255之间!',
         'default.max' => '默认值最多255个字符!',
         'desc.max' => '描述最多255个字符!',
     ];
@@ -44,7 +44,7 @@ class UpdateFieldType extends Base
                 'alpha_dash',
                 'between:1,30',
             ],
-            'length' => 'required|numeric|between:1,255',   
+            'field_type_length' => 'required|numeric|between:1,255',   
             'default' => 'max:255',   
             'desc' => 'max:255',   
         ];

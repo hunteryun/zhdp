@@ -17,7 +17,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">类型长度</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" name="length" value="1" lay-verify="required" autocomplete="off" placeholder="类型长度">
+                    <input type="text" class="layui-input" name="field_type_length" value="1" lay-verify="required" autocomplete="off" placeholder="类型长度">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -52,7 +52,7 @@
                 url: '{{url("api/user/field_type")}}',
                 data: {
                     'name': data.field.name,
-                    'length': data.field.length,
+                    'field_type_length': data.field.field_type_length,
                     'default': data.field.default,
                     'desc': data.field.desc,
                 },
