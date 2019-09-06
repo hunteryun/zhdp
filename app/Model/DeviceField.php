@@ -14,6 +14,11 @@ class DeviceField extends Model
     // protected $hidden = ['updated_at'];
     // 只可以显示的字段
     // protected $visible = ['updated_at'];
+     // 关联获取字段类型
+     public function field_type()
+     {
+          return $this->belongsTo(FieldType::class);
+     }
     // 设置默认值 length 字段
     public function setLengthAttribute($value)
     {

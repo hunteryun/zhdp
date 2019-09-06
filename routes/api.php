@@ -76,6 +76,10 @@ Route::prefix('/user')->group(function(){
         Route::post('', 'Api\\User\\DeviceController@store'); // 新增
         Route::put('{id}', 'Api\\User\\DeviceController@update'); // 更新
         Route::delete('{id}', 'Api\\User\\DeviceController@destroy'); // 删除
+        // 设备字段 /index.php/api/device_field
+        Route::prefix('/device_field')->group(function(){
+            Route::get('all', 'Api\\User\\DeviceFieldController@all'); // 获取所有数据
+        });
     });
 });
 // 字段类型 /index.php/api/field_type

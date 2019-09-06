@@ -50,11 +50,7 @@ Route::prefix('/user')->group(function(){
         Route::view('', 'user/device/index'); // 设备列表
         Route::view('add', 'user/device/add'); // 设备添加
         Route::view('edit', 'user/device/edit'); // 设备编辑
-        Route::prefix('/device_field')->group(function(){
-            Route::view('', 'user/device/device_field/index'); // 设备字段管理
-            Route::view('add', 'user/device/device_field/add'); // 设备字段添加
-            Route::view('edit', 'user/device/device_field/edit'); // 设备字段编辑
-        });
+        Route::view('device_field', 'user/device/device_field/index'); // 设备字段管理
     });
 });
 
