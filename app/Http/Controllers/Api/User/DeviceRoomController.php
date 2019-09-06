@@ -23,6 +23,16 @@ class DeviceRoomController extends Base
         $returnData['data']             = $deviceRegionList['data'];
         return success($returnData);
     }
+    // 获取所有
+    public function all()
+    {
+        $deviceRegionAll = UserModel::where('token', $this->user_token())->firstOrFail()->device_room()->get();
+        $returnData = [];
+        $returnData['msg']              = "查询成功";
+        $returnData['count']            = $deviceRegionAll->count();
+        $returnData['data']             = $deviceRegionAll->toArray();
+        return success($returnData);
+    }
     // 新增
      public function store(Request $request)
     {

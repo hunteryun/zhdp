@@ -25,6 +25,11 @@ class User extends Model
     {
          return $this->hasMany(DeviceRoom::class);
     }
+    // 关联设备表
+    public function device()
+    {
+         return $this->hasMany(Device::class);
+    }
     // 获取分页
     public function getPaginate($request){
         return $this->paginate($request->input('limit'))->toArray();

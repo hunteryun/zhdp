@@ -24,7 +24,7 @@ class DeviceRegionController extends Base
     // 获取所有
     public function all()
     {
-        $deviceRegionAll = UserModel::where('token', $this->user_token())->firstOrFail()->device_region()->get();
+        $deviceRegionAll = UserModel::where('token', $this->user_token())->firstOrFail()->device_region()->with('device_room')->get();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $deviceRegionAll->count();

@@ -63,12 +63,20 @@ Route::prefix('/user')->group(function(){
     // 设备房间
     Route::prefix('/device_room')->group(function(){
         Route::get('', 'Api\\User\\DeviceRoomController@index')->middleware('user.token'); // 设备房间列表
+        Route::get('all', 'Api\\User\\DeviceRoomController@all')->middleware('user.token'); // 所有房间区域列表
         Route::post('', 'Api\\User\\DeviceRoomController@store')->middleware('user.token'); // 添加设备房间列表
         Route::get('{id}', 'Api\\User\\DeviceRoomController@show')->middleware('user.token'); // 获取指定id房间
         Route::put('{id}', 'Api\\User\\DeviceRoomController@update')->middleware('user.token'); // 更新设备房间列表
         Route::delete('{id}', 'Api\\User\\DeviceRoomController@destroy')->middleware('user.token'); // 删除设备房间列表
     });
-    
+    // 设备 /index.php/api/device
+    Route::prefix('/device')->group(function(){
+        Route::get('', 'Api\\User\\DeviceController@index'); // 获取列表
+        Route::get('{id}', 'Api\\User\\DeviceController@show'); // 获取指定id
+        Route::post('', 'Api\\User\\DeviceController@store'); // 新增
+        Route::put('{id}', 'Api\\User\\DeviceController@update'); // 更新
+        Route::delete('{id}', 'Api\\User\\DeviceController@destroy'); // 删除
+    });
 });
 // 字段类型 /index.php/api/field_type
 Route::prefix('/field_type')->group(function(){
