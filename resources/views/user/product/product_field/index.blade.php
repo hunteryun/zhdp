@@ -35,7 +35,9 @@
                     {field: 'id', title: 'ID', width:80, sort: true, fixed: 'left'}
                     ,{field: 'name', title: '名称'}
                     ,{field: 'field', title: '标识符'}
-                    ,{field: 'field_type_id', title: '类型id'}
+                    ,{field: 'field_type.name', title: '字段类型', templet : function (d){
+                        return d.field_type.name;
+                    }}
                     ,{field: 'field_type_length', title: '长度'}
                     ,{field: 'default', title: '默认值'}
                     ,{field: 'common_field', title: '公共字段'}

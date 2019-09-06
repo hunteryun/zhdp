@@ -17,7 +17,7 @@ class ProductFieldController extends Base
     public function all(Request $request)
     {
         // length是前端关键字,所以重命名为lh
-        $productFieldAll = ProductModel::where('id', intval($request->product_id))->firstOrFail()->product_field()->get();
+        $productFieldAll = ProductModel::where('id', intval($request->product_id))->firstOrFail()->product_field()->with('field_type')->get();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $productFieldAll->count();

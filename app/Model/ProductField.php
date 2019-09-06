@@ -10,6 +10,11 @@ class ProductField extends Model
     // 指定表名
     // laravel自动会+s
     protected $table = 'product_field';
+    // 关联获取字段类型
+    public function field_type()
+    {
+         return $this->belongsTo(FieldType::class);
+    }
     // 设置默认值 length 字段
     public function setLengthAttribute($value)
     {
