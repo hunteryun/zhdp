@@ -61,8 +61,8 @@ class ProductController extends Base
         
         $deleteproductStatus = productModel::where('id', $id)->firstOrFail()->delete();
         if(!$deleteproductStatus){
-            return errors("字段类型删除失败");
+            return errors("产品删除失败");
         }
-        return success(['msg'=>"字段类型删除成功"]);
+        return success(['msg'=>"产品删除成功"]);
     }
 }

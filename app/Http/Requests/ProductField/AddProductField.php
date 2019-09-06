@@ -5,6 +5,7 @@ use App\Http\Requests\Base;
 use Illuminate\Validation\Rule;
 use App\Rules\ProductIdExists; // 引入判断产品id是否存在
 use App\Rules\FieldTypeIdExists; // 引入判断字段类型id是否存在
+use App\Rules\FieldTypeLength; // 引入判断字段类型长度是否符合要求
 // 产品字段
 class AddProductField extends Base
 {
@@ -21,8 +22,8 @@ class AddProductField extends Base
         'field.between' => '产品字段标识符长度需要在1-30之间!',
         'field_type_id.required' => '字段类型id必填!',
         'field_type_id.numeric' => '字段类型id必须是数字!',
-        'length.numeric' => '字段长度id必须是数字!',
-        'length.between' => '字段长度要在1-255之间!',
+        'field_type_length.numeric' => '字段长度id必须是数字!',
+        'field_type_length.between' => '字段长度要在1-255之间!',
         'default.alpha_dash' => '产品字默认值只允许字母和数字，以及破折号和下划线!',
         'default.max' => '产品字段标默认值最多255个字符!',
         'common_field.alpha_dash'  => '产品字默认值只允许字母和数字，以及破折号和下划线!',
@@ -76,9 +77,11 @@ class AddProductField extends Base
                 'numeric',
                 new FieldTypeIdExists,
             ],
-            'length' => [
+            'field_type_length' => [
                 'numeric',
                 'between:1,255',
+                // 
+                new FieldTypeLength
             ],
             'default' => [
                 'alpha_dash',

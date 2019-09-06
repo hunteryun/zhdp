@@ -44,6 +44,13 @@ Route::prefix('/user')->group(function(){
         Route::post('', 'Api\\User\\ProductController@store'); // 新增
         Route::put('{id}', 'Api\\User\\ProductController@update'); // 更新
         Route::delete('{id}', 'Api\\User\\ProductController@destroy'); // 删除
+        // 产品字段 /index.php/api/product_field
+        Route::prefix('/product_field')->group(function(){
+            Route::get('all', 'Api\\User\\ProductFieldController@all'); // 获取所有数据
+            Route::post('', 'Api\\User\\ProductFieldController@store'); // 新增
+            Route::put('{id}', 'Api\\User\\ProductFieldController@update'); // 更新
+            Route::delete('{id}', 'Api\\User\\ProductFieldController@destroy'); // 删除
+        });
     });
     // 设备区域
     Route::prefix('/device_region')->group(function(){

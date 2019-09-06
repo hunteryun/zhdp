@@ -28,6 +28,11 @@ Route::prefix('/user')->group(function(){
         Route::view('', 'user/product/index'); // 产品列表
         Route::view('add', 'user/product/add'); // 产品添加
         Route::view('edit', 'user/product/edit'); // 产品添加
+        Route::prefix('/product_field')->group(function(){
+            Route::view('', 'user/product/product_field/index'); // 产品字段管理
+            Route::view('add', 'user/product/product_field/add'); // 产品字段添加
+            Route::view('edit', 'user/product/product_field/edit'); // 产品字段编辑
+        });
     });
     // 区域管理
     Route::prefix('/device_region')->group(function(){

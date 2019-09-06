@@ -23,8 +23,8 @@ class UpdateDeviceField extends Base
         'field_type_id.numeric' => '字段类型id必须是数字!',
         'value.alpha_dash' => '设备字字段值只允许字母和数字，以及破折号和下划线!',
         'value.max' => '设备字段值最多255个字符!',
-        'length.numeric' => '字段长度id必须是数字!',
-        'length.between' => '字段长度要在1-255之间!',
+        'field_type_length.numeric' => '字段长度id必须是数字!',
+        'field_type_length.between' => '字段长度要在1-255之间!',
         'common_field.alpha_dash'  => '设备字默认值只允许字母和数字，以及破折号和下划线!',
         'common_field.max'  => '设备字段最多30个字符!',
         'common_field_sort.numeric' => '共同字段排序参数必须是数字!',
@@ -78,7 +78,7 @@ class UpdateDeviceField extends Base
                 'alpha_dash',
                 'max:255',
             ],
-            'length' => [
+            'field_type_length' => [
                 'numeric',
                 'between:1,255',
             ],
