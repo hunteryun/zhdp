@@ -26,6 +26,19 @@ class DeviceController extends Base
         $returnData['data']             = $deviceList['data'];
         return success($returnData);
     }
+    /**
+     * 获取房间下的所有设备 api/device/all
+     */
+    public function all(Request $request)
+    {
+        // length是前端关键字,所以重命名为lh
+        $DeviceFieldAll = UserModel::where('token', $this->user_token())->firstOrFail()->device_room()->where('id', intval($request->device_room_id))->firstOrFail()->device()->with('device_field')->get();
+        $returnData = [];
+        $returnData['msg']              = "查询成功";
+        $returnData['count']            = $DeviceFieldAll->count();
+        $returnData['data']             = $DeviceFieldAll->toArray();
+        return success(['data'=> $DeviceFieldAll->toArray()]);
+    }
     // 新增
     public function store(Request $request){
         (new AddDeviceRequests)->verification($request);

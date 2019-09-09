@@ -15,6 +15,11 @@ class DeviceRoom extends Model
     {
          return $this->belongsTo(DeviceRegion::class);
     }
+    // 关联查询房间下的设备
+    public function device()
+    {
+         return $this->hasMany(Device::class);
+    }
     // 设置默认值 desc 字段
     public function setDescAttribute($value)
     {

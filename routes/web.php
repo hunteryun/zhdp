@@ -44,6 +44,7 @@ Route::prefix('/user')->group(function(){
         Route::view('', 'user/device_room/index'); // 房间列表
         Route::view('add', 'user/device_room/add'); // 房间添加
         Route::view('edit', 'user/device_room/edit'); // 房间编辑
+        Route::view('device', 'user/device_room/device/index'); // 设备字段管理
     });
     // 设备管理
     Route::prefix('/device')->group(function(){

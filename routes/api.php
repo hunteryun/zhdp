@@ -29,27 +29,27 @@ Route::prefix('/user')->group(function(){
     Route::post('login', 'Api\\User\\LoginController@index'); // 登录
     // 字段类型 /index.php/api/field_type
     Route::prefix('/field_type')->group(function(){
-        Route::get('', 'Api\\User\\FieldTypeController@index'); // 获取列表
-        Route::get('all', 'Api\\User\\FieldTypeController@all'); // 获取所有数据
-        Route::get('{id}', 'Api\\User\\FieldTypeController@show'); // 获取指定id
-        Route::post('', 'Api\\User\\FieldTypeController@store'); // 新增
-        Route::put('{id}', 'Api\\User\\FieldTypeController@update'); // 更新
-        Route::delete('{id}', 'Api\\User\\FieldTypeController@destroy'); // 删除
+        Route::get('', 'Api\\User\\FieldTypeController@index')->middleware('user.token'); // 获取列表
+        Route::get('all', 'Api\\User\\FieldTypeController@all')->middleware('user.token'); // 获取所有数据
+        Route::get('{id}', 'Api\\User\\FieldTypeController@show')->middleware('user.token'); // 获取指定id
+        Route::post('', 'Api\\User\\FieldTypeController@store')->middleware('user.token'); // 新增
+        Route::put('{id}', 'Api\\User\\FieldTypeController@update')->middleware('user.token'); // 更新
+        Route::delete('{id}', 'Api\\User\\FieldTypeController@destroy')->middleware('user.token'); // 删除
     });
     // 产品 /index.php/api/product
     Route::prefix('/product')->group(function(){
-        Route::get('', 'Api\\User\\ProductController@index'); // 获取列表
-        Route::get('all', 'Api\\User\\ProductController@all'); // 获取所有数据
-        Route::get('{id}', 'Api\\User\\ProductController@show'); // 获取指定id
-        Route::post('', 'Api\\User\\ProductController@store'); // 新增
-        Route::put('{id}', 'Api\\User\\ProductController@update'); // 更新
-        Route::delete('{id}', 'Api\\User\\ProductController@destroy'); // 删除
+        Route::get('', 'Api\\User\\ProductController@index')->middleware('user.token'); // 获取列表
+        Route::get('all', 'Api\\User\\ProductController@all')->middleware('user.token'); // 获取所有数据
+        Route::get('{id}', 'Api\\User\\ProductController@show')->middleware('user.token'); // 获取指定id
+        Route::post('', 'Api\\User\\ProductController@store')->middleware('user.token'); // 新增
+        Route::put('{id}', 'Api\\User\\ProductController@update')->middleware('user.token'); // 更新
+        Route::delete('{id}', 'Api\\User\\ProductController@destroy')->middleware('user.token'); // 删除
         // 产品字段 /index.php/api/product_field
         Route::prefix('/product_field')->group(function(){
-            Route::get('all', 'Api\\User\\ProductFieldController@all'); // 获取所有数据
-            Route::post('', 'Api\\User\\ProductFieldController@store'); // 新增
-            Route::put('{id}', 'Api\\User\\ProductFieldController@update'); // 更新
-            Route::delete('{id}', 'Api\\User\\ProductFieldController@destroy'); // 删除
+            Route::get('all', 'Api\\User\\ProductFieldController@all')->middleware('user.token'); // 获取所有数据
+            Route::post('', 'Api\\User\\ProductFieldController@store')->middleware('user.token'); // 新增
+            Route::put('{id}', 'Api\\User\\ProductFieldController@update')->middleware('user.token'); // 更新
+            Route::delete('{id}', 'Api\\User\\ProductFieldController@destroy')->middleware('user.token'); // 删除
         });
     });
     // 设备区域
@@ -71,14 +71,15 @@ Route::prefix('/user')->group(function(){
     });
     // 设备 /index.php/api/device
     Route::prefix('/device')->group(function(){
-        Route::get('', 'Api\\User\\DeviceController@index'); // 获取列表
-        Route::get('{id}', 'Api\\User\\DeviceController@show'); // 获取指定id
-        Route::post('', 'Api\\User\\DeviceController@store'); // 新增
-        Route::put('{id}', 'Api\\User\\DeviceController@update'); // 更新
-        Route::delete('{id}', 'Api\\User\\DeviceController@destroy'); // 删除
+        Route::get('', 'Api\\User\\DeviceController@index')->middleware('user.token'); // 获取列表
+        Route::get('all', 'Api\\User\\DeviceController@all')->middleware('user.token'); // 获取房间下的所有设备
+        Route::get('{id}', 'Api\\User\\DeviceController@show')->middleware('user.token'); // 获取指定id
+        Route::post('', 'Api\\User\\DeviceController@store')->middleware('user.token'); // 新增
+        Route::put('{id}', 'Api\\User\\DeviceController@update')->middleware('user.token'); // 更新
+        Route::delete('{id}', 'Api\\User\\DeviceController@destroy')->middleware('user.token'); // 删除
         // 设备字段 /index.php/api/device_field
         Route::prefix('/device_field')->group(function(){
-            Route::get('all', 'Api\\User\\DeviceFieldController@all'); // 获取所有数据
+            Route::get('all', 'Api\\User\\DeviceFieldController@all')->middleware('user.token'); // 获取所有数据
         });
     });
 });

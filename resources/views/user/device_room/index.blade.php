@@ -17,6 +17,7 @@
             </div>
             <div class="layui-row">
                 <script type="text/html" id="bar">
+                    <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="view">查看</a>
                     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
                     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
                 </script>
@@ -33,11 +34,12 @@
                 ,cols: [[ 
                     {field: 'id', title: 'ID', width:80, sort: true, fixed: 'left'}
                     ,{field: 'name', title: '房间名称'}
+                    ,{field: 'token', title: 'TOKEN'}
                     ,{field: 'device_region_name', title: '区域名称', templet : function (d){
                         return d.device_region.name;
                     }}
                     ,{field: 'desc', title: '房间描述'}
-                    ,{fixed: 'right', title:'操作', toolbar: '#bar', width:150}
+                    ,{fixed: 'right', title:'操作', toolbar: '#bar', width:180}
                 ]]
             });
             table.on('tool(device_room)', function(obj){
@@ -64,6 +66,19 @@
                         layer.close(index);
                     });
                     layer.close(ajaxLoad);
+                } else if(obj.event === 'view'){
+                    window.device_room_info = data;
+                    layer.open({
+                        type:2,
+                        title:'查看设备',
+                        shadeClose:true,
+                        shade:0.8,
+                        area:['100%','100%'],
+                        content:'{{url("user/device_room/device")}}',
+                        end:function(){
+                            table.reload('device_room');
+                        }
+                    });
                 } else if(obj.event === 'edit'){
                     window.edit_device_room_info = data;
                     layer.open({
