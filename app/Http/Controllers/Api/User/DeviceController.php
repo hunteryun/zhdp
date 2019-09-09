@@ -11,6 +11,7 @@ use App\Model\DeviceField as DeviceFieldModel;
 use App\Http\Requests\Device\AddDevice as AddDeviceRequests;
 use App\Http\Requests\Device\UpdateDevice as UpdateDeviceRequests;
 use DB;
+use App\Services\UpdateDevice;
 // 设备
 class DeviceController extends Base
 {
@@ -88,40 +89,6 @@ class DeviceController extends Base
         }
         return success(['msg'=>'更新成功']);
     }
-    // 按照token更新设备字段
-    public function updateDeviceField(Request $request, $token){
-        $updateDataField = $request->input('data.field');
-        if(empty($updateDataField)){
-            return errors(['msg'=>'请指定要更新的字段']);
-        }
-
-        $deviceFieldList = UserModel::where('token', $this->user_token())->firstOrFail()->device()->where('token', $token)->firstOrFail()->device_field()->where('updated_at', '<', date('Y-m-d H:i:s', time() - 3) )->with('field_type')->get(['id','field','field_type_id']);
-        $saveStatus = [];
-        DB::beginTransaction();
-
-        foreach($deviceFieldList as $key => $value){
-            if(array_key_exists($value->field, $updateDataField)){
-                $field_type     = $value->field_type;
-                $updateValue    = $updateDataField[$value->field];
-                switch($field_type['name']){
-                    case 'bool':
-                        // 如果是bool 0为关，1为开
-                        $saveStatus[] = $this->boolFun($updateValue, $value);
-                        break;
-                }
-            }else{
-                DB::rollBack();
-                return errors(['msg'=>'更新失败，请检查指定字段名是否正确']);
-            }
-        }
-        if(count(array_unique($saveStatus)) < 2 && $saveStatus['0'] != false ){
-            DB::commit();
-            return success(['msg'=>'更新成功']);
-        }else{
-            DB::rollBack();
-            return errors(['msg'=>'更新失败']);
-        }
-    }
     // 删除
     public function destroy(Request $request, $id){
         
@@ -131,14 +98,9 @@ class DeviceController extends Base
         }
         return success(['msg'=>"设备删除成功"]);
     }
-    // 处理bool
-    function boolFun($updateValue, $model){
-        $saveStatus     = false;
-        $updateValue    = intval($updateValue);
-        if($updateValue == 0 || $updateValue == 1){
-            $model->value = $updateValue;
-            $saveStatus = $model->save();
-        }
-        return $saveStatus;
+    // 按照token更新设备字段
+    public function updateDeviceField(Request $request, $token){
+        $user_token = $this->user_token();
+        return (new UpdateDevice)->updateDeviceField($request, $user_token, $token);
     }
 }
