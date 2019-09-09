@@ -24,6 +24,8 @@ class DeviceField extends Model
     {
         if(empty($value)){
             $this->attributes['length'] = 0;
+        }else{
+            $this->attributes['length'] = $value;
         }
     }
     // 设置默认值 common_field 字段
@@ -31,6 +33,8 @@ class DeviceField extends Model
     {
         if(empty($value)){
             $this->attributes['common_field'] = '';
+        }else{
+            $this->attributes['common_field'] = $value;
         }
     }
     // 设置默认值 common_field_sort 字段
@@ -38,6 +42,8 @@ class DeviceField extends Model
     {
         if(empty($value)){
             $this->attributes['common_field_sort'] = 0;
+        }else{
+            $this->attributes['common_field_sort'] = $value;
         }
     }
     // 设置默认值 desc 字段
@@ -45,6 +51,8 @@ class DeviceField extends Model
     {
         if(empty($value)){
             $this->attributes['desc'] = '';
+        }else{
+            $this->attributes['desc'] = $value;
         }
     }
     // 设置默认值 sort 字段
@@ -52,6 +60,8 @@ class DeviceField extends Model
     {
         if(empty($value)){
             $this->attributes['sort'] = 0;
+        }else{
+            $this->attributes['sort'] = $value;
         }
     }
     // 获取分页
