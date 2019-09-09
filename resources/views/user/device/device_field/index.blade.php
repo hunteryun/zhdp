@@ -18,8 +18,19 @@
      <div class="layui-card">
         <div class="layui-card-header">请求案例</div>
          <div class="layui-card-body">
-            <pre class="layui-code" id="case-code">
+            <pre class="layui-code" id="request-case-code">
 //code...
+            </pre>      
+         </div>
+     </div>
+     <div class="layui-card">
+        <div class="layui-card-header">返回案例</div>
+         <div class="layui-card-body">
+            <pre class="layui-code" id="return-case-code">
+{
+    code: 0,
+    msg: '更新成功'
+}
             </pre>      
          </div>
      </div>
@@ -45,8 +56,9 @@
                 ]]
                 ,done : function(request){
                     var data = request.data;
-                    var text = "{\r\n";
-                        text += "&nbsp;&nbsp;&nbsp;&nbsp;token:" + window.parent.edit_device_info.token + ", // 更新标识TOKEN,用于更新指定设备, 必填！ \r\n";
+                    var text = "// 请求网址\r\n// {{url('api/user/device/')}}/" + window.parent.edit_device_info.token + " // 更新标识TOKEN,用于更新指定设备, 必填！";
+                        text += "\r\n{\r\n";
+                        // text += "&nbsp;&nbsp;&nbsp;&nbsp;token:" + window.parent.edit_device_info.token + ", // 更新标识TOKEN,用于更新指定设备, 必填！ \r\n";
                         text += "&nbsp;&nbsp;&nbsp;&nbsp;data:{\r\n";
                     for(var i in data){
                         text += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{\r\n";
@@ -56,7 +68,7 @@
                     }
                     text += "&nbsp;&nbsp;&nbsp;&nbsp;}\r\n";
                     text += "}";
-                    $('#case-code').html(text);
+                    $('#request-case-code').html(text);
                     layui.code({
                         title: 'NotePad++'
                         ,skin: 'notepad' //如果要默认风格，不用设定该key。
