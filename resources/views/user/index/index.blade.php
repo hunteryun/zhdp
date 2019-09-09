@@ -56,13 +56,21 @@
                          </dl>
                      </li>
                     <li class="layui-nav-item layui-nav-itemed">
-                         <a class="" href="javascript:;">位置</a>
+                         <a class="" href="javascript:;">位置与作物</a>
                          <dl class="layui-nav-child">
                              <dd><a class="layui-open-tab" href="{{url('user/device_region')}}">区域管理</a></dd>
+                             <dd><a class="layui-open-tab" href="{{url('user/crop_class')}}">作物管理</a></dd>
                              <dd><a class="layui-open-tab" href="{{url('user/device_room')}}">房间管理</a></dd>
                          </dl>
                      </li>
-                     <li class="layui-nav-item"><a class="layui-open-tab" href="{{url('user/device')}}">设备管理</a></li>
+                     <li class="layui-nav-item layui-nav-itemed">
+                         <a class="" href="javascript:;">设备</a>
+                         <dl class="layui-nav-child">
+                             <dd><a class="layui-open-tab" href="{{url('user/device')}}">设备管理</a></dd>
+                             <dd><a class="layui-open-tab" href="{{url('user/device_log')}}">设备日志</a></dd>
+                         </dl>
+                     </li>
+                     <!-- <li class="layui-nav-item"><a class="layui-open-tab" href="{{url('user/device')}}">设备管理</a></li> -->
                  </ul>
              </div>
          </div>

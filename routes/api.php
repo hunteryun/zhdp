@@ -60,6 +60,15 @@ Route::prefix('/user')->group(function(){
         Route::put('{id}', 'Api\\User\\DeviceRegionController@update')->middleware('user.token'); // 更新设备区域列表
         Route::delete('{id}', 'Api\\User\\DeviceRegionController@destroy')->middleware('user.token'); // 删除设备区域列表
     });
+    // 作物分类
+    Route::prefix('/crop_class')->group(function(){
+        Route::get('', 'Api\\User\\CropClassController@index')->middleware('user.token'); // 作物分类列表
+        Route::post('', 'Api\\User\\CropClassController@store')->middleware('user.token'); // 添加作物分类列表
+        Route::put('{id}', 'Api\\User\\CropClassController@update')->middleware('user.token'); // 更新作物分类列表
+        Route::delete('{id}', 'Api\\User\\CropClassController@destroy')->middleware('user.token'); // 删除作物分类列表
+        Route::get('top', 'Api\\User\\CropClassController@topAll')->middleware('user.token'); // 所有顶级作物分类列表
+        Route::get('top/{id}', 'Api\\User\\CropClassController@topIdAll')->middleware('user.token'); // 获取指定id下的作物种类
+    });
     // 设备房间
     Route::prefix('/device_room')->group(function(){
         Route::get('', 'Api\\User\\DeviceRoomController@index')->middleware('user.token'); // 设备房间列表

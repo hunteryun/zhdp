@@ -39,6 +39,12 @@ Route::prefix('/user')->group(function(){
         Route::view('', 'user/device_region/index'); // 区域列表
         Route::view('add', 'user/device_region/add'); // 区域编辑
     });
+    // 作物分类管理
+    Route::prefix('/crop_class')->group(function(){
+        Route::view('', 'user/crop_class/index'); // 作物分类列表
+        Route::view('add', 'user/crop_class/add'); // 作物分类添加
+        Route::view('edit', 'user/crop_class/edit'); // 作物分类编辑
+    });
     // 房间管理
     Route::prefix('/device_room')->group(function(){
         Route::view('', 'user/device_room/index'); // 房间列表
