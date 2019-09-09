@@ -18,7 +18,6 @@ class UpdateDeviceRoom extends Base
         'crop_class_id.required' => '作物类型id必填!',
         'crop_class_id.numeric' => '作物类型id必须是数字!',
         'desc.max' => '描述最多120字符!',
-        'desc.string' => '描述必须是字符串!',
     ];
     /**
      * Determine if the user is authorized to make this request.
@@ -56,7 +55,7 @@ class UpdateDeviceRoom extends Base
                 'numeric',
                 new CropClassIdExists
             ],   
-            'desc'  => 'string|max:120',
+            'desc'  => 'max:120',
         ];
     }
 }
