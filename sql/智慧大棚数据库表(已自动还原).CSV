@@ -32,6 +32,7 @@ id,id,,,
 id,id,,,
 用户id,user_id,,,房间所属用户id
 区域id,device_region_id,,,
+作物id,crop_class_id,,,
 名称,name,,,
 描述,desc,,,
 唯一标识,token,,,用来更新房间下的设备

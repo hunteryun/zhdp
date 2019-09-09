@@ -34,10 +34,13 @@
                 ,cols: [[ 
                     {field: 'id', title: 'ID', width:80, sort: true, fixed: 'left'}
                     ,{field: 'name', title: '房间名称'}
-                    ,{field: 'token', title: 'TOKEN'}
                     ,{field: 'device_region_name', title: '区域名称', templet : function (d){
                         return d.device_region.name;
                     }}
+                    ,{field: 'crop_class_name', title: '种植作物', templet : function (d){
+                        return d.crop_class.name;
+                    }}
+                    ,{field: 'token', title: 'TOKEN'}
                     ,{field: 'desc', title: '房间描述'}
                     ,{fixed: 'right', title:'操作', toolbar: '#bar', width:180}
                 ]]

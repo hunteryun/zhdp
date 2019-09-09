@@ -17,6 +17,22 @@
                 </div>
             </div>
             <div class="layui-form-item">
+                <label class="layui-form-label">作物种类</label>
+                <div class="layui-input-inline">
+                    <select id="crop_class_parent_id" name="crop_class_parent_id" lay-verify="required" lay-filter="crop_class_parent_id">
+                        <option value="">作物种类加载中...</option>
+                    </select>     
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">作物名称</label>
+                <div class="layui-input-inline">
+                    <select id="crop_class_id" name="crop_class_id" lay-verify="required">
+                        <option value="">请选择作物种类</option>
+                    </select>     
+                </div>
+            </div>
+            <div class="layui-form-item">
                 <label class="layui-form-label">房间名称</label>
                 <div class="layui-input-inline">
                     <input type="text" class="layui-input" name="name" lay-verify="required" autocomplete="off" placeholder="房间名称">
@@ -68,6 +84,80 @@
                 }
             }
         });
+        //  获取顶级种植作物列表
+        ajaxLoad1 = layer.load(1, {
+            shade: [0.8, '#393D49']
+        });
+        $.ajax({ 
+            type: "GET",
+            url: '{{url("api/user/crop_class/top")}}',
+            success: function(result){
+                layer.close(ajaxLoad1);
+                if (result.code > 0) {
+                    layer.msg(result.msg);
+                } else {
+                    var html='<option value="">请选择种植作物</option>';
+                    $.each(result.data,function(key,value){
+                        if(value.id == device_room_info.crop_class.pid){
+                            html+="<option value='"+value.id+"' selected>"+value.name+"</option>";
+                        }else{
+                            html+="<option value='"+value.id+"'>"+value.name+"</option>";
+                        }
+                    })
+                    $('select[name=crop_class_parent_id]').html(html);
+                    form.render("select");
+                }
+            }
+        });
+        // 设置默认分类下的种植作物
+        ajaxLoad2 = layer.load(1, {
+                shade: [0.8, '#393D49']
+            });
+            $.ajax({ 
+                type: "GET",
+                url: '{{url("api/user/crop_class/top")}}/' + device_room_info.crop_class.pid,
+                success: function(result){
+                    layer.close(ajaxLoad2);
+                    if (result.code > 0) {
+                        layer.msg(result.msg);
+                    } else {
+                        var html='<option value="">请选择种植作物</option>';
+                        $.each(result.data,function(key,value){
+                            if(value.id == device_room_info.crop_class.id){
+                                html+="<option value='"+value.id+"' selected>"+value.name+"</option>";
+                            }else{
+                                html+="<option value='"+value.id+"'>"+value.name+"</option>";
+                            }
+                        })
+                        $('select[name=crop_class_id]').html(html);
+                        form.render("select");
+                    }
+                }
+            });
+        // 获取分类下的种植作物
+        form.on('select(crop_class_parent_id)', function(data){
+            //  获取种植种类列表
+            ajaxLoad2 = layer.load(1, {
+                shade: [0.8, '#393D49']
+            });
+            $.ajax({ 
+                type: "GET",
+                url: '{{url("api/user/crop_class/top")}}/' + data.value,
+                success: function(result){
+                    layer.close(ajaxLoad2);
+                    if (result.code > 0) {
+                        layer.msg(result.msg);
+                    } else {
+                        var html='<option value="">请选择种植作物</option>';
+                        $.each(result.data,function(key,value){
+                            html+="<option value='"+value.id+"'>"+value.name+"</option>";
+                        })
+                        $('select[name=crop_class_id]').html(html);
+                        form.render("select");
+                    }
+                }
+            });
+        });   
          //监听提交
          form.on('submit(formSubmit)', function(data) {
              formLoad = layer.load(1, {
@@ -79,6 +169,7 @@
                 data: {
                     '_method': 'PUT',
                     'device_region_id': data.field.device_region_id,
+                    'crop_class_id': data.field.crop_class_id,
                     'name': data.field.name,
                     'desc': data.field.desc,
                 },

@@ -15,7 +15,7 @@ class DeviceRoomController extends Base
     public function index(Request $request)
     {
         $limit = $request->input('limit');
-        $deviceRegionList = UserModel::where('token', $this->user_token())->firstOrFail()->device_room()->with('device_region')->paginate($limit)->toArray();
+        $deviceRegionList = UserModel::where('token', $this->user_token())->firstOrFail()->device_room()->with('device_region','crop_class')->paginate($limit)->toArray();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $deviceRegionList['total'];
@@ -41,6 +41,7 @@ class DeviceRoomController extends Base
         $deviceRoomModel = new DeviceRoomModel;
         $deviceRoomModel->user_id          = $user_id;
         $deviceRoomModel->device_region_id = $request->input('device_region_id');
+        $deviceRoomModel->crop_class_id       = $request->input('crop_class_id');
         $deviceRoomModel->name             = $request->input('name');
         $deviceRoomModel->desc             = $request->input('desc');
         $deviceRoomModel->token            = str_random(60); // token 禁止更新
@@ -61,6 +62,7 @@ class DeviceRoomController extends Base
         (new UpdateDeviceRoomRequests)->verification();
         $deviceRoomInfo = UserModel::where('token', $this->user_token())->firstOrFail()->device_room()->where('id', $id)->firstOrFail();
         $deviceRoomInfo->device_region_id = $request->input('device_region_id');
+        $deviceRoomInfo->crop_class_id       = $request->input('crop_class_id');
         $deviceRoomInfo->name             = $request->input('name');
         $deviceRoomInfo->desc             = $request->input('desc');
         $updateDeviceRoom = $deviceRoomInfo->save();

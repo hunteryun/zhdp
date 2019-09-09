@@ -15,6 +15,11 @@ class DeviceRoom extends Model
     {
          return $this->belongsTo(DeviceRegion::class);
     }
+    // 关联查询所属作物
+    public function crop_class()
+    {
+         return $this->belongsTo(CropClass::class);
+    }
     // 关联查询房间下的设备
     public function device()
     {
