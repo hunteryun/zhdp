@@ -3,7 +3,6 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Exceptions\IdNotFound;
 
 class User extends Model
 {
@@ -34,5 +33,10 @@ class User extends Model
     public function device_field_log()
     {
          return $this->hasMany(DeviceFieldLog::class);
+    }
+    // 关联文章表
+    public function article()
+    {
+         return $this->hasMany(Article::class);
     }
 }

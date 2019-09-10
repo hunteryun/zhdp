@@ -19,12 +19,6 @@ use Illuminate\Http\Request;
 // 用户 /index.php/api/user
 // 
 Route::prefix('/user')->group(function(){
-    // Route::get('', 'Api\\UserController@index'); // 获取列表
-    // Route::get('{id}', 'Api\\UserController@show'); // 获取指定id
-    // Route::post('', 'Api\\UserController@store'); // 新增
-    // Route::put('{id}', 'Api\\UserController@update'); // 更新
-    // Route::delete('{id}', 'Api\\UserController@destroy'); // 删除
-    // 
     Route::post('reg', 'Api\\User\\RegController@index'); // 注册
     Route::post('login', 'Api\\User\\LoginController@index'); // 登录
     // 字段类型 /index.php/api/field_type
@@ -104,6 +98,22 @@ Route::prefix('/user')->group(function(){
         Route::post('', 'Api\\User\\ArticleClassController@store')->middleware('user.token'); // 添加文章分类列表
         Route::put('{id}', 'Api\\User\\ArticleClassController@update')->middleware('user.token'); // 更新文章分类列表
         Route::delete('{id}', 'Api\\User\\ArticleClassController@destroy')->middleware('user.token'); // 删除文章分类列表
+    });
+    // 文章
+    Route::prefix('/article')->group(function(){
+        Route::get('', 'Api\\User\\ArticleController@index')->middleware('user.token'); // 文章列表
+        Route::get('{id}', 'Api\\User\\ArticleController@show')->middleware('user.token'); // 获取指定id
+        Route::post('', 'Api\\User\\ArticleController@store')->middleware('user.token'); // 添加文章列表
+        Route::put('{id}', 'Api\\User\\ArticleController@update')->middleware('user.token'); // 更新文章列表
+        Route::delete('{id}', 'Api\\User\\ArticleController@destroy')->middleware('user.token'); // 删除文章列表
+    });
+    // 文章评论
+    Route::prefix('/article_comment')->group(function(){
+        Route::get('', 'Api\\User\\ArticleCommentController@index')->middleware('user.token'); // 文章评论
+        Route::get('{id}', 'Api\\User\\ArticleCommentController@show')->middleware('user.token'); // 获取指定id
+        Route::post('', 'Api\\User\\ArticleCommentController@store')->middleware('user.token'); // 添加文章评论
+        Route::put('{id}', 'Api\\User\\ArticleCommentController@update')->middleware('user.token'); // 更新文章评论
+        Route::delete('{id}', 'Api\\User\\ArticleCommentController@destroy')->middleware('user.token'); // 删除文章评论
     });
 });
 // 兜底路由
