@@ -67,7 +67,12 @@ Route::prefix('/user')->group(function(){
     });
     // 文章管理
     Route::prefix('/article')->group(function(){
-        // 文章分类管理
+        // 文章列表
+        Route::view('', 'user/article/index'); // 文章列表
+        Route::view('info', 'user/article/info'); // 文章详情
+        Route::view('add', 'user/article/add'); // 文章添加
+        // Route::view('edit', 'user/article/edit'); // 文章编辑
+            // 文章分类管理
         Route::prefix('/class')->group(function(){
             Route::view('', 'user/article/class/index'); // 文章分类列表
             Route::view('add', 'user/article/class/add'); // 文章分类添加

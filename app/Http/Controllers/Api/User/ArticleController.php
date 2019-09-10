@@ -32,7 +32,7 @@ class ArticleController extends Base
             $where['crop_class_id'] = intval($crop_class_id);
         }
         $limit  = $request->input('limit');
-        $deviceRegionList = ArticleModel::where($where)->paginate($limit)->toArray();
+        $deviceRegionList = ArticleModel::where($where)->orderBy('id','desc')->with('user')->paginate($limit)->toArray();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $deviceRegionList['total'];
@@ -43,7 +43,7 @@ class ArticleController extends Base
     // 获取指定id 
     public function show($id)
     {
-        $articleInfo = ArticleModel::where('id', $id)->firstOrFail();
+        $articleInfo = ArticleModel::where('id', $id)->with('user')->firstOrFail();
         return success(['msg' => '文章查询成功','data' => $articleInfo]);
     }
     // 新增
