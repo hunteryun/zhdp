@@ -28,43 +28,4 @@ class FieldType extends Model
             $this->attributes['desc'] = $value;
         }
     }
-    // 获取分页
-    public function getPaginate($request){
-        return $this->paginate($request->input('limit'))->toArray();
-    }
-    // 获取所有
-    public function getAll($request){
-        return $this->all();
-    }
-    // 获取单个
-    public function getFind($id){
-        try{
-            return $this->findOrFail($id);
-        }catch(\Exception $exception){
-            throw new IdNotFound('字段类型Id未找到');
-        }
-    }
-    // 新增字段类型
-    public function addFieldType($request){
-        $this->name      = $request->input('name');
-        $this->field_type_length    = $request->input('field_type_length');
-        $this->default   = $request->input('default');
-        $this->desc      = $request->input('desc');
-        return $this->save();
-    }
-    // 更新字段类型
-    public function updateFieldType($request, $id){
-        // 不允许循环赋值，因为有可能存在id,需要更新什么就更新什么
-        $fieldTypeInfo            = $this->getFind($id);
-        $fieldTypeInfo->name      = $request->input('name');
-        $fieldTypeInfo->field_type_length    = $request->input('field_type_length');
-        $fieldTypeInfo->default   = $request->input('default');
-        $fieldTypeInfo->desc      = $request->input('desc');
-        return $fieldTypeInfo->save();
-    }
-    // 删除字段类型
-    public function deleteFieldType($id){
-        $fieldTypeInfo = $this->getFind($id);
-        return $fieldTypeInfo->delete();
-    }
 }
