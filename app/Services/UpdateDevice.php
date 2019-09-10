@@ -9,7 +9,8 @@ class UpdateDevice
     {
         $this->deviceFieldLogModel = new DeviceFieldLogModel;
     }
-    function addLog($model){
+    function addLog($model, $user_id){
+        $this->deviceFieldLogModel->user_id = $user_id;
         $this->deviceFieldLogModel->device_id = $model->device_id;
         $this->deviceFieldLogModel->name = $model->name;
         $this->deviceFieldLogModel->field = $model->field;
@@ -23,14 +24,14 @@ class UpdateDevice
         $this->deviceFieldLogModel->save();
     }
     // 处理bool
-    function boolFun($updateValue, $model){
+    function boolFun($updateValue, $model, $user_id){
         $saveStatus     = false;
         $updateValue    = intval($updateValue);
         if($updateValue == 0 || $updateValue == 1){
             $model->value = $updateValue;
             $saveStatus = $model->save();
             if($saveStatus){
-                $this->addLog($model);
+                $this->addLog($model, $user_id);
             }
         }
         return $saveStatus;
@@ -41,6 +42,7 @@ class UpdateDevice
         if(empty($updateDataField)){
             return errors(['msg'=>'请指定要更新的字段']);
         }
+        $user_id = UserModel::where('token', $user_token)->firstOrFail(['id'])->id;
         $deviceFieldList = UserModel::where('token', $user_token)->firstOrFail()->device()->where('token', $device_token)->firstOrFail()->device_field()->where('updated_at', '<', date('Y-m-d H:i:s',( time() - 60)) )->with('field_type')->get();
         if($deviceFieldList->isEmpty()){
             return errors(['msg'=>'请检查该设备下是否存在字段或更新过快']);
@@ -56,7 +58,7 @@ class UpdateDevice
                 switch($field_type['name']){
                     case 'bool':
                         // 如果是bool 0为关，1为开
-                        $saveStatus[] = $this->boolFun($updateValue, $value);
+                        $saveStatus[] = $this->boolFun($updateValue, $value, $user_id);
                         break;
                 }
             }else{

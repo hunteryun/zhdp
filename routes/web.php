@@ -58,6 +58,12 @@ Route::prefix('/user')->group(function(){
         Route::view('add', 'user/device/add'); // 设备添加
         Route::view('edit', 'user/device/edit'); // 设备编辑
         Route::view('device_field', 'user/device/device_field/index'); // 设备字段管理
+        // 设备字段日志管理
+        Route::prefix('/device_field_log')->group(function(){
+            Route::view('', 'user/device/device_field_log/index'); // 产品字段管理
+            Route::view('add', 'user/device/device_field_log/add'); // 产品字段添加
+            Route::view('edit', 'user/device/device_field_log/edit'); // 产品字段编辑
+        });
     });
 });
 

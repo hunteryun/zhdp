@@ -14,6 +14,11 @@ class DeviceFieldLog extends Model
      {
           return $this->belongsTo(FieldType::class);
      }
+     // 关联查询所属设备
+    public function device()
+    {
+         return $this->belongsTo(Device::class);
+    }
     // 设置默认值 length 字段
     public function setLengthAttribute($value)
     {

@@ -67,7 +67,7 @@
                          <a class="" href="javascript:;">设备</a>
                          <dl class="layui-nav-child">
                              <dd><a class="layui-open-tab" href="{{url('user/device')}}">设备管理</a></dd>
-                             <dd><a class="layui-open-tab" href="{{url('user/device_log')}}">设备日志</a></dd>
+                             <dd><a class="layui-open-tab" href="{{url('user/device/device_field_log')}}">设备日志</a></dd>
                          </dl>
                      </li>
                      <!-- <li class="layui-nav-item"><a class="layui-open-tab" href="{{url('user/device')}}">设备管理</a></li> -->

@@ -30,6 +30,11 @@ class User extends Model
     {
          return $this->hasMany(Device::class);
     }
+    // 关联设备字段日志表
+    public function device_field_log()
+    {
+         return $this->hasMany(DeviceFieldLog::class);
+    }
     // 获取分页
     public function getPaginate($request){
         return $this->paginate($request->input('limit'))->toArray();

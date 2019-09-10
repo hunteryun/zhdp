@@ -20,6 +20,11 @@ class Device extends Model
     {
          return $this->hasMany(DeviceField::class);
     }
+    // 关联查询设备下的字段日志
+    public function device_field_log()
+    {
+         return $this->hasMany(DeviceFieldLog::class);
+    }
     // 设置默认值 desc 字段
     public function setDescAttribute($value)
     {
