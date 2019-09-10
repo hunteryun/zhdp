@@ -97,6 +97,14 @@ Route::prefix('/user')->group(function(){
             Route::get('', 'Api\\User\\DeviceFieldLogController@index'); // 获取列表
         });
     });
+    // 文章分类
+    Route::prefix('/article_class')->group(function(){
+        Route::get('', 'Api\\User\\ArticleClassController@index')->middleware('user.token'); // 文章分类列表
+        Route::get('all', 'Api\\User\\ArticleClassController@all')->middleware('user.token'); // 所有文章分类列表
+        Route::post('', 'Api\\User\\ArticleClassController@store')->middleware('user.token'); // 添加文章分类列表
+        Route::put('{id}', 'Api\\User\\ArticleClassController@update')->middleware('user.token'); // 更新文章分类列表
+        Route::delete('{id}', 'Api\\User\\ArticleClassController@destroy')->middleware('user.token'); // 删除文章分类列表
+    });
 });
 // 字段类型 /index.php/api/field_type
 Route::prefix('/field_type')->group(function(){
