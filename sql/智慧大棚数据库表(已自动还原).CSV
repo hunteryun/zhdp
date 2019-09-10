@@ -96,3 +96,53 @@ id,id,,,
 字段显示排序,common_field_sort,,,"通过共同字段(功能),进行判断先后的显示"
 字段排序,sort,,,字段显示先后排序(上面的是相同字段排序，这个是产品下字段的排序)
 描述,desc,,,
+,,,,
+文章分类表,article_class,,,
+字段,英文名,参数,默认,描述
+id,id,,,
+文章分类名,name,,,
+分类描述,desc,,,
+文章权限,article_permissions,,0,普通用户是否可以发帖 0可以 1 不可以
+,,,,
+文章表,article,,,
+字段,英文名,参数,默认,描述
+id,id,,,
+文章标题,title,,,
+文章时间,created_at,,,
+文章内容,content,,,
+用户id,user_id,,,
+作物id,crop_class_id,,,可以选择大分类，也可以选择小分类
+文章分类id,article_class_id,,,
+状态,status,,0,0未结 1已结
+精华,essence,,0,0正常 1精华
+查看次数,view_count,,0,
+评论次数,comment_count,,0,
+,,,,
+文章评论表,article_comment,,,
+字段,英文名,参数,默认,描述
+id,,,,
+用户id,user_id,,,
+文章id,article_id,,,
+评论时间,created_at,,,
+评论内容,content,,,
+,,,,
+文章查看表,article_view,,,
+字段,英文名,参数,默认,描述
+id,,,,
+用户id,user_id,,,
+文章id,article_id,,,
+,,,,
+文章收藏表,article_collection,,,
+字段,英文名,参数,默认,描述
+id,,,,
+用户id,user_id,,,
+文章id,article_id,,,
+,,,,
+文章消息表,article_msg,,,
+字段,英文名,参数,默认,描述
+id,,,,
+发送消息的用户id,user_id,,,发送方
+文章id,article_id,,,
+接收消息的用户id,receive_user_id,,,接收方
+状态,status,,0,0 评论 1点赞 2收藏
+查看,view,,0,0 未读 1 已读
