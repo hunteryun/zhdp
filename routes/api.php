@@ -122,6 +122,13 @@ Route::prefix('/user')->group(function(){
         Route::put('{id}', 'Api\\User\\ArticleViewController@update')->middleware('user.token'); // 更新文章浏览记录
         Route::delete('{id}', 'Api\\User\\ArticleViewController@destroy')->middleware('user.token'); // 删除文章浏览记录
     });
+    // 文章收藏表
+    Route::prefix('/article_collection')->group(function(){
+        Route::get('', 'Api\\User\\ArticleCollectionController@index')->middleware('user.token'); // 文章收藏
+        Route::post('', 'Api\\User\\ArticleCollectionController@store')->middleware('user.token'); // 添加文章收藏
+        Route::put('{id}', 'Api\\User\\ArticleCollectionController@update')->middleware('user.token'); // 更新文章收藏
+        Route::delete('{id}', 'Api\\User\\ArticleCollectionController@destroy')->middleware('user.token'); // 删除文章收藏
+    });
 });
 // 兜底路由
 Route::fallback(function () {

@@ -44,4 +44,9 @@ class User extends Model
     {
          return $this->hasMany(ArticleView::class);
     }
+    // 文章收藏表
+    public function article_collection()
+    {
+         return $this->hasMany(ArticleCollection::class);
+    }
 }
