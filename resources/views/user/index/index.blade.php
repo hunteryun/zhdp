@@ -70,6 +70,17 @@
                              <dd><a class="layui-open-tab" href="{{url('user/device/device_field_log')}}">设备日志</a></dd>
                          </dl>
                      </li>
+                     <li class="layui-nav-item layui-nav-itemed">
+                         <a class="" href="javascript:;">文章</a>
+                         <dl class="layui-nav-child">
+                             <dd><a class="layui-open-tab" href="{{url('user/article/class')}}">分类管理</a></dd>
+                             <dd><a class="layui-open-tab" href="{{url('user/article')}}">文章浏览</a></dd>
+                             <dd><a class="layui-open-tab" href="{{url('user/article/my')}}">我的文章</a></dd>
+                             <dd><a class="layui-open-tab" href="{{url('user/article/my_comment')}}">我的评论</a></dd>
+                             <dd><a class="layui-open-tab" href="{{url('user/article/my_collection')}}">我的收藏</a></dd>
+                             <dd><a class="layui-open-tab" href="{{url('user/article/my_view')}}">最近浏览</a></dd>
+                         </dl>
+                     </li>
                      <!-- <li class="layui-nav-item"><a class="layui-open-tab" href="{{url('user/device')}}">设备管理</a></li> -->
                  </ul>
              </div>

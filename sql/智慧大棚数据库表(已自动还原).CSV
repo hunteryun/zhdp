@@ -139,7 +139,7 @@ id,,,,
 用户id,user_id,,,
 文章id,article_id,,,
 ,,,,
-文章消息表,article_msg,,,
+文章消息表,article_msg,,,暂时不做【】【】【】【】
 字段,英文名,参数,默认,描述
 id,,,,
 发送消息的用户id,user_id,,,发送方

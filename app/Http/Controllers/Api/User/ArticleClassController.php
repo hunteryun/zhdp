@@ -14,7 +14,7 @@ class ArticleClassController extends Base
     public function index(Request $request)
     {
         $limit = $request->input('limit');
-        $articleClassList = ArticleClassModel::paginate($limit)->toArray();
+        $articleClassList = ArticleClassModel::orderBy('sort', 'desc')->paginate($limit)->toArray();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $articleClassList['total'];

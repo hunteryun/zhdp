@@ -65,6 +65,40 @@ Route::prefix('/user')->group(function(){
             Route::view('edit', 'user/device/device_field_log/edit'); // 产品字段编辑
         });
     });
+    // 文章管理
+    Route::prefix('/article')->group(function(){
+        // 文章分类管理
+        Route::prefix('/class')->group(function(){
+            Route::view('', 'user/article/class/index'); // 文章分类列表
+            Route::view('add', 'user/article/class/add'); // 文章分类添加
+            Route::view('edit', 'user/article/class/edit'); // 文章分类编辑
+        });
+        // // 我的文章
+        // Route::prefix('/my')->group(function(){
+        //     Route::view('', 'user/article/my/index'); // 我的文章列表
+        //     Route::view('add', 'user/article/my/add'); // 我的文章添加
+        //     Route::view('edit', 'user/article/my/edit'); // 我的文章编辑
+        // });
+        // // 我的评论
+        // Route::prefix('/my_comment')->group(function(){
+        //     Route::view('', 'user/article/my_comment/index'); // 我的评论列表
+        //     Route::view('add', 'user/article/my_comment/add'); // 我的评论添加
+        //     Route::view('edit', 'user/article/my_comment/edit'); // 我的评论编辑
+        // });
+        // // 我的收藏
+        // Route::prefix('/my_collection')->group(function(){
+        //     Route::view('', 'user/article/my_collection/index'); // 我的收藏列表
+        //     Route::view('add', 'user/article/my_collection/add'); // 我的收藏添加
+        //     Route::view('edit', 'user/article/my_collection/edit'); // 我的收藏编辑
+        // });
+        // // 最近浏览
+        // Route::prefix('/my_view')->group(function(){
+        //     Route::view('', 'user/article/my_view/index'); // 最近浏览列表
+        //     Route::view('add', 'user/article/my_view/add'); // 最近浏览添加
+        //     Route::view('edit', 'user/article/my_view/edit'); // 最近浏览编辑
+        // });
+    });
+    
 });
 
 // 兜底路由

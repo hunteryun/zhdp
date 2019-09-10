@@ -13,7 +13,7 @@ class ArticleClass extends Model
     public function setSortAttribute($value)
     {
         if(is_null($value)){
-            $this->attributes['sort'] = '';
+            $this->attributes['sort'] = 0;
         }else{
             $this->attributes['sort'] = $value;
         }
