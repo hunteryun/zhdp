@@ -118,6 +118,7 @@ id,id,,,
 精华,essence,,0,0正常 1精华
 查看次数,view_count,,0,
 评论次数,comment_count,,0,
+收藏次数,article_collection_count,,0,
 ,,,,
 文章评论表,article_comment,,,
 字段,英文名,参数,默认,描述
