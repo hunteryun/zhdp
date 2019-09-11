@@ -14,7 +14,6 @@
                         <div class="layui-btn-container">
                             <button type="button" class="layui-btn layui-btn-sm" id="refresh-page">刷新页面</button> 
                             <button type="button" class="layui-btn layui-btn-sm" id="refresh-article">刷新表格</button> 
-                            <button type="button" class="layui-btn layui-btn-sm" id="add-article">发布文章</button> 
                         </div>
                     </div>
                 </div>
@@ -154,20 +153,6 @@
                         form.render("select");
                     }
                 }
-            });
-            // 添加
-            $('#add-article').click(function(){
-                return layer.open({
-                    type:2,
-                    title:'添加文章',
-                    shadeClose:true,
-                    shade:0.8,
-                    area:['100%','100%'],
-                    content:'{{url("user/article/add")}}',
-                    end:function(){
-                        table.reload('article');
-                    }
-                });
             });
             //监听搜索
             form.on('submit(formSubmit)', function(data) {
