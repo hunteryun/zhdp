@@ -16,7 +16,7 @@ class ArticleCommentController extends Base
     {
         $limit      = $request->input('limit');
         $article_id = $request->input('article_id');
-        $deviceRegionList = ArticleComment::where('article_id', intval($article_id))->paginate($limit)->toArray();
+        $deviceRegionList = ArticleCommentModel::where('article_id', intval($article_id))->paginate($limit)->toArray();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $deviceRegionList['total'];
