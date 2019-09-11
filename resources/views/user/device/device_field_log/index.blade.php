@@ -18,7 +18,7 @@
                 <script type="text/html" id="bar">
                     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
                 </script>
-                <table id="device_field_log" lay-filter="device_field_log"></table>
+                <table lay-size="sm" id="device_field_log" lay-filter="device_field_log"></table>
             </div>
          </div>
      </div>

@@ -55,7 +55,7 @@
                     <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="view">查看</a>
                     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
                 </script>
-                <table id="article" lay-filter="article"></table>
+                <table lay-size="sm" id="article" lay-filter="article"></table>
             </div>
          </div>
      </div>

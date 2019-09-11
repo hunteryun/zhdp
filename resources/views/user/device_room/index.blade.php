@@ -21,7 +21,7 @@
                     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
                     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
                 </script>
-                <table id="device_room" lay-filter="device_room"></table>
+                <table lay-size="sm" id="device_room" lay-filter="device_room"></table>
             </div>
          </div>
      </div>

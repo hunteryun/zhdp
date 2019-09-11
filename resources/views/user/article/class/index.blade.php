@@ -20,7 +20,7 @@
                     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
                     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
                 </script>
-                <table id="article_class" lay-filter="article_class"></table>
+                <table lay-size="sm" id="article_class" lay-filter="article_class"></table>
             </div>
          </div>
      </div>

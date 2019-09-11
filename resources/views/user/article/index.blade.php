@@ -54,7 +54,7 @@
                 <script type="text/html" id="bar">
                     <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="view">查看</a>
                 </script>
-                <table id="article" lay-filter="article"></table>
+                <table lay-size="sm" id="article" lay-filter="article"></table>
             </div>
          </div>
      </div>

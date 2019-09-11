@@ -11,7 +11,7 @@
         <div class="layui-card-header">设备列表</div>
          <div class="layui-card-body">
             <div class="layui-row">
-                <table id="device" lay-filter="device"></table>
+                <table lay-size="sm" id="device" lay-filter="device"></table>
             </div>
          </div>
      </div>

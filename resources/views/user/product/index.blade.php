@@ -21,7 +21,7 @@
                     <a class="layui-btn layui-btn-xs" lay-event="product_field">字段管理</a>
                     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
                 </script>
-                <table id="product" lay-filter="product"></table>
+                <table lay-size="sm" id="product" lay-filter="product"></table>
             </div>
          </div>
      </div>
