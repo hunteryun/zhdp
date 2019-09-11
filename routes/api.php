@@ -60,6 +60,9 @@ Route::prefix('/user')->group(function(){
         Route::post('', 'Api\\User\\CropClassController@store')->middleware('user.token'); // 添加作物分类列表
         Route::put('{id}', 'Api\\User\\CropClassController@update')->middleware('user.token'); // 更新作物分类列表
         Route::delete('{id}', 'Api\\User\\CropClassController@destroy')->middleware('user.token'); // 删除作物分类列表
+
+        Route::get('all_child', 'Api\\User\\CropClassController@all_child')->middleware('user.token'); // 所有作物分类(子分类)
+
         Route::get('top', 'Api\\User\\CropClassController@topAll')->middleware('user.token'); // 所有顶级作物分类列表
         Route::get('top/{id}', 'Api\\User\\CropClassController@topIdAll')->middleware('user.token'); // 获取指定id下的作物种类
     });

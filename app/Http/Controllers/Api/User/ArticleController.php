@@ -32,6 +32,11 @@ class ArticleController extends Base
         if(!empty($crop_class_id)){
             $where['crop_class_id'] = intval($crop_class_id);
         }
+        // 标题
+        $title = $request->title;
+        if(!empty($title)){
+            $where[] = ['title', 'like', '%'.$title.'%'];
+        }
         $limit  = $request->input('limit');
         $deviceRegionList = ArticleModel::where($where)->orderBy('id','desc')->with('user', 'article_class', 'crop_class')->paginate($limit)->toArray();
         $returnData = [];

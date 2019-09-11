@@ -77,4 +77,14 @@ class CropClassController extends Base
         $returnData['data']             = $cropClassAll->toArray();
         return success($returnData);
     }
+    // 获取所有子分类
+    public function all_child(Request $request)
+    {
+        $cropClassAll = CropClassModel::where('id', '<>', 0)->where('pid', '<>', 0)->get();
+        $returnData = [];
+        $returnData['msg']              = "查询成功";
+        $returnData['count']            = $cropClassAll->count();
+        $returnData['data']             = $cropClassAll->toArray();
+        return success($returnData);
+    }
 }
