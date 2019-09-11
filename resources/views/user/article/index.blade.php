@@ -52,9 +52,9 @@
                         shade:0.8,
                         area:['100%','100%'],
                         content:'{{url("user/article/info")}}',
-                        end:function(){
-                            table.reload('article');
-                        }
+                        // end:function(){
+                        //     table.reload('article');
+                        // }
                     });
                 }
             });

@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\User\Base;
 use Illuminate\Http\Request;
 use App\Model\User as UserModel;
 use App\Model\Article as ArticleModel;
+use App\Model\ArticleView as ArticleViewModel;
 use App\Http\Requests\Article\AddArticle as AddArticleRequests;
 use App\Http\Requests\Article\UpdateArticle as UpdateArticleRequests;
 // 文章
@@ -44,6 +45,24 @@ class ArticleController extends Base
     public function show($id)
     {
         $articleInfo = ArticleModel::where('id', $id)->with('user')->firstOrFail();
+        // 写入查看次数
+        $articleViewModel = new ArticleViewModel;
+        $user_id =  UserModel::where('token', $this->user_token())->firstOrFail(['id'])->id;
+        // 判断是否已读过
+        try{
+            // 查看过则只更新查看时间
+            $articleViewInfo = $articleViewModel->where('user_id', $user_id)->where('article_id', $id)->firstOrFail();
+            $articleViewInfo->updated_at = date('Y-m-d H:i:s', time());
+            $articleViewInfo->save();
+        }catch (\Exception $e){
+            // 没有查看过则记录查询
+            $articleViewModel->user_id = $user_id;
+            $articleViewModel->article_id = $id;
+            $articleViewAddStatus = $articleViewModel->save();
+            if($articleViewAddStatus){
+                $articleInfo->increment('view_count');
+            }
+        }
         return success(['msg' => '文章查询成功','data' => $articleInfo]);
     }
     // 新增
