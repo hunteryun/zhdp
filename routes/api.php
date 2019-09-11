@@ -105,10 +105,13 @@ Route::prefix('/user')->group(function(){
     // 文章
     Route::prefix('/article')->group(function(){
         Route::get('', 'Api\\User\\ArticleController@index')->middleware('user.token'); // 文章列表
-        Route::get('{id}', 'Api\\User\\ArticleController@show')->middleware('user.token'); // 获取指定id
+        Route::get('{id}', 'Api\\User\\ArticleController@show')->where('id', '[0-9]+')->middleware('user.token'); // 获取指定id
         Route::post('', 'Api\\User\\ArticleController@store')->middleware('user.token'); // 添加文章列表
-        Route::put('{id}', 'Api\\User\\ArticleController@update')->middleware('user.token'); // 更新文章列表
-        Route::delete('{id}', 'Api\\User\\ArticleController@destroy')->middleware('user.token'); // 删除文章列表
+        Route::put('{id}', 'Api\\User\\ArticleController@update')->where('id', '[0-9]+')->middleware('user.token'); // 更新文章列表
+        Route::delete('{id}', 'Api\\User\\ArticleController@destroy')->where('id', '[0-9]+')->middleware('user.token'); // 删除文章列表
+        Route::prefix('/my')->group(function(){
+            Route::get('', 'Api\\User\\ArticleController@my')->middleware('user.token'); // 获取自己的文章列表
+        });
     });
     // 文章评论
     Route::prefix('/article_comment')->group(function(){

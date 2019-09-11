@@ -9,10 +9,10 @@
     <div class="layui-container" style="padding:15px">
         <form class="layui-form layui-form-pane" action="">
             <div class="layui-form-item">
-                <label class="layui-form-label">区域名称</label>
+                <label class="layui-form-label">文章分类</label>
                 <div class="layui-input-inline">
-                    <select id="device_region_id" name="device_region_id" lay-verify="required">
-                        <option value="">加载区域中...</option>
+                    <select id="article_class_id" name="article_class_id" lay-verify="required">
+                        <option value="">加载分类中...</option>
                     </select>     
                 </div>
             </div>
@@ -33,15 +33,15 @@
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">房间名称</label>
+                <label class="layui-form-label">文章标题</label>
                 <div class="layui-input-inline">
-                    <input type="text" class="layui-input" name="name" lay-verify="required" autocomplete="off" placeholder="房间名称">
+                    <input type="text" class="layui-input" name="title" lay-verify="required" autocomplete="off" placeholder="文章标题">
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">房间描述</label>
-                <div class="layui-input-inline">
-                    <textarea type="text" class="layui-textarea" name="desc" placeholder="房间描述"></textarea>
+                <label class="layui-form-label">文章内容</label>
+                <div class="layui-input-block">
+                    <textarea type="text" class="layui-textarea" id="content" name="content" placeholder="文章内容"></textarea>
                 </div>
             </div>
             <div class="layui-form-item">
@@ -54,32 +54,32 @@
     </div>
      @include('user.public.include_js')
      <script>
-        //  获取父页面传过来的值
-        var device_room_info =  window.parent.edit_device_room_info;
+         //  获取父页面传过来的值
+        var edit_article_info =  window.parent.edit_article_info;
         //  初始化input
-        $("input[name='name']").val(device_room_info.name);
-        $("textarea[name='desc']").val(device_room_info.desc);
-        //  获取区域列表
-        ajaxLoad = layer.load(1, {
+        $("input[name='title']").val(edit_article_info.title);
+        $("textarea[name='content']").val(edit_article_info.content);
+         //  获取文章分类列表
+        ajaxLoad2 = layer.load(1, {
             shade: [0.8, '#393D49']
         });
         $.ajax({ 
             type: "GET",
-            url: '{{url("api/user/device_region/all")}}',
+            url: '{{url("api/user/article_class/all")}}',
             success: function(result){
-                layer.close(ajaxLoad);
+                layer.close(ajaxLoad2);
                 if (result.code > 0) {
                     layer.msg(result.msg);
                 } else {
-                    var html='<option value="">请选择区域</option>';
+                    var html='<option value="">请选择文章分类</option>';
                     $.each(result.data,function(key,value){
-                        if(value.id == device_room_info.device_region.id){
+                        if(value.id == edit_article_info.article_class.id){
                             html+="<option value='"+value.id+"' selected>"+value.name+"</option>";
                         }else{
                             html+="<option value='"+value.id+"'>"+value.name+"</option>";
                         }
                     })
-                    $('select[name=device_region_id]').html(html);
+                    $('select[name=article_class_id]').html(html);
                     form.render("select");
                 }
             }
@@ -98,7 +98,7 @@
                 } else {
                     var html='<option value="">请选择种植作物</option>';
                     $.each(result.data,function(key,value){
-                        if(value.id == device_room_info.crop_class.pid){
+                        if(value.id == edit_article_info.crop_class.pid){
                             html+="<option value='"+value.id+"' selected>"+value.name+"</option>";
                         }else{
                             html+="<option value='"+value.id+"'>"+value.name+"</option>";
@@ -115,7 +115,7 @@
         });
         $.ajax({ 
             type: "GET",
-            url: '{{url("api/user/crop_class/top")}}/' + device_room_info.crop_class.pid,
+            url: '{{url("api/user/crop_class/top")}}/' + edit_article_info.crop_class.pid,
             success: function(result){
                 layer.close(ajaxLoad2);
                 if (result.code > 0) {
@@ -123,7 +123,7 @@
                 } else {
                     var html='<option value="">请选择种植作物</option>';
                     $.each(result.data,function(key,value){
-                        if(value.id == device_room_info.crop_class.id){
+                        if(value.id == edit_article_info.crop_class.id){
                             html+="<option value='"+value.id+"' selected>"+value.name+"</option>";
                         }else{
                             html+="<option value='"+value.id+"'>"+value.name+"</option>";
@@ -150,7 +150,11 @@
                     } else {
                         var html='<option value="">请选择种植作物</option>';
                         $.each(result.data,function(key,value){
-                            html+="<option value='"+value.id+"'>"+value.name+"</option>";
+                            if(value.id == edit_article_info.crop_class.id){
+                                html+="<option value='"+value.id+"' selected>"+value.name+"</option>";
+                            }else{
+                                html+="<option value='"+value.id+"'>"+value.name+"</option>";
+                            }
                         })
                         $('select[name=crop_class_id]').html(html);
                         form.render("select");
@@ -158,20 +162,40 @@
                 }
             });
         });   
+        // 初始化编辑器
+        var layedit = layui.layedit;
+        var layeditNode = layedit.build('content',{
+            tool:[  
+                'strong' //加粗
+                ,'italic' //斜体
+                ,'underline' //下划线
+                ,'del' //删除线
+                ,'|' //分割线
+                ,'left' //左对齐
+                ,'center' //居中对齐
+                ,'right' //右对齐
+                ,'link' //超链接
+                ,'unlink' //清除链接
+                ,'face' //表情
+            ]
+        }); 
          //监听提交
          form.on('submit(formSubmit)', function(data) {
+             var content = layedit.getContent(layeditNode);
+             if(typeof content == "undefined" || content == null || content == ""){
+                 return layer.alert("请输入文章正文");
+             }
              formLoad = layer.load(1, {
                  shade: [0.8, '#393D49']
              });
              $.ajax({ 
-                type: "POST",
-                url: '{{url("api/user/device_room")}}/' + device_room_info.id,
+                type: "PUT",
+                url: '{{url("api/user/article")}}/' + edit_article_info.id,
                 data: {
-                    '_method': 'PUT',
-                    'device_region_id': data.field.device_region_id,
+                    'article_class_id': data.field.article_class_id,
                     'crop_class_id': data.field.crop_class_id,
-                    'name': data.field.name,
-                    'desc': data.field.desc,
+                    'title': data.field.title,
+                    'content': content,
                 },
                 success: function(result){
                     layer.close(formLoad);

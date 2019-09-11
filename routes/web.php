@@ -78,12 +78,12 @@ Route::prefix('/user')->group(function(){
             Route::view('add', 'user/article/class/add'); // 文章分类添加
             Route::view('edit', 'user/article/class/edit'); // 文章分类编辑
         });
-        // // 我的文章
-        // Route::prefix('/my')->group(function(){
-        //     Route::view('', 'user/article/my/index'); // 我的文章列表
-        //     Route::view('add', 'user/article/my/add'); // 我的文章添加
-        //     Route::view('edit', 'user/article/my/edit'); // 我的文章编辑
-        // });
+        // 我的文章
+        Route::prefix('/my')->group(function(){
+            Route::view('', 'user/article/my/index'); // 我的文章列表
+            Route::view('info', 'user/article/info'); // 文章详情
+            Route::view('edit', 'user/article/my/edit'); // 我的文章编辑
+        });
         // // 我的评论
         // Route::prefix('/my_comment')->group(function(){
         //     Route::view('', 'user/article/my_comment/index'); // 我的评论列表

@@ -110,4 +110,38 @@ class ArticleController extends Base
         }
         return success(['msg'=>"文章删除成功"]);
     }
+    // 获取自己的文章列表
+    // @url api/user/article/my?article_class_id=1&status=1&crop_class_id=1
+    public function my(Request $request)
+    {
+        $where = [];
+        // 分类
+        $article_class_id  = $request->article_class_id;
+        if(!empty($article_class_id)){
+            $where['article_class_id'] = intval($article_class_id);
+        }
+        // 状态
+        $status = $request->status;
+        if(!empty($status)){
+            $where['status'] = intval($status);
+        }
+        // 作物
+        $crop_class_id = $request->crop_class_id;
+        if(!empty($crop_class_id)){
+            $where['crop_class_id'] = intval($crop_class_id);
+        }
+        // 标题
+        $title = $request->title;
+        if(!empty($title)){
+            $where[] = ['title', 'like', '%'.$title.'%'];
+        }
+        $limit  = $request->input('limit');
+        $deviceRegionList = UserModel::where('token', $this->user_token())->firstOrFail()->article()->where($where)->orderBy('id','desc')->with( 'article_class', 'crop_class')->paginate($limit)->toArray();
+        $returnData = [];
+        $returnData['msg']              = "查询成功";
+        $returnData['count']            = $deviceRegionList['total'];
+        $returnData['current_page']     = $deviceRegionList['current_page'];
+        $returnData['data']             = $deviceRegionList['data'];
+        return success($returnData);
+    }
 }
