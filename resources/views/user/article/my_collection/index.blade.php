@@ -53,6 +53,7 @@
             <div class="layui-row">
                 <script type="text/html" id="bar">
                     <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="view">查看</a>
+                    <a class="layui-btn layui-btn-xs" lay-event="cancel_article_collection">取消收藏</a>
                 </script>
                 <table id="article" lay-filter="article"></table>
             </div>
@@ -85,7 +86,7 @@
                         return d.article.comment_count;
                     }}
                     // ,{field: 'article_collection_count', title: '收藏'}
-                    ,{fixed: 'right', title:'操作', toolbar: '#bar', width:60}
+                    ,{fixed: 'right', title:'操作', toolbar: '#bar', width:150}
                 ]]
             });
             table.on('tool(article)', function(obj){
@@ -103,7 +104,38 @@
                             table.reload('article');
                         }
                     });
+                }else if(obj.event === 'cancel_article_collection'){
+                    var article_id = data.article_id;
+                    // 取消收藏
+                    ajaxLoad2 = layer.load(1, {
+                        shade: [0.8, '#393D49']
+                    });
+                    $.ajax({ 
+                        type: "POST",
+                        url: '{{url("api/user/article_collection")}}?article_id=' + article_id,
+                        success: function(result){
+                            layer.close(ajaxLoad2);
+                            // status 0 取消收藏 1 收藏
+                            if(result.status > 0){
+                                // 收藏成功
+                                if (result.code > 0) {
+                                    layer.msg("收藏失败");
+                                }else{
+                                    layer.msg("收藏成功");
+                                }
+                            }else{
+                                // 取消收藏成功
+                                if (result.code > 0) {
+                                    layer.msg("取消收藏失败");
+                                }else{
+                                    layer.msg("取消收藏成功");
+                                }
+                            }
+                            table.reload('article');
+                        }
+                    });
                 }
+                // cancel_article_collection
             });
             // 刷新页面
             $('#refresh-page').click(function(){
