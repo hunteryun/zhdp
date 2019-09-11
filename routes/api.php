@@ -125,8 +125,8 @@ Route::prefix('/user')->group(function(){
     // 文章收藏表
     Route::prefix('/article_collection')->group(function(){
         Route::get('', 'Api\\User\\ArticleCollectionController@index')->middleware('user.token'); // 文章收藏
+        Route::get('{article_id}', 'Api\\User\\ArticleCollectionController@show')->middleware('user.token'); // 获取指定id是否收藏
         Route::post('', 'Api\\User\\ArticleCollectionController@store')->middleware('user.token'); // 添加文章收藏
-        Route::put('{id}', 'Api\\User\\ArticleCollectionController@update')->middleware('user.token'); // 更新文章收藏
         Route::delete('{id}', 'Api\\User\\ArticleCollectionController@destroy')->middleware('user.token'); // 删除文章收藏
     });
 });

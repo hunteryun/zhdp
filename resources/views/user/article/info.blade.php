@@ -13,6 +13,7 @@
             时间：<span id="created_at"></span>
             查看：<span id="view_count">0</span>
             评论：<span id="comment_count">0</span>
+            <button type="button" class="layui-btn layui-btn-xs layui-btn-primary" id="article-collection">收藏</button> 
         </div>
          <div class="layui-card-body" id="content">
             文章内容加载中
@@ -21,14 +22,18 @@
      <blockquote class="layui-elem-quote">
          回复
     </blockquote>
-    <div class="layui-form layui-form-pane">
-        <div class="layui-form-item layui-form-text">
-            <div class="layui-input-block">
-                <textarea type="text" class="layui-textarea" id="my-comment" name="my-comment" placeholder="评论内容"></textarea>
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <div class="layui-form layui-form-pane">
+                <div class="layui-form-item layui-form-text">
+                    <div class="layui-input-block">
+                        <textarea type="text" class="layui-textarea" id="my-comment" name="my-comment" placeholder="评论内容"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <button type="submit" id="submit" class="layui-btn" lay-submit="" lay-filter="formSubmit">提交</button>
+                </div>
             </div>
-        </div>
-        <div class="layui-form-item">
-            <button type="submit" id="submit" class="layui-btn" lay-submit="" lay-filter="formSubmit">提交</button>
         </div>
     </div>
      <blockquote class="layui-elem-quote">
@@ -63,6 +68,59 @@
                 }
             }
         });
+        // 收藏
+        $.ajax({ 
+            type: "GET",
+            url: '{{url("api/user/article_collection")}}/' + article_id,
+            success: function(result){
+                if (result.code > 0) {
+                    $('#article-collection').text('收藏');
+                    $('#article-collection').addClass("layui-btn-primary");
+                } else {
+                    $('#article-collection').text('已收藏');
+                    $('#article-collection').removeClass("layui-btn-primary");
+                }
+                // 点击收藏事件
+                $('#article-collection').click(function(){
+                    //  获取文章详情
+                    ajaxLoad2 = layer.load(1, {
+                        shade: [0.8, '#393D49']
+                    });
+                    $.ajax({ 
+                        type: "POST",
+                        url: '{{url("api/user/article_collection")}}?article_id=' + article_id,
+                        success: function(result){
+                            layer.close(ajaxLoad2);
+                            // status 0 取消收藏 1 收藏
+                            if(result.status > 0){
+                                // 收藏成功
+                                if (result.code > 0) {
+                                    layer.msg("收藏失败");
+                                    $('#article-collection').text('收藏');
+                                    $('#article-collection').addClass("layui-btn-primary");
+                                }else{
+                                    layer.msg("收藏成功");
+                                    $('#article-collection').text('已收藏');
+                                    $('#article-collection').removeClass("layui-btn-primary");
+                                }
+                            }else{
+                                // 取消收藏成功
+                                if (result.code > 0) {
+                                    layer.msg("取消收藏失败");
+                                    $('#article-collection').text('已收藏');
+                                    $('#article-collection').removeClass("layui-btn-primary");
+                                }else{
+                                    layer.msg("取消收藏成功");
+                                    $('#article-collection').text('收藏');
+                                    $('#article-collection').addClass("layui-btn-primary");
+                                }
+                            }
+                        }
+                    });
+                });
+            }
+        });
+
         // 初始化编辑器
         var layedit = layui.layedit;
         var layeditNode = layedit.build('my-comment',{
@@ -98,13 +156,13 @@
                     'content': content,
                 },
                 success: function(result){
-                    layer.close(formLoad);
                     if (result.code > 0) {
                         layer.msg(result.msg);
                     } else {
                         // 刷新页面 
                         window.location.reload();
                     }
+                    layer.close(formLoad);
                 }
             });
              return false;
@@ -161,7 +219,7 @@
                             html += '<div class="layui-card">';
                             html += '<a id="'+data[i].id+'"></a>';
                             html += '<div class="layui-card-header" style="height: auto">';
-                                html += '用户:' + data[i].user_id;
+                                html += '用户:' + data[i].user.name;
                                 html += ' 时间:' + data[i].created_at;
                             html += '</div>';
                                 html += '<div class="layui-card-body">';
