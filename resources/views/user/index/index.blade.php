@@ -85,7 +85,10 @@
                  </ul>
              </div>
          </div>
-
+        <div class="site-tree-mobile layui-hide">
+            <i class="layui-icon"></i>
+        </div>
+        <div class="site-mobile-shade"></div>
          <div class="layui-body">
              <div class="layui-tab layui-tab-brief admin-nav-card" style="margin-top: 0px!important;" lay-filter="index-tab" lay-allowclose="true">
                  <ul class="layui-tab-title">
