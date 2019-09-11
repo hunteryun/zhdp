@@ -15,6 +15,8 @@
                     <button type="button" class="layui-btn layui-btn-sm" id="add-article">发布文章</button> 
                 </div>
             </div>
+            <!-- 栏目工具条 -->
+            <!-- 文章列表 -->
             <div class="layui-row">
                 <script type="text/html" id="bar">
                     <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="view">查看</a>
@@ -31,14 +33,20 @@
                 ,page: true 
                 ,cols: [[ 
                     {field: 'id', title: 'ID', width:80, sort: true, fixed: 'left'}
+                    ,{field: 'article_class_name', title: '分类', templet : function (d){
+                        return d.article_class.name;
+                    }}
+                    ,{field: 'crop_class_name', title: '作物', templet : function (d){
+                        return d.crop_class.name;
+                    }}
                     ,{field: 'title', title: '标题'}
-                    ,{field: 'user_id', title: '发帖人', width:120, templet : function (d){
+                    ,{field: 'user_id', title: '发帖人', templet : function (d){
                         return d.user.name;
                     }}
-                    ,{field: 'created_at', title: '时间', width:165}
-                    ,{field: 'view_count', title: '浏览', width:60}
-                    ,{field: 'comment_count', title: '评论', width:60}
-                    ,{field: 'article_collection_count', title: '收藏', width:60}
+                    ,{field: 'created_at', title: '时间'}
+                    // ,{field: 'view_count', title: '浏览'}
+                    ,{field: 'comment_count', title: '评论'}
+                    // ,{field: 'article_collection_count', title: '收藏'}
                     ,{fixed: 'right', title:'操作', toolbar: '#bar', width:80}
                 ]]
             });

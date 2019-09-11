@@ -14,6 +14,16 @@ class Article extends Model
     {
          return $this->belongsTo(User::class);
     }
+    // 关联查询所属作物分类
+    public function crop_class()
+    {
+         return $this->belongsTo(CropClass::class);
+    }
+    // 关联查询所属文章分类
+    public function article_class()
+    {
+         return $this->belongsTo(ArticleClass::class);
+    }
     // 关联查询房间下的设备
     // public function device()
     // {

@@ -33,7 +33,7 @@ class ArticleController extends Base
             $where['crop_class_id'] = intval($crop_class_id);
         }
         $limit  = $request->input('limit');
-        $deviceRegionList = ArticleModel::where($where)->orderBy('id','desc')->with('user')->paginate($limit)->toArray();
+        $deviceRegionList = ArticleModel::where($where)->orderBy('id','desc')->with('user', 'article_class', 'crop_class')->paginate($limit)->toArray();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $deviceRegionList['total'];
