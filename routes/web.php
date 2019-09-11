@@ -90,12 +90,12 @@ Route::prefix('/user')->group(function(){
             // Route::view('add', 'user/article/my_comment/add'); // 我的评论添加
             // Route::view('edit', 'user/article/my_comment/edit'); // 我的评论编辑
         });
-        // // 我的收藏
-        // Route::prefix('/my_collection')->group(function(){
-        //     Route::view('', 'user/article/my_collection/index'); // 我的收藏列表
-        //     Route::view('add', 'user/article/my_collection/add'); // 我的收藏添加
-        //     Route::view('edit', 'user/article/my_collection/edit'); // 我的收藏编辑
-        // });
+        // 我的收藏
+        Route::prefix('/my_collection')->group(function(){
+            Route::view('', 'user/article/my_collection/index'); // 我的收藏列表
+            // Route::view('add', 'user/article/my_collection/add'); // 我的收藏添加
+            // Route::view('edit', 'user/article/my_collection/edit'); // 我的收藏编辑
+        });
         // // 最近浏览
         // Route::prefix('/my_view')->group(function(){
         //     Route::view('', 'user/article/my_view/index'); // 最近浏览列表

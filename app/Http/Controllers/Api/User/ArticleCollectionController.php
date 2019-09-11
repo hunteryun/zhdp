@@ -68,4 +68,37 @@ class ArticleCollectionController extends Base
         }
         return success(['msg'=>"文章收藏删除成功"]);
     }
+    // 获取自己的收藏
+    public function my(Request $request)
+    {
+        $limit  = $request->input('limit');
+        $deviceRegionList = UserModel::where('token', $this->user_token())->firstOrFail()->article_collection()->whereHas('article', function($query){
+            $request = request();
+            $article_class_id  = $request->article_class_id;
+            if(!empty($article_class_id)){
+                $query->where('article_class_id', intval($article_class_id));
+            }
+            // 状态
+            $status = $request->status;
+            if(!empty($status)){
+                $query->where('status', intval($status));
+            }
+            // 作物
+            $crop_class_id = $request->crop_class_id;
+            if(!empty($crop_class_id)){
+                $query->where('crop_class_id', intval($crop_class_id));
+            }
+            // 标题
+            $title = $request->title;
+            if(!empty($title)){
+                $query->where('title', 'like', '%'.$title.'%');
+            }
+        })->with('article', 'article.user', 'article.article_class', 'article.crop_class')->orderBy('id','desc')->paginate($limit)->toArray();
+        $returnData = [];
+        $returnData['msg']              = "查询成功";
+        $returnData['count']            = $deviceRegionList['total'];
+        $returnData['current_page']     = $deviceRegionList['current_page'];
+        $returnData['data']             = $deviceRegionList['data'];
+        return success($returnData);
+    }
 }

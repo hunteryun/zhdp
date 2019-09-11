@@ -128,15 +128,18 @@ Route::prefix('/user')->group(function(){
     Route::prefix('/article_view')->group(function(){
         Route::get('', 'Api\\User\\ArticleViewController@index')->middleware('user.token'); // 文章浏览记录
         Route::post('', 'Api\\User\\ArticleViewController@store')->middleware('user.token'); // 添加文章浏览记录
-        Route::put('{id}', 'Api\\User\\ArticleViewController@update')->middleware('user.token'); // 更新文章浏览记录
-        Route::delete('{id}', 'Api\\User\\ArticleViewController@destroy')->middleware('user.token'); // 删除文章浏览记录
+        Route::put('{id}', 'Api\\User\\ArticleViewController@update')->where('id', '[0-9]+')->middleware('user.token'); // 更新文章浏览记录
+        Route::delete('{id}', 'Api\\User\\ArticleViewController@destroy')->where('id', '[0-9]+')->middleware('user.token'); // 删除文章浏览记录
     });
     // 文章收藏表
     Route::prefix('/article_collection')->group(function(){
         Route::get('', 'Api\\User\\ArticleCollectionController@index')->middleware('user.token'); // 文章收藏
-        Route::get('{article_id}', 'Api\\User\\ArticleCollectionController@show')->middleware('user.token'); // 获取指定id是否收藏
+        Route::get('{article_id}', 'Api\\User\\ArticleCollectionController@show')->where('article_id', '[0-9]+')->middleware('user.token'); // 获取指定id是否收藏
         Route::post('', 'Api\\User\\ArticleCollectionController@store')->middleware('user.token'); // 添加文章收藏
-        Route::delete('{id}', 'Api\\User\\ArticleCollectionController@destroy')->middleware('user.token'); // 删除文章收藏
+        Route::delete('{id}', 'Api\\User\\ArticleCollectionController@destroy')->where('id', '[0-9]+')->middleware('user.token'); // 删除文章收藏
+        Route::prefix('/my')->group(function(){
+            Route::get('', 'Api\\User\\ArticleCollectionController@my')->middleware('user.token'); // 获取自己收藏的文章
+        });
     });
 });
 // 兜底路由
