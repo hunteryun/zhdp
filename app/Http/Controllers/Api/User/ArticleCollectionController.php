@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\User;
 use App\Http\Controllers\Api\User\Base;
 use Illuminate\Http\Request;
 use App\Model\User as UserModel;
+use App\Model\Article as ArticleModel;
 use App\Model\ArticleCollection as ArticleCollectionModel;
 use App\Http\Requests\ArticleCollection\AddArticleCollection as AddArticleCollectionRequests;
 // 文章收藏
@@ -37,11 +38,15 @@ class ArticleCollectionController extends Base
         (new AddArticleCollectionRequests)->verification();
         $article_id = $request->article_id;
         $articleExists = UserModel::where('token', $this->user_token())->firstOrFail()->article_collection()->where('article_id', $article_id)->exists();
+        // 文章详情
+        $articleInfo = ArticleModel::where('id', $article_id)->firstOrFail();
         if($articleExists){
             $deleteArticleCollectionStatus = UserModel::where('token', $this->user_token())->firstOrFail()->article_collection()->where('article_id', $article_id)->firstOrFail()->delete();
             if(!$deleteArticleCollectionStatus){
                 return errors(['msg'=>"文章收藏删除失败", 'status' => 0]);
             }
+            // 设置收藏数
+            $articleInfo->decrement('article_collection_count');
             return success(['msg'=>"文章收藏删除成功", 'status' => 0]);
         }else{
             $user_id = UserModel::where('token', $this->user_token())->firstOrFail(['id'])->id;
@@ -52,6 +57,8 @@ class ArticleCollectionController extends Base
             if(!$addArticleCollection){
                 return errors(['msg'=>"文章收藏创建失败", 'status' => 1]);
             }
+            // 设置收藏数
+            $articleInfo->increment('article_collection_count');
             return success(['msg'=>"文章收藏创建成功", 'status' => 1]);
         }
     }  
