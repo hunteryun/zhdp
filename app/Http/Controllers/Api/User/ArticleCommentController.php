@@ -70,4 +70,16 @@ class ArticleCommentController extends Base
         }
         return success(['msg'=>"文章评论删除成功"]);
     }
+    // 查询自己的评论
+    public function my(Request $request)
+    {
+        $limit      = $request->input('limit');
+        $deviceRegionList = UserModel::where('token', $this->user_token())->firstOrFail()->article_comment()->with('user', 'article')->orderBy('id', 'desc')->paginate($limit)->toArray();
+        $returnData = [];
+        $returnData['msg']              = "查询成功";
+        $returnData['count']            = $deviceRegionList['total'];
+        $returnData['current_page']     = $deviceRegionList['current_page'];
+        $returnData['data']             = $deviceRegionList['data'];
+        return success($returnData);
+    }
 }

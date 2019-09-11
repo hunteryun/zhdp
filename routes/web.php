@@ -84,12 +84,12 @@ Route::prefix('/user')->group(function(){
             Route::view('info', 'user/article/info'); // 文章详情
             Route::view('edit', 'user/article/my/edit'); // 我的文章编辑
         });
-        // // 我的评论
-        // Route::prefix('/my_comment')->group(function(){
-        //     Route::view('', 'user/article/my_comment/index'); // 我的评论列表
-        //     Route::view('add', 'user/article/my_comment/add'); // 我的评论添加
-        //     Route::view('edit', 'user/article/my_comment/edit'); // 我的评论编辑
-        // });
+        // 我的评论
+        Route::prefix('/my_comment')->group(function(){
+            Route::view('', 'user/article/my_comment/index'); // 我的评论列表
+            // Route::view('add', 'user/article/my_comment/add'); // 我的评论添加
+            // Route::view('edit', 'user/article/my_comment/edit'); // 我的评论编辑
+        });
         // // 我的收藏
         // Route::prefix('/my_collection')->group(function(){
         //     Route::view('', 'user/article/my_collection/index'); // 我的收藏列表

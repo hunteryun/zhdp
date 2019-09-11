@@ -14,4 +14,9 @@ class ArticleComment extends Model
     {
          return $this->belongsTo(User::class);
     }
+    // 关联查询所属文章
+    public function article()
+    {
+         return $this->belongsTo(Article::class);
+    }
 }

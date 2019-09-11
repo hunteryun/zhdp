@@ -116,10 +116,13 @@ Route::prefix('/user')->group(function(){
     // 文章评论
     Route::prefix('/article_comment')->group(function(){
         Route::get('', 'Api\\User\\ArticleCommentController@index')->middleware('user.token'); // 文章评论
-        Route::get('{id}', 'Api\\User\\ArticleCommentController@show')->middleware('user.token'); // 获取指定id
+        Route::get('{id}', 'Api\\User\\ArticleCommentController@show')->where('id', '[0-9]+')->middleware('user.token'); // 获取指定id
         Route::post('', 'Api\\User\\ArticleCommentController@store')->middleware('user.token'); // 添加文章评论
-        Route::put('{id}', 'Api\\User\\ArticleCommentController@update')->middleware('user.token'); // 更新文章评论
-        Route::delete('{id}', 'Api\\User\\ArticleCommentController@destroy')->middleware('user.token'); // 删除文章评论
+        Route::put('{id}', 'Api\\User\\ArticleCommentController@update')->where('id', '[0-9]+')->middleware('user.token'); // 更新文章评论
+        Route::delete('{id}', 'Api\\User\\ArticleCommentController@destroy')->where('id', '[0-9]+')->middleware('user.token'); // 删除文章评论
+        Route::prefix('/my')->group(function(){
+            Route::get('', 'Api\\User\\ArticleCommentController@my')->middleware('user.token'); // 获取自己的文章列表
+        });
     });
     // 文章查看表
     Route::prefix('/article_view')->group(function(){

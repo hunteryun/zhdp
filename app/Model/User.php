@@ -49,4 +49,9 @@ class User extends Model
     {
          return $this->hasMany(ArticleCollection::class);
     }
+    // 文章评论表
+    public function article_comment()
+    {
+         return $this->hasMany(ArticleComment::class);
+    }
 }

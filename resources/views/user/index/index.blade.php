@@ -48,14 +48,14 @@
              <div class="layui-side-scroll">
                  <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
                  <ul class="layui-nav layui-nav-tree" lay-filter="test">
-                    <li class="layui-nav-item layui-nav-itemed">
+                    <li class="layui-nav-item">
                          <a class="" href="javascript:;">产品</a>
                          <dl class="layui-nav-child">
                              <dd><a class="layui-open-tab" href="{{url('user/field_type')}}">字段类型管理</a></dd>
                              <dd><a class="layui-open-tab" href="{{url('user/product')}}">产品管理</a></dd>
                          </dl>
                      </li>
-                    <li class="layui-nav-item layui-nav-itemed">
+                    <li class="layui-nav-item">
                          <a class="" href="javascript:;">位置与作物</a>
                          <dl class="layui-nav-child">
                              <dd><a class="layui-open-tab" href="{{url('user/device_region')}}">区域管理</a></dd>
@@ -63,7 +63,7 @@
                              <dd><a class="layui-open-tab" href="{{url('user/device_room')}}">房间管理</a></dd>
                          </dl>
                      </li>
-                     <li class="layui-nav-item layui-nav-itemed">
+                     <li class="layui-nav-item">
                          <a class="" href="javascript:;">设备</a>
                          <dl class="layui-nav-child">
                              <dd><a class="layui-open-tab" href="{{url('user/device')}}">设备管理</a></dd>
@@ -89,7 +89,7 @@
          <div class="layui-body">
              <div class="layui-tab layui-tab-brief admin-nav-card" style="margin-top: 0px!important;" lay-filter="index-tab" lay-allowclose="true">
                  <ul class="layui-tab-title">
-                     <li class="layui-this" lay-id="1">网站设置</li>
+                     <li class="layui-this" lay-id="1">控制台</li>
                  </ul>
                  <div class="layui-tab-content" style="min-height: 150px; overflow-y:auto;background: #F2F2F2;">
                      <div class="layui-tab-item layui-show">
