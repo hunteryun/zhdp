@@ -38,15 +38,13 @@ class ArticleCollectionController extends Base
         (new AddArticleCollectionRequests)->verification();
         $article_id = $request->article_id;
         $articleExists = UserModel::where('token', $this->user_token())->firstOrFail()->article_collection()->where('article_id', $article_id)->exists();
-        // 文章详情
-        $articleInfo = ArticleModel::where('id', $article_id)->firstOrFail();
         if($articleExists){
             $deleteArticleCollectionStatus = UserModel::where('token', $this->user_token())->firstOrFail()->article_collection()->where('article_id', $article_id)->firstOrFail()->delete();
             if(!$deleteArticleCollectionStatus){
                 return errors(['msg'=>"文章收藏删除失败", 'status' => 0]);
             }
             // 设置收藏数
-            $articleInfo->decrement('article_collection_count');
+            ArticleModel::where('id', $article_id)->decrement('article_collection_count');
             return success(['msg'=>"文章收藏删除成功", 'status' => 0]);
         }else{
             $user_id = UserModel::where('token', $this->user_token())->firstOrFail(['id'])->id;
@@ -58,7 +56,7 @@ class ArticleCollectionController extends Base
                 return errors(['msg'=>"文章收藏创建失败", 'status' => 1]);
             }
             // 设置收藏数
-            $articleInfo->increment('article_collection_count');
+            ArticleModel::where('id', $article_id)->increment('article_collection_count');
             return success(['msg'=>"文章收藏创建成功", 'status' => 1]);
         }
     }  

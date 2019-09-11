@@ -13,6 +13,7 @@
             时间：<span id="created_at"></span>
             查看：<span id="view_count">0</span>
             评论：<span id="comment_count">0</span>
+            收藏：<span id="article_collection_count">0</span>
             <button type="button" class="layui-btn layui-btn-xs layui-btn-primary" id="article-collection">收藏</button> 
         </div>
          <div class="layui-card-body" id="content">
@@ -64,6 +65,7 @@
                     $('#created_at').html(article_info.created_at);
                     $('#view_count').html(article_info.view_count);
                     $('#comment_count').html(article_info.comment_count);
+                    $('#article_collection_count').html(article_info.article_collection_count);
                     $('#content').html(article_info.content);
                 }
             }

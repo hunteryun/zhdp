@@ -36,8 +36,9 @@
                         return d.user.name;
                     }}
                     ,{field: 'created_at', title: '时间', width:165}
-                    ,{field: 'view_count', title: '浏览(次)', width:90}
-                    ,{field: 'comment_count', title: '收藏(次)', width:90}
+                    ,{field: 'view_count', title: '浏览', width:60}
+                    ,{field: 'comment_count', title: '评论', width:60}
+                    ,{field: 'article_collection_count', title: '收藏', width:60}
                     ,{fixed: 'right', title:'操作', toolbar: '#bar', width:80}
                 ]]
             });
@@ -52,9 +53,9 @@
                         shade:0.8,
                         area:['100%','100%'],
                         content:'{{url("user/article/info")}}',
-                        // end:function(){
-                        //     table.reload('article');
-                        // }
+                        end:function(){
+                            table.reload('article');
+                        }
                     });
                 }
             });

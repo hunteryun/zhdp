@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\User\Base;
 use Illuminate\Http\Request;
 use App\Model\User as UserModel;
 use App\Model\ArticleComment as ArticleCommentModel;
+use App\Model\Article as ArticleModel;
 use App\Http\Requests\ArticleComment\AddArticleComment as AddArticleCommentRequests;
 use App\Http\Requests\ArticleComment\UpdateArticleComment as UpdateArticleCommentRequests;
 // 文章评论
@@ -37,6 +38,9 @@ class ArticleCommentController extends Base
         if(!$addArticleComment){
             return errors(['msg'=>"文章评论创建失败"]);
         }
+        // 更新评论数
+        ArticleModel::where('id', $request->input('article_id'))->increment('comment_count');
+        // 
         return success(['msg'=>"文章评论创建成功"]);
     }      
     // 获取指定id 
