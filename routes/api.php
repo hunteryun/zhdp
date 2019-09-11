@@ -130,6 +130,9 @@ Route::prefix('/user')->group(function(){
         Route::post('', 'Api\\User\\ArticleViewController@store')->middleware('user.token'); // 添加文章浏览记录
         Route::put('{id}', 'Api\\User\\ArticleViewController@update')->where('id', '[0-9]+')->middleware('user.token'); // 更新文章浏览记录
         Route::delete('{id}', 'Api\\User\\ArticleViewController@destroy')->where('id', '[0-9]+')->middleware('user.token'); // 删除文章浏览记录
+        Route::prefix('/my')->group(function(){
+            Route::get('', 'Api\\User\\ArticleViewController@my')->middleware('user.token'); // 获取自己收藏的文章
+        });
     });
     // 文章收藏表
     Route::prefix('/article_collection')->group(function(){

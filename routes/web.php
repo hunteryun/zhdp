@@ -96,12 +96,12 @@ Route::prefix('/user')->group(function(){
             // Route::view('add', 'user/article/my_collection/add'); // 我的收藏添加
             // Route::view('edit', 'user/article/my_collection/edit'); // 我的收藏编辑
         });
-        // // 最近浏览
-        // Route::prefix('/my_view')->group(function(){
-        //     Route::view('', 'user/article/my_view/index'); // 最近浏览列表
-        //     Route::view('add', 'user/article/my_view/add'); // 最近浏览添加
-        //     Route::view('edit', 'user/article/my_view/edit'); // 最近浏览编辑
-        // });
+        // 最近浏览
+        Route::prefix('/my_view')->group(function(){
+            Route::view('', 'user/article/my_view/index'); // 最近浏览列表
+            // Route::view('add', 'user/article/my_view/add'); // 最近浏览添加
+            // Route::view('edit', 'user/article/my_view/edit'); // 最近浏览编辑
+        });
     });
     
 });
