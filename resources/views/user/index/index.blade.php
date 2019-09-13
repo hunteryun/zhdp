@@ -15,7 +15,7 @@
      <div class="layui-layout layui-layout-admin">
          <div class="layui-header header header-demo">
              <div class="layui-main">
-                 <div class="layui-logo">layui 后台布局</div>
+                 <div class="layui-logo">智慧大棚云平台</div>
                  <!-- 大屏幕显示区域 -->
                  <ul class="layui-nav layui-layout-left layui-hide-xs">
                      <li class="layui-nav-item"><a href="{{url('/')}}">网站首页</a></li>
@@ -49,14 +49,14 @@
                  <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
                  <ul class="layui-nav layui-nav-tree" lay-filter="test">
                     <li class="layui-nav-item">
-                         <a class="" href="javascript:;">产品</a>
+                         <a class="" href="javascript:;">产品管理</a>
                          <dl class="layui-nav-child">
                              <dd><a class="layui-open-tab" href="{{url('user/field_type')}}">字段类型管理</a></dd>
                              <dd><a class="layui-open-tab" href="{{url('user/product')}}">产品管理</a></dd>
                          </dl>
                      </li>
                     <li class="layui-nav-item">
-                         <a class="" href="javascript:;">位置与作物</a>
+                         <a class="" href="javascript:;">位置与作物管理</a>
                          <dl class="layui-nav-child">
                              <dd><a class="layui-open-tab" href="{{url('user/device_region')}}">区域管理</a></dd>
                              <dd><a class="layui-open-tab" href="{{url('user/crop_class')}}">作物管理</a></dd>
@@ -64,14 +64,16 @@
                          </dl>
                      </li>
                      <li class="layui-nav-item">
-                         <a class="" href="javascript:;">设备</a>
+                         <a class="" href="javascript:;">设备管理</a>
                          <dl class="layui-nav-child">
                              <dd><a class="layui-open-tab" href="{{url('user/device')}}">设备管理</a></dd>
                              <dd><a class="layui-open-tab" href="{{url('user/device/device_field_log')}}">设备日志</a></dd>
                          </dl>
                      </li>
-                     <li class="layui-nav-item layui-nav-itemed">
-                         <a class="" href="javascript:;">文章</a>
+                     <!--  layui-nav-itemed 打开选项卡 -->
+                     <li class="layui-nav-item">
+                         <a class="" href="javascript:;">社区交流</a>
+                         <!-- <a class="" href="javascript:;">文章管理</a> -->
                          <dl class="layui-nav-child">
                              <dd><a class="layui-open-tab" href="{{url('user/article/class')}}">分类管理</a></dd>
                              <dd><a class="layui-open-tab" href="{{url('user/article')}}">文章浏览</a></dd>
@@ -81,6 +83,42 @@
                              <dd><a class="layui-open-tab" href="{{url('user/article/my_view')}}">最近浏览</a></dd>
                          </dl>
                      </li>
+                     <li class="layui-nav-item">
+                         <a class="" href="javascript:;">病虫害与天气预警管理</a>
+                         <dl class="layui-nav-child">
+                             <dd><a class="layui-open-tab" href="">病虫害预警</a></dd>
+                             <dd><a class="layui-open-tab" href="">天气预警</a></dd>
+                         </dl>
+                     </li>
+                     <li class="layui-nav-item">
+                         <a class="" href="javascript:;">数据分析</a>
+                         <dl class="layui-nav-child">
+                             <!-- 通过百度echer进行显示 -->
+                             <dd><a class="layui-open-tab" href="">数据可视化</a></dd>
+                             <!-- 整理显示为漂亮的数据大屏 -->
+                             <dd><a class="layui-open-tab" href="">数据大屏</a></dd>
+                         </dl>
+                     </li>
+                     <li class="layui-nav-item"><a class="layui-open-tab" href="">用户管理</a></li>
+                     <li class="layui-nav-item">
+                         <a class="" href="javascript:;">管理员管理</a>
+                         <dl class="layui-nav-child">
+                             <dd><a class="layui-open-tab" href="">路由管理</a></dd>
+                             <dd><a class="layui-open-tab" href="">权限管理</a></dd>
+                             <dd><a class="layui-open-tab" href="">管理员管理</a></dd>
+                         </dl>
+                     </li>
+                     <li class="layui-nav-item">
+                         <a class="" href="javascript:;">通知管理</a>
+                         <dl class="layui-nav-child">
+                             <!-- 每次登录都要通知的通知 -->
+                             <dd><a class="layui-open-tab" href="">即时通知</a></dd>
+                             <!-- 用户只查看一次就不再显示的通知 -->
+                             <dd><a class="layui-open-tab" href="">历史通知</a></dd>
+                         </dl>
+                     </li>
+                     <li class="layui-nav-item"><a class="layui-open-tab" href="">系统消息</a></li>
+                     <li class="layui-nav-item"><a class="layui-open-tab" href="">系统设置</a></li>
                      <!-- <li class="layui-nav-item"><a class="layui-open-tab" href="{{url('user/device')}}">设备管理</a></li> -->
                  </ul>
              </div>
