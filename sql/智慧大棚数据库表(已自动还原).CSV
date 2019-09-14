@@ -212,26 +212,34 @@ id,,,,
 选项,option,,,选项(如果是单选或多选，则本字段必填，选项以逗号分隔)
 值,value,,,如果是普通文本或文本域，则存储字符串。如果是单选或多选，则存储选项，以逗号隔开!!
 ,,,,
-设备事件,device_event,,,当设备的value高于或低于或等于某值的时候进行操作，一个设备可以有多个事件
+设备事件,device_event,,,当设备的value高于或低于或等于某值的时候进行操作，一个字段可以有多个事件
 id,,,,
+用户id,user_id,,,
 类型,type,,,0 低于 1 等于 2 高于
 值,value,,,用于比较的值
 事件名,name,,,
 事件描述,desc,,,
+设备区域id,device_region_id,,,
+设备房间id,device_room_id,,,
 设备id,device_id,,,
 所属设备字段id,device_field_id,,,
 关联设备id,associated_device_id,,,关联设备进行相关的操作(必须是同一房间下)
+关联设备字段,associated_device_field_id,,,操作该字段
 操作类型(暂时只能操作继电器),operation_type,,0,0 关闭 1打开(有继电开关的只能有一个字段，并且该字段是bool)
 ,,,,
 设备事件日志,device_event_log,,,
 id,,,,
+用户id,user_id,,,
 类型,type,,,0 低于 1 等于 2 高于
 值,value,,,用于比较的值
 事件名,name,,,
 事件描述,desc,,,
+设备区域id,device_region_id,,,
+设备房间id,device_room_id,,,
 设备id,device_id,,,
 所属设备字段id,device_field_id,,,
 关联设备id,associated_device_id,,,关联设备进行相关的操作(必须是同一房间下)
+关联设备字段,associated_device_field_id,,,操作该字段
 操作类型(暂时只能操作继电器),operation_type,,0,0 关闭 1打开(有继电开关的只能有一个字段，并且该字段是bool)
 ,,,,
 地图表,map,,,

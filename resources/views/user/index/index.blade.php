@@ -68,6 +68,15 @@
                          <dl class="layui-nav-child">
                              <dd><a class="layui-open-tab" href="{{url('user/device')}}">设备管理</a></dd>
                              <dd><a class="layui-open-tab" href="{{url('user/device/device_field_log')}}">设备日志</a></dd>
+                             <dd><a class="layui-open-tab" href="{{url('user/device/device_event')}}">事件管理</a></dd>
+                             <dd><a class="layui-open-tab" href="{{url('user/device/device_event_log')}}">事件日志</a></dd>
+                         </dl>
+                     </li>
+                     <li class="layui-nav-item">
+                         <a class="" href="javascript:;">病虫害与天气预警管理</a>
+                         <dl class="layui-nav-child">
+                             <dd><a class="layui-open-tab" href="">病虫害预警</a></dd>
+                             <dd><a class="layui-open-tab" href="">天气预警</a></dd>
                          </dl>
                      </li>
                      <!--  layui-nav-itemed 打开选项卡 -->
@@ -81,13 +90,6 @@
                              <dd><a class="layui-open-tab" href="{{url('user/article/my_comment')}}">我的评论</a></dd>
                              <dd><a class="layui-open-tab" href="{{url('user/article/my_collection')}}">我的收藏</a></dd>
                              <dd><a class="layui-open-tab" href="{{url('user/article/my_view')}}">最近浏览</a></dd>
-                         </dl>
-                     </li>
-                     <li class="layui-nav-item">
-                         <a class="" href="javascript:;">病虫害与天气预警管理</a>
-                         <dl class="layui-nav-child">
-                             <dd><a class="layui-open-tab" href="">病虫害预警</a></dd>
-                             <dd><a class="layui-open-tab" href="">天气预警</a></dd>
                          </dl>
                      </li>
                      <li class="layui-nav-item">

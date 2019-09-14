@@ -93,6 +93,24 @@ Route::prefix('/user')->group(function(){
         Route::prefix('/device_field_log')->group(function(){
             Route::get('', 'Api\\User\\DeviceFieldLogController@index'); // 获取列表
         });
+        // 事件
+        Route::prefix('/device_event')->group(function(){
+            Route::get('', 'Api\\User\\DeviceEventController@index')->middleware('user.token'); // 设备事件列表
+            Route::get('all', 'Api\\User\\DeviceEventController@all')->middleware('user.token'); // 所有设备事件列表
+            Route::post('', 'Api\\User\\DeviceEventController@store')->middleware('user.token'); // 添加设备事件列表
+            Route::get('{id}', 'Api\\User\\DeviceEventController@show')->where('id', '[0-9]+')->middleware('user.token'); // 获取指定设备id的所有事件
+            Route::put('{id}', 'Api\\User\\DeviceEventController@update')->where('id', '[0-9]+')->middleware('user.token'); // 更新设备事件列表
+            Route::delete('{id}', 'Api\\User\\DeviceEventController@destroy')->where('id', '[0-9]+')->middleware('user.token'); // 删除设备事件列表
+        });
+        // 事件日志
+        Route::prefix('/device_event_log')->group(function(){
+            Route::get('', 'Api\\User\\DeviceEventLogController@index')->middleware('user.token'); // 设备事件日志列表
+            Route::get('all', 'Api\\User\\DeviceEventLogController@all')->middleware('user.token'); // 所有设备事件日志列表
+            Route::post('', 'Api\\User\\DeviceEventLogController@store')->middleware('user.token'); // 添加设备事件日志列表
+            Route::get('{id}', 'Api\\User\\DeviceEventLogController@show')->where('id', '[0-9]+')->middleware('user.token'); // 获取指定设备id的所有事件日志
+            Route::put('{id}', 'Api\\User\\DeviceEventLogController@update')->where('id', '[0-9]+')->middleware('user.token'); // 更新设备事件日志列表
+            Route::delete('{id}', 'Api\\User\\DeviceEventLogController@destroy')->where('id', '[0-9]+')->middleware('user.token'); // 删除设备事件日志列表
+        });
     });
     // 文章分类
     Route::prefix('/article_class')->group(function(){

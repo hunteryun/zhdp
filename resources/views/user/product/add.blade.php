@@ -37,7 +37,7 @@
              });
              $.ajax({ 
                 type: "POST",
-                url: '{{url("api/user/device_room")}}',
+                url: '{{url("api/user/product")}}',
                 data: {
                     'product_id': data.field.product_id,
                     'name': data.field.name,

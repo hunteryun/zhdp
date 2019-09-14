@@ -3,17 +3,17 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Exceptions\IdNotFound;
 // 设备字段
 class DeviceField extends Model
 {
     // 指定表名
     // laravel自动会+s
     protected $table = 'device_field';
-    // 隐藏指定字段
-    // protected $hidden = ['updated_at'];
-    // 只可以显示的字段
-    // protected $visible = ['updated_at'];
+    // 关联查询设备字段下的事件
+    public function device_event()
+    {
+         return $this->hasMany(DeviceEvent::class);
+    }
      // 关联获取字段类型
      public function field_type()
      {
