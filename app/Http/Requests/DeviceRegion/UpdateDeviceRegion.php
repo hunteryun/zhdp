@@ -3,7 +3,7 @@
 namespace App\Http\Requests\DeviceRegion;
 use App\Http\Requests\Base;
 use Illuminate\Validation\Rule;
-use App\Rules\UserIdExists; // 引入判断是不是真实的用户id 
+// use App\Rules\UserIdExists; // 引入判断是不是真实的用户id 
 // 设备区域
 class UpdateDeviceRegion extends Base
 {
@@ -12,8 +12,15 @@ class UpdateDeviceRegion extends Base
         'name.unique' => '名字已经存在!',
         'name.alpha_dash' => '名字只允许字母和数字，以及破折号和下划线!',
         'name.between' => '名字长度需要在1-30之间!',
-        'user_id.required' => '用户id必填!',
-        'user_id.numeric' => '用户id必须是数字!',
+        // 'user_id.required' => '用户id必填!',
+        // 'user_id.numeric' => '用户id必须是数字!',
+        
+        'province.required' => '省标识必填!',
+        'province.numeric' => '省标识必须是数字!',
+        'city.required' => '市标识必填!',
+        'city.numeric' => '市标识必须是数字!',
+        'area.required' => '县标识必填!',
+        'area.numeric' => '县标识必须是数字!',
     ];
     /**
      * Determine if the user is authorized to make this request.
@@ -41,12 +48,24 @@ class UpdateDeviceRegion extends Base
                 'alpha_dash',
                 'between:1,30',
             ],
-            'user_id' => [
+            // 'user_id' => [
+            //     'required',
+            //     'numeric',
+            //     'between:1,255',
+            //     new UserIdExists
+            // ],   
+            'province' => [
                 'required',
                 'numeric',
-                'between:1,255',
-                new UserIdExists
             ],   
+            'city' => [
+                'required',
+                'numeric',
+            ],   
+            'area' => [
+                'required',
+                'numeric',
+            ], 
         ];
     }
 }

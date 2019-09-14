@@ -37,7 +37,8 @@ Route::prefix('/user')->group(function(){
     // 区域管理
     Route::prefix('/device_region')->group(function(){
         Route::view('', 'user/device_region/index'); // 区域列表
-        Route::view('add', 'user/device_region/add'); // 区域编辑
+        Route::view('add', 'user/device_region/add'); // 区域添加
+        Route::view('edit', 'user/device_region/edit'); // 区域更新
     });
     // 作物分类管理
     Route::prefix('/crop_class')->group(function(){

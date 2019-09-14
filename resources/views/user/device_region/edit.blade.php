@@ -43,10 +43,51 @@
      @include('user.public.include_js')
     <script src="{{asset('/js/region_data.js')}}" charset="utf-8"></script>
     <script>
+        //  获取父页面传过来的值
+        var device_region_info =  window.parent.edit_device_region_info;
+        //  初始化input
+        $("input[name='name']").val(device_region_info.name);
+    </script>
+    <script>
         var Province = $("#province"), City = $("#city"), Area = $("#area");
         // 初始化
         (function(){
-            provinceLinkage();
+            // 设置省
+            getProvince(function(data){
+                var html = "";
+                data.forEach(function(index){
+                    if(index.provinceCode == device_region_info.province){
+                        html += "<option value='"+index.provinceCode+"' selected>"+index.provinceName+"</option>";
+                    }else{
+                        html += "<option value='"+index.provinceCode+"'>"+index.provinceName+"</option>";
+                    }
+                });
+                Province.html(html);
+            });
+            // 设置市
+            getCity(device_region_info.province, function(data){
+                var html = "";
+                data.forEach(function(index){
+                    if(index.cityCode == device_region_info.city){
+                        html += "<option value='"+index.cityCode+"' selected>"+index.cityName+"</option>";
+                    }else{
+                        html += "<option value='"+index.cityCode+"'>"+index.cityName+"</option>";
+                    }
+                });
+                City.html(html);
+            });
+            // 设置县
+            getArea(device_region_info.province, device_region_info.city, function(data){
+                var html = "";
+                data.forEach(function(index){
+                    if(index.areaCode == device_region_info.area){
+                        html += "<option value='"+index.areaCode+"' selected>"+index.areaName+"</option>";
+                    }else{
+                        html += "<option value='"+index.areaCode+"'>"+index.areaName+"</option>";
+                    }
+                });
+                Area.html(html);
+            });
             updateName();
             form.render('select');
         })()
@@ -66,18 +107,6 @@
         form.on('select(area)', function(){
             updateName();
         });
-        // 省初始化
-        function provinceLinkage(){
-            getProvince(function(data){
-                var ProvinceHtml = "";
-                data.forEach(function(index){
-                    ProvinceHtml += "<option value='"+index.provinceCode+"'>"+index.provinceName+"</option>";
-                });
-                Province.html(ProvinceHtml);
-                // 市联动
-                cityLinkage(data[0].provinceCode);
-            });
-        }
         // 市联动
         function cityLinkage(provinceCode){
             getCity(provinceCode, function(data){
@@ -180,8 +209,8 @@
                  shade: [0.8, '#393D49']
              });
              $.ajax({ 
-                type: "POST",
-                url: '{{url("api/user/device_region")}}',
+                type: "PUT",
+                url: '{{url("api/user/device_region")}}/' + device_region_info.id,
                 data: {
                     'name': data.field.name,
                     'province': data.field.province,

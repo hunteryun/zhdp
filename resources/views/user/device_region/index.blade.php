@@ -61,32 +61,17 @@
                     layer.close(index);
                 });
                 } else if(obj.event === 'edit'){
-                    layer.prompt({
-                        title: '修改区域名称'
-                        ,formType: 0
-                        ,value: data.name
-                    }, function(value, index){
-                        ajaxLoad = layer.load(1, {
-                            shade: [0.8, '#393D49']
-                        });
-                        $.ajax({ 
-                            type: "POST",
-                            url: '{{url("api/user/device_region")}}/'+ data.id,
-                            data: {
-                                '_method': 'PUT',
-                                'name': value,
-                            },
-                            success: function(result){
-                                layer.close(ajaxLoad);
-                                layer.msg(result.msg);
-                                if (result.code == 0) {
-                                    obj.update({
-                                        name: value
-                                    });
-                                }
-                            }
-                        });
-                        layer.close(index);
+                    window.edit_device_region_info = data;
+                    layer.open({
+                        type:2,
+                        title:'修改设备区域',
+                        shadeClose:true,
+                        shade:0.8,
+                        area:['100%','100%'],
+                        content:'{{url("user/device_region/edit")}}',
+                        end:function(){
+                            table.reload('device_region');
+                        }
                     });
                 }
             });
