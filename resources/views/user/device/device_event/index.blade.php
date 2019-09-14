@@ -17,7 +17,6 @@
             </div>
             <div class="layui-row">
                 <script type="text/html" id="bar">
-                    <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="view">查看</a>
                     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
                     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
                 </script>
@@ -62,7 +61,7 @@
                     ,{field: 'operation_type', title: '触发操作', templet : function (d){
                         return d.operation_type == 1? '开': '关';
                     }}
-                    ,{fixed: 'right', title:'操作', toolbar: '#bar', width:180}
+                    ,{fixed: 'right', title:'操作', toolbar: '#bar', width:120}
                 ]]
             });
             table.on('tool(device_event)', function(obj){

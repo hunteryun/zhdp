@@ -74,8 +74,6 @@ Route::prefix('/user')->group(function(){
         // 设备事件日志管理
         Route::prefix('/device_event_log')->group(function(){
             Route::view('', 'user/device/device_event_log/index'); // 事件日志管理
-            Route::view('add', 'user/device/device_event_log/add'); // 事件日志添加
-            Route::view('edit', 'user/device/device_event_log/edit'); // 事件日志编辑
         });
     });
     // 文章管理

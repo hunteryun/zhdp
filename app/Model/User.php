@@ -59,4 +59,9 @@ class User extends Model
      {
           return $this->hasMany(DeviceEvent::class);
      }
+     // 设备事件日志表
+     public function device_event_log()
+     {
+          return $this->hasMany(DeviceEventLog::class);
+     }
 }

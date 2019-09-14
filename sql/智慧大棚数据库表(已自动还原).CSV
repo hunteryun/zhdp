@@ -229,9 +229,11 @@ id,,,,
 ,,,,
 设备事件日志,device_event_log,,,
 id,,,,
+设备事件id,device_event_id,,,
 用户id,user_id,,,
 类型,type,,,0 低于 1 等于 2 高于
 值,value,,,用于比较的值
+记录值,log_value,,,实际传入的值
 事件名,name,,,
 事件描述,desc,,,
 设备区域id,device_region_id,,,

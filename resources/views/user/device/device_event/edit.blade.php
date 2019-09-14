@@ -124,14 +124,10 @@
          var device_region_list;
          var device_list;
         //  初始化设备区域
-        // ajaxLoad1 = layer.load(1, {
-        //     shade: [0.8, '#393D49']
-        // });
          $.ajax({ 
             type: "GET",
             url: '{{url("api/user/device_region/all")}}',
             success: function(result){
-                // layer.close(ajaxLoad1);
                 if (result.code > 0) {
                     layer.msg(result.msg);
                 } else {

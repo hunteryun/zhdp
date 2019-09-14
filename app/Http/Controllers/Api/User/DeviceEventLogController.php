@@ -15,7 +15,7 @@ class DeviceEventLogController extends Base
     public function index(Request $request)
     {
         $limit = $request->input('limit');
-        $deviceList = UserModel::where('token', $this->user_token())->firstOrFail()->device_event_log()->paginate($limit)->toArray();
+        $deviceList = UserModel::where('token', $this->user_token())->firstOrFail()->device_event_log()->with("device", "device_field", "associated_device", "associated_device_field")->paginate($limit)->toArray();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $deviceList['total'];
@@ -39,10 +39,12 @@ class DeviceEventLogController extends Base
         $deviceEventLog->type                  = $request->input('type');
         $deviceEventLog->value                 = $request->input('value');
         $deviceEventLog->desc                  = $request->input('desc');
+        $deviceEventLog->device_region_id             = $request->input('device_region_id');
+        $deviceEventLog->device_room_id             = $request->input('device_room_id');
         $deviceEventLog->device_id             = $request->input('device_id');
         $deviceEventLog->device_field_id       = $request->input('device_field_id');
         $deviceEventLog->associated_device_id  = $request->input('associated_device_id');
-        $deviceEvent->associated_device_field_id  = $request->input('associated_device_field_id');
+        $deviceEventLog->associated_device_field_id  = $request->input('associated_device_field_id');
         $deviceEventLog->operation_type        = $request->input('operation_type');
         $addArticle = $deviceEventLog->save();
         if(!$addArticle){
@@ -58,10 +60,12 @@ class DeviceEventLogController extends Base
         $deviceEventLogInfo->type                  = $request->input('type');
         $deviceEventLogInfo->value                 = $request->input('value');
         $deviceEventLogInfo->desc                  = $request->input('desc');
+        $deviceEventLogInfo->device_region_id             = $request->input('device_region_id');
+        $deviceEventLogInfo->device_room_id             = $request->input('device_room_id');
         $deviceEventLogInfo->device_id             = $request->input('device_id');
         $deviceEventLogInfo->device_field_id       = $request->input('device_field_id');
         $deviceEventLogInfo->associated_device_id  = $request->input('associated_device_id');
-        $deviceEventInfo->associated_device_field_id  = $request->input('associated_device_field_id');
+        $deviceEventLogInfo->associated_device_field_id  = $request->input('associated_device_field_id');
         $deviceEventLogInfo->operation_type        = $request->input('operation_type');
         $updateDevice = $deviceEventLogInfo->save();
         if(!$updateDevice){

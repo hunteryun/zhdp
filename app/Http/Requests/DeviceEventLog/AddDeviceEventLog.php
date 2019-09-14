@@ -17,9 +17,13 @@ class AddDeviceEventLog extends Base
         'value.required' => '设备事件日志值必填!',
         'value.alpha_dash' => '值只允许字母和数字，以及破折号和下划线!',
         'value.between' => '设备事件日志值长度需要在1-255之间!',
-        'desc.required' => '设备事件日志描述必填!',
-        'desc.alpha_dash' => '描述只允许字母和数字，以及破折号和下划线!',
+        // 'desc.required' => '设备事件日志描述必填!',
+        // 'desc.alpha_dash' => '描述只允许字母和数字，以及破折号和下划线!',
         'desc.max' => '设备事件日志描述最大长度255!',
+        'device_region_id.required' => '设备日志区域id必填!',
+        'device_region_id.numeric' => '设备日志区域id必须是数字!',
+        'device_room_id.required' => '设备日志房间id必填!',
+        'device_room_id.numeric' => '设备日志房间id必须是数字!',
         'device_id.required' => '设备id必填!',
         'device_id.numeric' => '设备id必须是数字!',
         'device_field_id.required' => '设备字段id必填!',
@@ -69,6 +73,16 @@ class AddDeviceEventLog extends Base
             'desc' => [
                 'alpha_dash',
                 'max:255',
+            ],
+            'device_region_id' => [
+                'required',
+                'numeric',
+                new DeviceRegionIdExists,
+            ],
+            'device_room_id' => [
+                'required',
+                'numeric',
+                new DeviceRoomIdExists,
             ],
             'device_id' => [
                 'required',
