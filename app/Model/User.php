@@ -69,4 +69,9 @@ class User extends Model
      {
           return $this->hasMany(PestWarningLog::class);
      }
+     // 登录通知
+     public function login_notice_log()
+     {
+          return $this->hasMany(LoginNoticeLog::class);
+     }
 }

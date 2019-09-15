@@ -191,6 +191,25 @@ Route::prefix('/user')->group(function(){
         Route::put('{id}', 'Api\\User\\AdminController@update')->where('id', '[0-9]+')->middleware('user.token'); // 更新管理员
         Route::delete('{id}', 'Api\\User\\AdminController@destroy')->where('id', '[0-9]+')->middleware('user.token'); // 删除管理员
     });
+    // 登录通知表
+    Route::prefix('/login_notice')->group(function(){
+        Route::get('', 'Api\\User\\LoginNoticeController@index')->middleware('user.token'); // 登录通知
+        Route::get('every_day', 'Api\\User\\LoginNoticeController@every_day')->middleware('user.token'); // 获取每次登录都要提示的信息
+        Route::get('{id}', 'Api\\User\\LoginNoticeController@show')->where('id', '[0-9]+')->middleware('user.token'); // 获取指定id
+        Route::post('', 'Api\\User\\LoginNoticeController@store')->middleware('user.token'); // 添加登录通知
+        Route::put('{id}', 'Api\\User\\LoginNoticeController@update')->where('id', '[0-9]+')->middleware('user.token'); // 更新登录通知
+        Route::delete('{id}', 'Api\\User\\LoginNoticeController@destroy')->where('id', '[0-9]+')->middleware('user.token'); // 删除登录通知、
+        // 即时通知
+        Route::prefix('/immediate_login_notice')->group(function(){
+            Route::get('', 'Api\\User\\LoginNoticeController@every_day')->middleware('user.token'); // 获取即时通知分页
+            Route::get('every_day_all', 'Api\\User\\LoginNoticeController@every_day_all')->middleware('user.token'); // 获取所有即时通知
+        });
+        Route::prefix('/login_notice_log')->group(function(){
+            Route::get('', 'Api\\User\\LoginNoticeLogController@my')->middleware('user.token'); // 获取历史通知(每个人查看记录的那种)
+            Route::get('unread_all', 'Api\\User\\LoginNoticeLogController@unread_all')->middleware('user.token'); // 获取所有未读通知
+            Route::get('{id}', 'Api\\User\\LoginNoticeLogController@show')->where('id', '[0-9]+')->middleware('user.token'); // 获取指定id
+    });
+    });
 });
 // 兜底路由
 Route::fallback(function () {

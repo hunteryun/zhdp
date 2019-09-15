@@ -109,12 +109,14 @@
                          </dl>
                      </li>
                      <li class="layui-nav-item">
-                         <a class="" href="javascript:;">通知管理</a>
+                         <a class="" href="javascript:;">登录通知管理</a>
                          <dl class="layui-nav-child">
+                             <!-- 显示 -->
+                            <dd><a class="layui-open-tab" href="{{url('user/login_notice')}}">通知管理</a></dd>
                              <!-- 每次登录都要通知的通知 -->
-                             <dd><a class="layui-open-tab" href="">即时通知</a></dd>
+                             <dd><a class="layui-open-tab" href="{{url('user/login_notice/immediate_login_notice')}}">即时通知</a></dd>
                              <!-- 用户只查看一次就不再显示的通知 -->
-                             <dd><a class="layui-open-tab" href="">历史通知</a></dd>
+                             <dd><a class="layui-open-tab" href="{{url('user/login_notice/login_notice_log')}}">历史通知</a></dd>
                          </dl>
                      </li>
                      <li class="layui-nav-item"><a class="layui-open-tab" href="">系统消息</a></li>
