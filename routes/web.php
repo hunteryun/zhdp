@@ -149,6 +149,11 @@ Route::prefix('/user')->group(function(){
             Route::view('info', 'user/login_notice/login_notice_log/info'); //登录通知记录详情
         });
     });
+    // 系统消息管理
+    Route::prefix('/system_msg')->group(function(){
+        Route::view('', 'user/system_msg/index'); // 系统消息列表
+        Route::view('info', 'user/system_msg/info'); //系统消息列表详情
+    });
     
 });
 

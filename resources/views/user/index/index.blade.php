@@ -119,9 +119,8 @@
                              <dd><a class="layui-open-tab" href="{{url('user/login_notice/login_notice_log')}}">历史通知</a></dd>
                          </dl>
                      </li>
-                     <li class="layui-nav-item"><a class="layui-open-tab" href="">系统消息</a></li>
-                     <li class="layui-nav-item"><a class="layui-open-tab" href="">系统设置</a></li>
-                     <!-- <li class="layui-nav-item"><a class="layui-open-tab" href="{{url('user/device')}}">设备管理</a></li> -->
+                     <li class="layui-nav-item"><a class="layui-open-tab" href="{{url('user/system_msg')}}">系统消息</a></li>
+                     <li class="layui-nav-item"><a class="layui-open-tab" href="{{url('user/system_settings')}}">系统设置</a></li>
                  </ul>
              </div>
          </div>
