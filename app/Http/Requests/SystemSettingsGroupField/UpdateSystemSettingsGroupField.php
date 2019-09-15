@@ -53,10 +53,9 @@ class UpdateSystemSettingsGroupField extends Base
                 'between:1,30',
             ],
             'field' => [
-                // 'required',
-                Rule::unique('system_settings_group_field')->where('id', $this->request->id),
+                'required',
+                Rule::unique('system_settings_group_field')->ignore($this->request->id),
                 'between:1,255',
-                'unique:system_settings_group_field'
             ], 
             'desc'  => 'max:120',
             'value' => [

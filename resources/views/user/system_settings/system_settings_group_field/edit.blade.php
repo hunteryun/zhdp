@@ -8,40 +8,53 @@
  <body>
     <div class="layui-container" style="padding:15px">
         <form class="layui-form layui-form-pane" action="">
-            <div class="layui-form-item">
-                <label class="layui-form-label">区域名称</label>
+        <div class="layui-form-item">
+                <label class="layui-form-label">设置组</label>
                 <div class="layui-input-inline">
-                    <select id="device_region_id" name="device_region_id" lay-verify="required">
-                        <option value="">加载区域中...</option>
+                    <select id="system_settings_group_id" name="system_settings_group_id" lay-verify="required">
+                        <option value="">加载设置组中...</option>
                     </select>     
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">作物种类</label>
+                <label class="layui-form-label">设置名称</label>
                 <div class="layui-input-inline">
-                    <select id="crop_class_parent_id" name="crop_class_parent_id" lay-verify="required" lay-filter="crop_class_parent_id">
-                        <option value="">作物种类加载中...</option>
+                    <input type="text" class="layui-input" name="name" lay-verify="required" autocomplete="off" placeholder="设置名称">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">唯一标识</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" name="field" lay-verify="required" autocomplete="off" placeholder="唯一标识">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">设置描述</label>
+                <div class="layui-input-block">
+                    <textarea type="text" class="layui-textarea" name="desc" placeholder="设置描述"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">设置类型</label>
+                <div class="layui-input-inline">
+                    <select id="type" name="type" lay-verify="required">
+                        <option value="0">普通文本</option>
+                        <option value="1">文本域</option>
+                        <option value="2">单选</option>
+                        <option value="3">多选</option>
                     </select>     
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">作物名称</label>
-                <div class="layui-input-inline">
-                    <select id="crop_class_id" name="crop_class_id" lay-verify="required">
-                        <option value="">请选择作物种类</option>
-                    </select>     
+                <label class="layui-form-label">选项</label>
+                <div class="layui-input-block">
+                    <textarea type="text" class="layui-textarea" name="option" placeholder="选项如果是单选或多选，选项请以逗号隔开。文本则不填写"></textarea>
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">房间名称</label>
-                <div class="layui-input-inline">
-                    <input type="text" class="layui-input" name="name" lay-verify="required" autocomplete="off" placeholder="房间名称">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">房间描述</label>
-                <div class="layui-input-inline">
-                    <textarea type="text" class="layui-textarea" name="desc" placeholder="房间描述"></textarea>
+                <label class="layui-form-label">值</label>
+                <div class="layui-input-block">
+                    <textarea type="text" class="layui-textarea" name="value" placeholder="选项如果是单选或多选，选项key请以逗号隔开。文本则直接填写"></textarea>
                 </div>
             </div>
             <div class="layui-form-item">
@@ -55,123 +68,59 @@
      @include('user.public.include_js')
      <script>
         //  获取父页面传过来的值
-        var device_room_info =  window.parent.edit_device_room_info;
+        var system_settings_group_field_info =  window.parent.edit_system_settings_group_field_info;
+        console.log(system_settings_group_field_info);
         //  初始化input
-        $("input[name='name']").val(device_room_info.name);
-        $("textarea[name='desc']").val(device_room_info.desc);
-        //  获取区域列表
+        $("input[name='name']").val(system_settings_group_field_info.name);
+        $("input[name='field']").val(system_settings_group_field_info.field);
+        $("input[name='field']").val(system_settings_group_field_info.field);
+        $("textarea[name='desc']").val(system_settings_group_field_info.desc);
+        $("select[name='type']").val(system_settings_group_field_info.type);
+        $("textarea[name='option']").val(system_settings_group_field_info.option);
+        $("textarea[name='value']").val(system_settings_group_field_info.value);
+        form.render("select");
+        //  获取设置组列表
         ajaxLoad = layer.load(1, {
             shade: [0.8, '#393D49']
         });
         $.ajax({ 
             type: "GET",
-            url: '{{url("api/user/device_region/all")}}',
+            url: '{{url("api/user/system_settings/system_settings_group/all")}}',
             success: function(result){
                 layer.close(ajaxLoad);
                 if (result.code > 0) {
                     layer.msg(result.msg);
                 } else {
-                    var html='<option value="">请选择区域</option>';
+                    var html='<option value="">请选择设置组</option>';
                     $.each(result.data,function(key,value){
-                        if(value.id == device_room_info.device_region.id){
+                        if(value.id == system_settings_group_field_info.system_settings_group_id){
                             html+="<option value='"+value.id+"' selected>"+value.name+"</option>";
                         }else{
                             html+="<option value='"+value.id+"'>"+value.name+"</option>";
                         }
                     })
-                    $('select[name=device_region_id]').html(html);
+                    $('select[name=system_settings_group_id]').html(html);
                     form.render("select");
                 }
             }
         });
-        //  获取顶级种植作物列表
-        ajaxLoad1 = layer.load(1, {
-            shade: [0.8, '#393D49']
-        });
-        $.ajax({ 
-            type: "GET",
-            url: '{{url("api/user/crop_class/top")}}',
-            success: function(result){
-                layer.close(ajaxLoad1);
-                if (result.code > 0) {
-                    layer.msg(result.msg);
-                } else {
-                    var html='<option value="">请选择种植作物</option>';
-                    $.each(result.data,function(key,value){
-                        if(value.id == device_room_info.crop_class.pid){
-                            html+="<option value='"+value.id+"' selected>"+value.name+"</option>";
-                        }else{
-                            html+="<option value='"+value.id+"'>"+value.name+"</option>";
-                        }
-                    })
-                    $('select[name=crop_class_parent_id]').html(html);
-                    form.render("select");
-                }
-            }
-        });
-        // 设置默认分类下的种植作物
-        ajaxLoad2 = layer.load(1, {
-            shade: [0.8, '#393D49']
-        });
-        $.ajax({ 
-            type: "GET",
-            url: '{{url("api/user/crop_class/top")}}/' + device_room_info.crop_class.pid,
-            success: function(result){
-                layer.close(ajaxLoad2);
-                if (result.code > 0) {
-                    layer.msg(result.msg);
-                } else {
-                    var html='<option value="">请选择种植作物</option>';
-                    $.each(result.data,function(key,value){
-                        if(value.id == device_room_info.crop_class.id){
-                            html+="<option value='"+value.id+"' selected>"+value.name+"</option>";
-                        }else{
-                            html+="<option value='"+value.id+"'>"+value.name+"</option>";
-                        }
-                    })
-                    $('select[name=crop_class_id]').html(html);
-                    form.render("select");
-                }
-            }
-        });
-        // 获取分类下的种植作物
-        form.on('select(crop_class_parent_id)', function(data){
-            //  获取种植种类列表
-            ajaxLoad2 = layer.load(1, {
-                shade: [0.8, '#393D49']
-            });
-            $.ajax({ 
-                type: "GET",
-                url: '{{url("api/user/crop_class/top")}}/' + data.value,
-                success: function(result){
-                    layer.close(ajaxLoad2);
-                    if (result.code > 0) {
-                        layer.msg(result.msg);
-                    } else {
-                        var html='<option value="">请选择种植作物</option>';
-                        $.each(result.data,function(key,value){
-                            html+="<option value='"+value.id+"'>"+value.name+"</option>";
-                        })
-                        $('select[name=crop_class_id]').html(html);
-                        form.render("select");
-                    }
-                }
-            });
-        });   
          //监听提交
          form.on('submit(formSubmit)', function(data) {
              formLoad = layer.load(1, {
                  shade: [0.8, '#393D49']
              });
              $.ajax({ 
-                type: "POST",
-                url: '{{url("api/user/device_room")}}/' + device_room_info.id,
+                type: "PUT",
+                url: '{{url("api/user/system_settings/system_settings_group_field")}}/' + system_settings_group_field_info.id,
                 data: {
                     '_method': 'PUT',
-                    'device_region_id': data.field.device_region_id,
-                    'crop_class_id': data.field.crop_class_id,
+                    'system_settings_group_id': data.field.system_settings_group_id,
                     'name': data.field.name,
+                    'field': data.field.field,
                     'desc': data.field.desc,
+                    'type': data.field.type,
+                    'option': data.field.option,
+                    'value': data.field.value,
                 },
                 success: function(result){
                     layer.close(formLoad);

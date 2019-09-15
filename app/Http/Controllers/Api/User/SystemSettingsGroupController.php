@@ -25,7 +25,7 @@ class SystemSettingsGroupController extends Base
     // 获取所有
     public function all()
     {
-        $systemSettingsGroupAll = SystemSettingsGroupModel::orderBy('id', 'desc')->all();
+        $systemSettingsGroupAll = SystemSettingsGroupModel::orderBy('id', 'desc')->get();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $systemSettingsGroupAll->count();
