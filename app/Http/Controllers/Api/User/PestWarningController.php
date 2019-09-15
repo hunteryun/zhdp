@@ -16,7 +16,7 @@ class PestWarningController extends Base
     public function index(Request $request)
     {
         $limit = $request->input('limit');
-        $pestWarningList = PestWarningModel::paginate($limit)->toArray();
+        $pestWarningList = PestWarningModel::orderBy("id", "desc")->paginate($limit)->toArray();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $pestWarningList['total'];

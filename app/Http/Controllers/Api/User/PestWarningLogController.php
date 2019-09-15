@@ -12,7 +12,7 @@ class PestWarningLogController extends Base
     public function index(Request $request)
     {
         $limit = $request->input('limit');
-        $PestWarningLogList = UserModel::where('token', $this->user_token())->firstOrFail()->pest_warning_log()->with("pest_warning")->paginate($limit)->toArray();
+        $PestWarningLogList = UserModel::where('token', $this->user_token())->firstOrFail()->pest_warning_log()->with("pest_warning")->orderBy("id", "desc")->paginate($limit)->toArray();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $PestWarningLogList['total'];
