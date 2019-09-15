@@ -215,6 +215,27 @@ Route::prefix('/user')->group(function(){
         Route::get('', 'Api\\User\\SystemMsgController@index')->middleware('user.token'); // 系统消息列表
         Route::get('{id}', 'Api\\User\\SystemMsgController@show')->where('id', '[0-9]+')->middleware('user.token'); // 获取指定id(并更新读取状态)
     });
+    // 系统设置
+    Route::prefix('/system_settings')->group(function(){
+        // 系统设置组
+        Route::prefix('/system_settings_group')->group(function(){
+            Route::get('', 'Api\\User\\SystemSettingsGroupController@index')->middleware('user.token'); // 获取列表
+            Route::get('all', 'Api\\User\\SystemSettingsGroupController@all')->middleware('user.token'); // 获取所有数据
+            Route::get('{id}', 'Api\\User\\SystemSettingsGroupController@show')->where('id', '[0-9]+')->middleware('user.token'); // 获取指定id
+            Route::post('', 'Api\\User\\SystemSettingsGroupController@store')->middleware('user.token'); // 新增
+            Route::put('{id}', 'Api\\User\\SystemSettingsGroupController@update')->where('id', '[0-9]+')->middleware('user.token'); // 更新
+            Route::delete('{id}', 'Api\\User\\SystemSettingsGroupController@destroy')->where('id', '[0-9]+')->middleware('user.token'); // 删除
+        });
+        // 系统设置字段
+        Route::prefix('/system_settings_group_field')->group(function(){
+            Route::get('', 'Api\\User\\SystemSettingsGroupFieldController@index')->middleware('user.token'); // 获取列表
+            Route::get('all', 'Api\\User\\SystemSettingsGroupFieldController@all')->middleware('user.token'); // 获取所有数据
+            Route::get('{id}', 'Api\\User\\SystemSettingsGroupFieldController@show')->where('id', '[0-9]+')->middleware('user.token'); // 获取指定id
+            Route::post('', 'Api\\User\\SystemSettingsGroupFieldController@store')->middleware('user.token'); // 新增
+            Route::put('{id}', 'Api\\User\\SystemSettingsGroupFieldController@update')->where('id', '[0-9]+')->middleware('user.token'); // 更新
+            Route::delete('{id}', 'Api\\User\\SystemSettingsGroupFieldController@destroy')->where('id', '[0-9]+')->middleware('user.token'); // 删除
+        });
+    });
 });
 // 兜底路由
 Route::fallback(function () {

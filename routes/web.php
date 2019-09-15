@@ -154,6 +154,20 @@ Route::prefix('/user')->group(function(){
         Route::view('', 'user/system_msg/index'); // 系统消息列表
         Route::view('info', 'user/system_msg/info'); //系统消息列表详情
     });
+    // 系统设置组管理
+    Route::prefix('/system_settings')->group(function(){
+        Route::prefix('/system_settings_group')->group(function(){
+            Route::view('', 'user/system_settings/system_settings_group/index'); // 系统设置组列表
+            Route::view('add', 'user/system_settings/system_settings_group/add'); // 系统设置组添加
+            Route::view('edit', 'user/system_settings/system_settings_group/edit'); // 系统设置组编辑
+        });
+        // 系统设置管理
+        Route::prefix('/system_settings_group_field')->group(function(){
+            Route::view('', 'user/system_settings/system_settings_group_field/index'); // 系统设置列表
+            Route::view('add', 'user/system_settings/system_settings_group_field/add'); // 系统设置添加
+            Route::view('edit', 'user/system_settings/system_settings_group_field/edit'); // 系统设置编辑
+        });
+    });
     
 });
 

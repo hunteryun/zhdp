@@ -120,7 +120,13 @@
                          </dl>
                      </li>
                      <li class="layui-nav-item"><a class="layui-open-tab" href="{{url('user/system_msg')}}">系统消息</a></li>
-                     <li class="layui-nav-item"><a class="layui-open-tab" href="{{url('user/system_settings')}}">系统设置</a></li>
+                     <li class="layui-nav-item">
+                         <a class="" href="javascript:;">系统设置</a>
+                         <dl class="layui-nav-child">
+                            <dd><a class="layui-open-tab" href="{{url('user/system_settings/system_settings_group')}}">设置组管理</a></dd>
+                             <dd><a class="layui-open-tab" href="{{url('user/system_settings/system_settings_group_field')}}">设置字段管理</a></dd>
+                         </dl>
+                     </li>
                  </ul>
              </div>
          </div>
