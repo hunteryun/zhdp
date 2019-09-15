@@ -101,13 +101,11 @@
                              <dd><a class="layui-open-tab" href="">数据大屏</a></dd>
                          </dl>
                      </li>
-                     <li class="layui-nav-item"><a class="layui-open-tab" href="">用户管理</a></li>
                      <li class="layui-nav-item">
-                         <a class="" href="javascript:;">管理员管理</a>
+                         <a class="" href="javascript:;">用户管理</a>
                          <dl class="layui-nav-child">
-                             <dd><a class="layui-open-tab" href="">路由管理</a></dd>
-                             <dd><a class="layui-open-tab" href="">权限管理</a></dd>
-                             <dd><a class="layui-open-tab" href="">管理员管理</a></dd>
+                             <dd><a class="layui-open-tab" href="{{url('user/admin')}}">管理员管理</a></dd>
+                             <dd><a class="layui-open-tab" href="{{url('user/user')}}">用户管理</a></dd>
                          </dl>
                      </li>
                      <li class="layui-nav-item">

@@ -175,6 +175,22 @@ Route::prefix('/user')->group(function(){
             Route::get('', 'Api\\User\\ArticleCollectionController@my')->middleware('user.token'); // 获取自己收藏的文章
         });
     });
+    // 用户表
+    Route::prefix('/user')->group(function(){
+        Route::get('', 'Api\\User\\UserController@index')->middleware('user.token'); // 用户
+        Route::get('{id}', 'Api\\User\\UserController@show')->where('id', '[0-9]+')->middleware('user.token'); // 获取指定id
+        Route::post('', 'Api\\User\\UserController@store')->middleware('user.token'); // 添加用户
+        Route::put('{id}', 'Api\\User\\UserController@update')->where('id', '[0-9]+')->middleware('user.token'); // 更新用户
+        Route::delete('{id}', 'Api\\User\\UserController@destroy')->where('id', '[0-9]+')->middleware('user.token'); // 删除用户
+    });
+    // 管理员表
+    Route::prefix('/admin')->group(function(){
+        Route::get('', 'Api\\User\\AdminController@index')->middleware('user.token'); // 管理员
+        Route::get('{id}', 'Api\\User\\AdminController@show')->where('id', '[0-9]+')->middleware('user.token'); // 获取指定id
+        Route::post('', 'Api\\User\\AdminController@store')->middleware('user.token'); // 添加管理员
+        Route::put('{id}', 'Api\\User\\AdminController@update')->where('id', '[0-9]+')->middleware('user.token'); // 更新管理员
+        Route::delete('{id}', 'Api\\User\\AdminController@destroy')->where('id', '[0-9]+')->middleware('user.token'); // 删除管理员
+    });
 });
 // 兜底路由
 Route::fallback(function () {

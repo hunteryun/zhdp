@@ -30,10 +30,10 @@ class PestWarningController extends Base
         $pestWarningModel = new PestWarningModel;
         $pestWarningModel->title = $request->input('title');
         $pestWarningModel->type = $request->input('type');
-        if($request->has('start_time')){
+        if($request->filled('start_time')){
             $pestWarningModel->start_time = $request->input('start_time');
         }
-        if($request->has('end_time')){
+        if($request->filled('end_time')){
             $pestWarningModel->end_time = $request->input('end_time');
         }
         $pestWarningModel->warning = $request->input('warning');
@@ -67,10 +67,10 @@ class PestWarningController extends Base
         $pestWarningInfo = PestWarningModel::where('id', $id)->firstOrFail();
         $pestWarningInfo->title = $request->input('title');
         $pestWarningInfo->type = $request->input('type');
-        if($request->has('start_time')){
+        if($request->filled('start_time')){
             $pestWarningInfo->start_time = $request->input('start_time');
         }
-        if($request->has('end_time')){
+        if($request->filled('end_time')){
             $pestWarningInfo->end_time = $request->input('end_time');
         }
         $pestWarningInfo->warning = $request->input('warning');

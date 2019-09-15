@@ -121,6 +121,18 @@ Route::prefix('/user')->group(function(){
             // Route::view('edit', 'user/article/my_view/edit'); // 最近浏览编辑
         });
     });
+    // 用户管理
+    Route::prefix('/user')->group(function(){
+        Route::view('', 'user/user/index'); // 用户列表
+        Route::view('add', 'user/user/add'); // 用户添加
+        Route::view('edit', 'user/user/edit'); // 用户编辑
+    });
+    // 管理员管理
+    Route::prefix('/admin')->group(function(){
+        Route::view('', 'user/admin/index'); // 管理员列表
+        Route::view('add', 'user/admin/add'); // 管理员添加
+        Route::view('edit', 'user/admin/edit'); // 管理员编辑
+    });
     
 });
 

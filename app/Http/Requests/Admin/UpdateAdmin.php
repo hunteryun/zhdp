@@ -3,10 +3,10 @@
 namespace App\Http\Requests\User;
 use App\Http\Requests\Base;
 use Illuminate\Validation\Rule;
-class UpdateUser extends Base
+class UpdateAdmin extends Base
 {
     public $messages = [
-        'name.required' => '用户名必填!',
+        'name.required' => '管理员名必填!',
         'name.unique' => '名字已经存在!',
         'name.alpha_dash' => '名字只允许字母和数字，以及破折号和下划线!',
         'name.between' => '名字长度需要在6-30之间!',
@@ -20,7 +20,7 @@ class UpdateUser extends Base
      */
     public function authorize()
     {
-        //false 表示用户无权限，如果要带入控制器设置为true
+        //false 表示管理员无权限，如果要带入控制器设置为true
         return false;
     }
 
@@ -36,7 +36,7 @@ class UpdateUser extends Base
             'name' => [
                 'required',
                 // 验证唯一，除了自己
-                Rule::unique('user')->ignore($this->request->id),
+                Rule::unique('admin')->ignore($this->request->id),
                 'alpha_dash',
                 'between:6,30',
             ],
