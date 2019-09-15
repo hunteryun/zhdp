@@ -229,7 +229,6 @@ Route::prefix('/user')->group(function(){
         // 系统设置字段
         Route::prefix('/system_settings_group_field')->group(function(){
             Route::get('', 'Api\\User\\SystemSettingsGroupFieldController@index')->middleware('user.token'); // 获取列表
-            Route::get('all', 'Api\\User\\SystemSettingsGroupFieldController@all')->middleware('user.token'); // 获取所有数据
             Route::get('{id}', 'Api\\User\\SystemSettingsGroupFieldController@show')->where('id', '[0-9]+')->middleware('user.token'); // 获取指定id
             Route::post('', 'Api\\User\\SystemSettingsGroupFieldController@store')->middleware('user.token'); // 新增
             Route::put('{id}', 'Api\\User\\SystemSettingsGroupFieldController@update')->where('id', '[0-9]+')->middleware('user.token'); // 更新
