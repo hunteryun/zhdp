@@ -208,7 +208,12 @@ Route::prefix('/user')->group(function(){
             Route::get('', 'Api\\User\\LoginNoticeLogController@index')->middleware('user.token'); // 获取历史通知(每个人查看记录的那种)
             Route::get('unread_all', 'Api\\User\\LoginNoticeLogController@unread_all')->middleware('user.token'); // 获取所有未读通知
             Route::get('{id}', 'Api\\User\\LoginNoticeLogController@show')->where('id', '[0-9]+')->middleware('user.token'); // 获取指定id
+        });
     });
+    // 系统消息
+    Route::prefix('/system_msg')->group(function(){
+        Route::get('', 'Api\\User\\SystemMsgController@index')->middleware('user.token'); // 系统消息列表
+        Route::get('{id}', 'Api\\User\\SystemMsgController@show')->where('id', '[0-9]+')->middleware('user.token'); // 获取指定id(并更新读取状态)
     });
 });
 // 兜底路由

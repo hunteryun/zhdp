@@ -74,4 +74,9 @@ class User extends Model
      {
           return $this->hasMany(LoginNoticeLog::class);
      }
+     // 系统消息
+     public function system_msg()
+     {
+          return $this->hasMany(SystemMsg::class);
+     }
 }
