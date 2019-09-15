@@ -75,8 +75,8 @@
                      <li class="layui-nav-item">
                          <a class="" href="javascript:;">病虫害与天气预警管理</a>
                          <dl class="layui-nav-child">
-                             <dd><a class="layui-open-tab" href="">病虫害天气预警管理</a></dd>
-                             <dd><a class="layui-open-tab" href="">病虫害天气预警记录</a></dd>
+                             <dd><a class="layui-open-tab" href="{{url('user/pest_warning')}}">病虫害天气预警管理</a></dd>
+                             <dd><a class="layui-open-tab" href="{{url('user/pest_warning/pest_warning_log')}}">病虫害天气预警记录</a></dd>
                          </dl>
                      </li>
                      <!--  layui-nav-itemed 打开选项卡 -->

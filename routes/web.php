@@ -76,6 +76,13 @@ Route::prefix('/user')->group(function(){
             Route::view('', 'user/device/device_event_log/index'); // 事件日志管理
         });
     });
+    // 病虫害预警管理
+    Route::prefix('/pest_warning')->group(function(){
+        Route::view('', 'user/pest_warning/index'); // 病虫害预警列表
+        Route::view('add', 'user/pest_warning/add'); // 病虫害预警添加
+        Route::view('edit', 'user/pest_warning/edit'); // 病虫害预警编辑
+        Route::view('pest_warning_log', 'user/pest_warning/pest_warning_log/index'); // 病虫害预警日志管理(显示所有用户对于已发布事件的查看状态)
+    });
     // 文章管理
     Route::prefix('/article')->group(function(){
         // 文章列表

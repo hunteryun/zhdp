@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Api\User\Base;
 use Illuminate\Http\Request;
+use App\Model\User as UserModel;
 use App\Model\PestWarning as PestWarningModel;
+use App\Model\PestWarningLog as PestWarningLogModel;
 use App\Http\Requests\PestWarning\AddPestWarning as AddPestWarningRequests;
 use App\Http\Requests\PestWarning\UpdatePestWarning as UpdatePestWarningRequests;
 // 病虫害预警
@@ -28,11 +30,32 @@ class PestWarningController extends Base
         $pestWarningModel = new PestWarningModel;
         $pestWarningModel->title = $request->input('title');
         $pestWarningModel->type = $request->input('type');
-        $pestWarningModel->start_time = $request->input('start_time');
-        $pestWarningModel->end_time = $request->input('end_time');
+        if($request->has('start_time')){
+            $pestWarningModel->start_time = $request->input('start_time');
+        }
+        if($request->has('end_time')){
+            $pestWarningModel->end_time = $request->input('end_time');
+        }
         $pestWarningModel->warning = $request->input('warning');
         $pestWarningModel->content = $request->input('content');
         $addPestWarning = $pestWarningModel->save();
+        $pest_warning_id = $pestWarningModel->id;
+        // 写入日志
+        $date_time = date("Y-m-d H:i:s", time()); 
+        UserModel::chunk(100, function ($users) use ($pest_warning_id, $date_time){
+            $logs = [];
+            foreach ($users as $user) {
+                $log = [];
+                $log['pest_warning_id'] = $pest_warning_id;
+                $log['user_id'] = $user->id;
+                $log['status'] = '0';
+                $log['updated_at'] = $date_time;
+                $log['created_at'] = $date_time;
+                $logs[] = $log;
+            }
+            PestWarningLogModel::insert($logs);
+        });
+        
         if(!$addPestWarning){
             return errors(['msg'=>'创建失败']);
         }
@@ -44,8 +67,12 @@ class PestWarningController extends Base
         $pestWarningInfo = PestWarningModel::where('id', $id)->firstOrFail();
         $pestWarningInfo->title = $request->input('title');
         $pestWarningInfo->type = $request->input('type');
-        $pestWarningInfo->start_time = $request->input('start_time');
-        $pestWarningInfo->end_time = $request->input('end_time');
+        if($request->has('start_time')){
+            $pestWarningInfo->start_time = $request->input('start_time');
+        }
+        if($request->has('end_time')){
+            $pestWarningInfo->end_time = $request->input('end_time');
+        }
         $pestWarningInfo->warning = $request->input('warning');
         $pestWarningInfo->content = $request->input('content');
         $updatePestWarning = $pestWarningInfo->save();

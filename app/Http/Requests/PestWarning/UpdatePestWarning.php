@@ -45,8 +45,8 @@ class UpdatePestWarning extends Base
         return [
             'title' => 'required|alpha_dash|between:1,255',
             'type' => 'required|in:0,1',   
-            'start_time' => 'date',   
-            'end_time' => 'date',   
+            'start_time' => 'date|nullable',   
+            'end_time' => 'date|nullable',    
             'warning' => 'required|max:65535',   
             'content' => 'required|max:65535',   
         ];
