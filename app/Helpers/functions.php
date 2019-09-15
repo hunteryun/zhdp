@@ -32,4 +32,21 @@ function json($arr = [], $httpCode)
 {
     return response()->json($arr, $httpCode);
 }
-
+/**
+ * ----
+ * 给指定用户发送系统消息
+ * ----
+ * @param mixed $user_id 用户id
+ * @param mixed $type 消息类型 (0 天气预警 1 病虫害预警 2 设备预警 3 文章被回复)
+ * @param mixed $title 消息标题
+ * @param mixed $content 消息内容
+ * @return bool
+ */
+function send_system_msg($user_id, $type, $title, $content){
+    $SystemMsgMode = new App\Model\SystemMsg;
+    $SystemMsgMode->user_id = $user_id;
+    $SystemMsgMode->type    = $type;
+    $SystemMsgMode->title   = $title;
+    $SystemMsgMode->content = $content;
+    return $SystemMsgMode->save();
+}
