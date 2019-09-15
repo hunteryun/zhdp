@@ -112,6 +112,15 @@ Route::prefix('/user')->group(function(){
             Route::delete('{id}', 'Api\\User\\DeviceEventLogController@destroy')->where('id', '[0-9]+')->middleware('user.token'); // 删除设备事件日志列表
         });
     });
+    // 病虫害与天气预警
+    Route::prefix('/pest_warning')->group(function(){
+        Route::get('', 'Api\\User\\PestWarningController@index')->middleware('user.token'); // 病虫害与天气预警列表
+        Route::get('all', 'Api\\User\\PestWarningController@all')->middleware('user.token'); // 所有房间区域列表
+        Route::post('', 'Api\\User\\PestWarningController@store')->middleware('user.token'); // 添加病虫害与天气预警列表
+        Route::get('{id}', 'Api\\User\\PestWarningController@show')->middleware('user.token'); // 获取指定id房间
+        Route::put('{id}', 'Api\\User\\PestWarningController@update')->middleware('user.token'); // 更新病虫害与天气预警列表
+        Route::delete('{id}', 'Api\\User\\PestWarningController@destroy')->middleware('user.token'); // 删除病虫害与天气预警列表
+    });
     // 文章分类
     Route::prefix('/article_class')->group(function(){
         Route::get('', 'Api\\User\\ArticleClassController@index')->middleware('user.token'); // 文章分类列表
