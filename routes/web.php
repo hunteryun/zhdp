@@ -142,9 +142,11 @@ Route::prefix('/user')->group(function(){
         // 
         Route::prefix('/immediate_login_notice')->group(function(){
             Route::view('', 'user/login_notice/immediate_login_notice/index'); //即时登录通知
+            Route::view('info', 'user/login_notice/immediate_login_notice/info'); //即时登录通知详情
         });
         Route::prefix('/login_notice_log')->group(function(){
             Route::view('', 'user/login_notice/login_notice_log/index'); //登录通知记录
+            Route::view('info', 'user/login_notice/login_notice_log/info'); //登录通知记录详情
         });
     });
     

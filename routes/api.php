@@ -205,7 +205,7 @@ Route::prefix('/user')->group(function(){
             Route::get('every_day_all', 'Api\\User\\LoginNoticeController@every_day_all')->middleware('user.token'); // 获取所有即时通知
         });
         Route::prefix('/login_notice_log')->group(function(){
-            Route::get('', 'Api\\User\\LoginNoticeLogController@my')->middleware('user.token'); // 获取历史通知(每个人查看记录的那种)
+            Route::get('', 'Api\\User\\LoginNoticeLogController@index')->middleware('user.token'); // 获取历史通知(每个人查看记录的那种)
             Route::get('unread_all', 'Api\\User\\LoginNoticeLogController@unread_all')->middleware('user.token'); // 获取所有未读通知
             Route::get('{id}', 'Api\\User\\LoginNoticeLogController@show')->where('id', '[0-9]+')->middleware('user.token'); // 获取指定id
     });
