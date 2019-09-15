@@ -64,4 +64,9 @@ class User extends Model
      {
           return $this->hasMany(DeviceEventLog::class);
      }
+     // 预警日志
+     public function pest_warning_log()
+     {
+          return $this->hasMany(PestWarningLog::class);
+     }
 }

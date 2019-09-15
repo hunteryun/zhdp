@@ -115,11 +115,15 @@ Route::prefix('/user')->group(function(){
     // 病虫害与天气预警
     Route::prefix('/pest_warning')->group(function(){
         Route::get('', 'Api\\User\\PestWarningController@index')->middleware('user.token'); // 病虫害与天气预警列表
-        Route::get('all', 'Api\\User\\PestWarningController@all')->middleware('user.token'); // 所有房间区域列表
         Route::post('', 'Api\\User\\PestWarningController@store')->middleware('user.token'); // 添加病虫害与天气预警列表
-        Route::get('{id}', 'Api\\User\\PestWarningController@show')->middleware('user.token'); // 获取指定id房间
-        Route::put('{id}', 'Api\\User\\PestWarningController@update')->middleware('user.token'); // 更新病虫害与天气预警列表
-        Route::delete('{id}', 'Api\\User\\PestWarningController@destroy')->middleware('user.token'); // 删除病虫害与天气预警列表
+        Route::get('{id}', 'Api\\User\\PestWarningController@show')->where('id', '[0-9]+')->middleware('user.token'); // 获取指定id房间
+        Route::put('{id}', 'Api\\User\\PestWarningController@update')->where('id', '[0-9]+')->middleware('user.token'); // 更新病虫害与天气预警列表
+        Route::delete('{id}', 'Api\\User\\PestWarningController@destroy')->where('id', '[0-9]+')->middleware('user.token'); // 删除病虫害与天气预警列表
+        // 病虫害与天气预警日志
+        Route::prefix('/pest_warning_log')->group(function(){
+            Route::get('', 'Api\\User\\PestWarningLogController@index')->middleware('user.token'); // 病虫害与天气预警日志列表
+            Route::get('{id}', 'Api\\User\\PestWarningLogController@show')->where('id', '[0-9]+')->middleware('user.token'); // 获取指定id房间
+        });
     });
     // 文章分类
     Route::prefix('/article_class')->group(function(){
