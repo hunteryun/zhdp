@@ -15,7 +15,15 @@ class DeviceRoomController extends Base
     public function index(Request $request)
     {
         $limit = $request->input('limit');
-        $deviceRegionList = UserModel::where('token', $this->user_token())->firstOrFail()->device_room()->with('device_region','crop_class')->paginate($limit)->toArray();
+        $deviceRegionList = UserModel::where('token', $this->user_token())->firstOrFail()->device_room()->orderBy('id', 'desc')->whereHas('device_region', function($query) use ($request){
+            if($request->filled('device_region_name')){
+                $query->where('name', 'like', '%'.$request->input('device_region_name').'%');
+            }
+        })->whereHas('crop_class', function($query)use($request){
+            if($request->filled('crop_class_pid')){
+                $query->where('pid', $request->input('crop_class_pid'));
+            }
+        })->with('device_region','crop_class')->paginate($limit)->toArray();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $deviceRegionList['total'];

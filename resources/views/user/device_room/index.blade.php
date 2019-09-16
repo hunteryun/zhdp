@@ -15,6 +15,23 @@
                     <button type="button" class="layui-btn layui-btn-sm" id="add-device-region">添加房间</button> 
                 </div>
             </div>
+            <form class="layui-form">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                    <input type="text" name="device_region_name" autocomplete="off" placeholder="区域名称" class="layui-input">
+                    </div>
+                    <div class="layui-inline">
+                        <select name="crop_class_pid" id="crop_class_pid" lay-search>
+                            <option value="" selected>作物分类:加载中...</option>
+                        </select>
+                    </div>
+                    <div class="layui-inline">
+                        <div class="layui-input-inline">
+                        <button type="submit" id="submit" class="layui-btn" lay-submit="" lay-filter="formSubmit">搜索</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
             <div class="layui-row">
                 <script type="text/html" id="bar">
                     <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="view">查看</a>
@@ -33,10 +50,10 @@
                 ,page: true 
                 ,cols: [[ 
                     {field: 'id', title: 'ID', width:80, sort: true, fixed: 'left'}
-                    ,{field: 'name', title: '房间名称'}
                     ,{field: 'device_region_name', title: '区域名称', templet : function (d){
                         return d.device_region.name;
                     }}
+                    ,{field: 'name', title: '房间名称'}
                     ,{field: 'crop_class_name', title: '种植作物', templet : function (d){
                         return d.crop_class.name;
                     }}
@@ -118,6 +135,38 @@
                         table.reload('device_room');
                     }
                 });
+            });
+            // 获取作物分类
+            ajaxLoad3 = layer.load(1, {
+                shade: [0.8, '#393D49']
+            });
+            $.ajax({ 
+                type: "GET",
+                url: '{{url("api/user/crop_class/top")}}',
+                success: function(result){
+                    layer.close(ajaxLoad3);
+                    if (result.code > 0) {
+                        layer.msg(result.msg);
+                    } else {
+                        var html='<option value="" selected>作物分类:不限作物</option>';
+                        $.each(result.data,function(key,value){
+                            html+="<option value='"+value.id+"'>"+value.name+"</option>";
+                        })
+                        $('select[name=crop_class_pid]').html(html);
+                        form.render("select");
+                    }
+                }
+            });
+            //监听搜索
+            form.on('submit(formSubmit)', function(data) {
+                // 重载 table
+                table.reload('device_room',{
+                    where: {
+                        'device_region_name': data.field.device_region_name,
+                        'crop_class_pid': data.field.crop_class_pid,
+                    }
+                });
+                return false;
             });
      </script>
  </body>
