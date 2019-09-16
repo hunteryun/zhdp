@@ -48,13 +48,10 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         // 捕获 findOrFail 和 firstOrFail 异常
-        // if ($exception instanceof ModelNotFoundException) {
-        //     // code 最前面 msg在他后面
-        //     return errors([
-        //         'code' => 1,
-        //         'msg' => $exception->getMessage(),
-        //     ], 200);
-        // }
+        if ($exception instanceof ModelNotFoundException) {
+            // code 最前面 msg在他后面
+            return errors(['msg' => $exception->getMessage()]);
+        }
         return parent::render($request, $exception);
     }
 }
