@@ -5,16 +5,45 @@
      @include('user.public.include_head')
  </head>
 
- <body class="layui-layout-body">
+ <body>
      <div class="layui-card">
          <div class="layui-card-body">
-            <div class="layui-row">
-                <div class="layui-btn-container">
-                    <button type="button" class="layui-btn layui-btn-sm" id="refresh-page">刷新页面</button> 
-                    <button type="button" class="layui-btn layui-btn-sm" id="refresh-device-region">刷新表格</button> 
-                    <button type="button" class="layui-btn layui-btn-sm" id="add-device-region">添加设备</button> 
+            <form class="layui-form">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <div class="layui-btn-container">
+                            <button type="button" class="layui-btn layui-btn-sm" id="refresh-page">刷新页面</button> 
+                            <button type="button" class="layui-btn layui-btn-sm" id="refresh-device-region">刷新表格</button> 
+                            <button type="button" class="layui-btn layui-btn-sm" id="add-device-region">添加设备</button> 
+                        </div>
+                    </div>
                 </div>
-            </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <select name="device_region_id" id="device_region_id" lay-search>
+                            <option value="" selected>区域:加载中...</option>
+                        </select>
+                    </div>
+                    <div class="layui-inline">
+                        <select name="device_room_id" id="device_room_id" lay-search>
+                            <option value="" selected>房间:请先选择区域.</option>
+                        </select>
+                    </div>
+                    <div class="layui-inline">
+                        <select name="product_id" id="product_id" lay-search>
+                            <option value="" selected>产品类型:加载中...</option>
+                        </select>
+                    </div>
+                    <div class="layui-inline">
+                            <input type="text" name="name" autocomplete="off" placeholder="设备名称" class="layui-input">
+                    </div>
+                    <div class="layui-inline">
+                        <div class="layui-input-inline">
+                        <button type="submit" id="submit" class="layui-btn" lay-submit="" lay-filter="formSubmit">搜索</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
             <div class="layui-row">
                 <script type="text/html" id="bar">
                     <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="view">查看</a>

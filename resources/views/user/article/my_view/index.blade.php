@@ -5,7 +5,7 @@
      @include('user.public.include_head')
  </head>
 
- <body class="layui-layout-body">
+ <body>
      <div class="layui-card">
          <div class="layui-card-body">
             <form class="layui-form">

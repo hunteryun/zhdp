@@ -11,7 +11,7 @@
      </style>
  </head>
 
- <body class="layui-layout-body">
+ <body>
      <div class="layui-layout layui-layout-admin">
          <div class="layui-header header header-demo">
              <div class="layui-main">
