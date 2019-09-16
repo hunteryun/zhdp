@@ -19,7 +19,7 @@ class DeviceController extends Base
     public function index(Request $request)
     {
         $limit = $request->input('limit');
-        $deviceList = UserModel::where('token', $this->user_token())->firstOrFail()->device()->with('device_room')->paginate($limit)->toArray();
+        $deviceList = UserModel::where('token', $this->user_token())->firstOrFail()->device()->orderBy('id', 'desc')->with('device_room')->paginate($limit)->toArray();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $deviceList['total'];
@@ -33,7 +33,7 @@ class DeviceController extends Base
     public function all(Request $request)
     {
         // length是前端关键字,所以重命名为lh
-        $DeviceFieldAll = UserModel::where('token', $this->user_token())->firstOrFail()->device_room()->where('id', intval($request->device_room_id))->firstOrFail()->device()->with('device_field')->get();
+        $DeviceFieldAll = UserModel::where('token', $this->user_token())->firstOrFail()->device_room()->where('id', intval($request->device_room_id))->firstOrFail()->device()->orderBy('id', 'desc')->with('device_field')->get();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $DeviceFieldAll->count();
