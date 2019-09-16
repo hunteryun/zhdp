@@ -55,7 +55,12 @@ class UpdateDevice
             $responseField->value = $deviceEventModel->operation_type;
             $eventStatus = $responseField->save();
             if($eventStatus){
+                // 写入设备日志事件
                 $this->addDeviceEvent($deviceEventModel, $deviceFieldModel->value);
+                // 写入系统消息
+                $title = $deviceEventModel->type == 0? "低于阈值" :  ($deviceEventModel->type == 1 ? "等于阈值" : "高于阈值");
+                $content = "事件名称：".$deviceEventModel->name."发生了字段: ".$deviceEventModel->field.$title."事件，请及时检查";
+                send_system_msg($user_id, '2', $title, $content);
             }
         }
     }
