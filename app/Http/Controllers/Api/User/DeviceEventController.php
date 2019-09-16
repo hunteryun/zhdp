@@ -24,7 +24,7 @@ class DeviceEventController extends Base
         }
         // 字段事件类型
         if($request->filled('type')){
-            $where[] = ['type', $request->input('type')];
+            $where[] = ['type', strval(intval($request->input('type')))];
         }
         $deviceList = UserModel::where('token', $this->user_token())->firstOrFail()->device_event()->where($where)->whereHas('device', function($query) use($request){
             // 产品
