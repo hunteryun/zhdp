@@ -33,6 +33,7 @@
                 ,cols: [[ 
                     {field: 'id', title: 'ID', width:80, sort: true, fixed: 'left'}
                     ,{field: 'name', title: '设置组名称'}
+                    ,{field: 'field', title: '唯一标识'}
                     ,{field: 'desc', title: '设置组描述'}
                     ,{fixed: 'right', title:'操作', toolbar: '#bar', width:150}
                 ]]

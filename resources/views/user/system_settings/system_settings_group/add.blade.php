@@ -15,6 +15,12 @@
                 </div>
             </div>
             <div class="layui-form-item">
+                <label class="layui-form-label">唯一标识</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" name="field" lay-verify="required" autocomplete="off" placeholder="唯一标识">
+                </div>
+            </div>
+            <div class="layui-form-item">
                 <label class="layui-form-label">设置组描述</label>
                 <div class="layui-input-inline">
                     <textarea type="text" class="layui-textarea" name="desc" placeholder="设置组描述"></textarea>
@@ -41,6 +47,7 @@
                 data: {
                     'name': data.field.name,
                     'desc': data.field.desc,
+                    'field': data.field.field,
                 },
                 success: function(result){
                     layer.close(formLoad);

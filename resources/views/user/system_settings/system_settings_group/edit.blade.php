@@ -15,6 +15,12 @@
                 </div>
             </div>
             <div class="layui-form-item">
+                <label class="layui-form-label">唯一标识</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" name="field" lay-verify="required" autocomplete="off" placeholder="唯一标识">
+                </div>
+            </div>
+            <div class="layui-form-item">
                 <label class="layui-form-label">设置组描述</label>
                 <div class="layui-input-inline">
                     <textarea type="text" class="layui-textarea" name="desc" placeholder="设置组描述"></textarea>
@@ -34,6 +40,7 @@
         console.log(window.parent.edit_system_settings_group_info);
         var system_settings_group_info =  window.parent.edit_system_settings_group_info;
         //  初始化input
+        $("input[name='field']").val(system_settings_group_info.field);
         $("input[name='name']").val(system_settings_group_info.name);
         $("textarea[name='desc']").val(system_settings_group_info.desc);
          //监听提交
@@ -48,6 +55,7 @@
                     '_method': 'PUT',
                     'name': data.field.name,
                     'desc': data.field.desc,
+                    'field': data.field.field,
                 },
                 success: function(result){
                     layer.close(formLoad);

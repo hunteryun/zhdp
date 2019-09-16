@@ -36,6 +36,7 @@ class SystemSettingsGroupController extends Base
     public function store(Request $request){
         (new AddSystemSettingsGroupRequests)->verification($request);
         $systemSettingsGroupModel = new SystemSettingsGroupModel;
+        $systemSettingsGroupModel->field = $request->input('field');
         $systemSettingsGroupModel->name = $request->input('name');
         $systemSettingsGroupModel->desc = $request->input('desc');
         $addSystemSettingsGroup = $systemSettingsGroupModel->save();
@@ -48,6 +49,7 @@ class SystemSettingsGroupController extends Base
     public function update(Request $request, $id){
         (new UpdateSystemSettingsGroupRequests)->verification();
         $systemSettingsGroupInfo = SystemSettingsGroupModel::where('id', $id)->firstOrFail();
+        $systemSettingsGroupInfo->field = $request->input('field');
         $systemSettingsGroupInfo->name = $request->input('name');
         $systemSettingsGroupInfo->desc = $request->input('desc');
         $updateSystemSettingsGroup = $systemSettingsGroupInfo->save();
