@@ -49,15 +49,6 @@ class DeviceEventController extends Base
             if($request->filled('device_field_id')){
                 $query->where('id', intval($request->input('device_field_id')));
             }
-            // 字段名
-            if($request->filled('device_field_name')){
-                $query->where('name', 'like', '%'.$request->input('device_field_name').'%');
-            }
-            // 字段标识
-            if($request->filled('device_field_field')){
-                $query->where('field', 'like', '%'.$request->input('device_field_field').'%');
-            }
-            
         })->with("device", "device_field", "associated_device", "associated_device_field")->orderBy('id', 'desc')->paginate($limit)->toArray();
         
         $returnData = [];

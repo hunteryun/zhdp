@@ -45,12 +45,6 @@
                         </select>
                     </div>
                     <div class="layui-inline">
-                        <input type="text" name="device_field_name" autocomplete="off" placeholder="字段名称" class="layui-input">
-                    </div>
-                    <div class="layui-inline">
-                        <input type="text" name="device_field_field" autocomplete="off" placeholder="字段标识" class="layui-input">
-                    </div>
-                    <div class="layui-inline">
                         <select name="type" id="type" lay-search lay-filter="type">
                             <option value="" selected>事件类型:不限</option>
                             <option value="0" >事件类型:低于阈值</option>
@@ -299,8 +293,6 @@
                         'product_id': data.field.product_id,
                         'device_id': data.field.device_id,
                         'device_field_id': data.field.device_field_id,
-                        'device_field_name': data.field.device_field_name,
-                        'device_field_field': data.field.device_field_field,
                         'type': data.field.type,
                         'name': data.field.name,
                     }
