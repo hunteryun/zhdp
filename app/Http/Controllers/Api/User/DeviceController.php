@@ -57,6 +57,7 @@ class DeviceController extends Base
         $productFieldModel = new ProductFieldModel;
         $productFieldList = $productFieldModel::where('product_id', $request->input('product_id'))->get()->toArray();
         $deviceInsertData = [];
+        $date_time = date("Y-m-d H:i:s", time());
         foreach($productFieldList as $key => $value){
             $row = [];
             $row["device_id"] = $device_id;
@@ -68,6 +69,8 @@ class DeviceController extends Base
             $row["common_field_sort"] = $value['common_field_sort'];
             $row["desc"] = $value['desc'];
             $row["sort"] = $value['sort'];
+            $row["created_at"] = $date_time;
+            $row["updated_at"] = $date_time;
             $deviceInsertData[] = $row;
         }
         if($addDeviceStatus && (new DeviceFieldModel)->insert($deviceInsertData)){
