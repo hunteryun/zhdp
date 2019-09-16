@@ -23,7 +23,7 @@ class LoginNoticeLogController extends Base
     // 获取所有未读的登录通知
     public function unread_all(Request $request)
     {
-        $loginNoticeLogAll = UserModel::where('token', $this->user_token())->firstOrFail()->login_notice_log()->where('status', '0')->orderBy("id", "desc")->with('login_notice')->all();
+        $loginNoticeLogAll = UserModel::where('token', $this->user_token())->firstOrFail()->login_notice_log()->where('status', '0')->orderBy("id", "desc")->with('login_notice')->get();
         // 获取后变为已读
         foreach($loginNoticeLogAll as $row){
             $row->status = '1';

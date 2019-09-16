@@ -285,7 +285,7 @@
                     layer.open({
                         type: 1,
                         title: data[index].title,
-                        content: '<div style="padding:20px">'+data[index].content+'</div>'
+                        content: '<div style="padding:10px 30px 30px 30px"><div class="layui-row layui-col-space15"><div class="layui-col-md12"><div class="layui-card"><div class="layui-card-body">'+data[index].content+'</div></div></div></div></div>  '
                     });
                 }
             }
@@ -303,8 +303,8 @@
                 for (let index = 0; index < data.length; index++) {
                     layer.open({
                         type: 1,
-                        title: data[index].title,
-                        content: '<div style="padding:20px">'+data[index].content+'</div>'
+                        title: data[index].login_notice.title,
+                        content: '<div style="padding:10px 30px 30px 30px"><div class="layui-row layui-col-space15"><div class="layui-col-md12"><div class="layui-card"><div class="layui-card-body">'+data[index].login_notice.content+'</div></div></div></div></div>  '
                     });
                 }
             }
