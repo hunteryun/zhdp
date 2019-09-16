@@ -9,6 +9,7 @@ class UpdateDevice
     {
         $this->deviceFieldLogModel = new DeviceFieldLogModel;
     }
+    // 记录日志
     function addLog($model, $user_id){
         $this->deviceFieldLogModel->user_id = $user_id;
         $this->deviceFieldLogModel->device_id = $model->device_id;
@@ -36,6 +37,32 @@ class UpdateDevice
         }
         return $saveStatus;
     }
+    // 处理整数类型
+    function integerFun($updateValue, $model, $user_id){
+        $saveStatus     = false;
+        $updateValue    = intval($updateValue);
+        if(strlen($updateValue) > $model->field_type_length){
+            $model->value = $updateValue;
+            $saveStatus = $model->save();
+            if($saveStatus){
+                $this->addLog($model, $user_id);
+            }
+        }
+        return $saveStatus;
+    }
+    // 处理浮点类型
+    function floatFun($updateValue, $model, $user_id){
+        $saveStatus     = false;
+        $updateValue    = floatval($updateValue);
+        if(strlen($updateValue) > $model->field_type_length){
+            $model->value = $updateValue;
+            $saveStatus = $model->save();
+            if($saveStatus){
+                $this->addLog($model, $user_id);
+            }
+        }
+        return $saveStatus;
+    }
     // 按照token更新设备字段
     public function updateDeviceField($request, $user_token, $device_token){
         $updateDataField = $request->input('data.field');
@@ -51,14 +78,22 @@ class UpdateDevice
         $saveStatus = [];
         DB::beginTransaction();
 
-        foreach($deviceFieldList as $key => $value){
-            if(array_key_exists($value->field, $updateDataField)){
-                $field_type     = $value->field_type;
-                $updateValue    = $updateDataField[$value->field];
+        foreach($deviceFieldList as $key => $model){
+            if(array_key_exists($model->field, $updateDataField)){
+                $field_type     = $model->field_type;
+                $updateValue    = $updateDataField[$model->field];
                 switch($field_type['name']){
                     case 'bool':
                         // 如果是bool 0为关，1为开
-                        $saveStatus[] = $this->boolFun($updateValue, $value, $user_id);
+                        $saveStatus[] = $this->boolFun($updateValue, $model, $user_id);
+                        break;
+                    case 'integer':
+                        // 数值类型
+                        $saveStatus[] = $this->integerFun($updateValue, $model, $user_id);
+                        break;
+                    case 'float':
+                        // 浮点类型
+                        $saveStatus[] = $this->floatFun($updateValue, $model, $user_id);
                         break;
                 }
             }else{
