@@ -33,11 +33,11 @@ class DeviceController extends Base
         $deviceList = UserModel::where('token', $this->user_token())->firstOrFail()->device()->where($where)->orderBy('id', 'desc')->whereHas('device_room', function($query) use($request){
             // 区域
             if($request->filled('device_region_id')){
-                $query->where('device_region_id', intval($request->device_region_id));
+                $query->where('device_region_id', intval($request->input('device_region_id')));
             }
             // 房间
             if($request->filled('device_room_id')){
-                $query->where('device_room_id', intval($request->device_room_id));
+                $query->where('device_room_id', intval($request->input('device_room_id')));
             }
         })->with('device_room')->paginate($limit)->toArray();
         $returnData = [];
