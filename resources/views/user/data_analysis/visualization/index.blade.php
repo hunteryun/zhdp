@@ -171,6 +171,10 @@
             });   
             //监听搜索
             form.on('submit(formSubmit)', function(data) {
+                if(!data.field.device_region_id || !data.field.device_room_id){
+                    layer.msg("请选择条件后进行查找");
+                    return false;
+                }
                 ajaxLoad10 = layer.load(1, {
                     shade: [0.8, '#393D49']
                 });

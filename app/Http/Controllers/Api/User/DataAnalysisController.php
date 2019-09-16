@@ -25,12 +25,20 @@ class DataAnalysisController extends Base
             // 区域
             if($request->filled('device_region_id')){
                 $query->where('device_region_id', intval($request->input('device_region_id')));
+            }else{
+                return errors(['msg'=>"请选择区域"]);
             }
             // 房间
             if($request->filled('device_room_id')){
                 $query->where('device_room_id', intval($request->input('device_room_id')));
+            }else{
+                return errors(['msg'=>"请选择房间"]);
             }
-        })->with('device_room')->get();
+        })->whereHas('device_field.field_type', function($query) use($request){
+            // 不是布尔值的设备
+            $query->where('name', '<>', 'bool');
+
+        })->with('device_field', 'device_field.device_field_log')->get();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']             = count($deviceList);

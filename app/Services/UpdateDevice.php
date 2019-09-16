@@ -17,6 +17,7 @@ class UpdateDevice
         $DeviceFieldLogModel = new DeviceFieldLogModel;
         $DeviceFieldLogModel->user_id = $user_id;
         $DeviceFieldLogModel->device_id = $model->device_id;
+        $DeviceFieldLogModel->device_field_id = $model->id;
         $DeviceFieldLogModel->name = $model->name;
         $DeviceFieldLogModel->field = $model->field;
         $DeviceFieldLogModel->field_type_id = $model->field_type_id;

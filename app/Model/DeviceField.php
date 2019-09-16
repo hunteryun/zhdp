@@ -19,6 +19,11 @@ class DeviceField extends Model
      {
           return $this->belongsTo(FieldType::class);
      }
+     // 关联设备字段下的字段日志
+    public function device_field_log()
+    {
+         return $this->hasMany(DeviceFieldLog::class);
+    }
     // 设置默认值 length 字段
     public function setLengthAttribute($value)
     {
