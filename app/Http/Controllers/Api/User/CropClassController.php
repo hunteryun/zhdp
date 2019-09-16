@@ -14,7 +14,20 @@ class CropClassController extends Base
     public function index(Request $request)
     {
         $limit = $request->input('limit');
-        $cropClassList = CropClassModel::where('id', '<>', 0)->with('crop_class_parent')->paginate($limit)->toArray();
+
+        $where = [];
+        // 分类
+        $pid  = $request->pid;
+        if(!empty($pid)){
+            $where['pid'] = intval($pid);
+        }
+        // 名字
+        $name = $request->name;
+        if(!empty($name)){
+            $where[] = ['name', 'like', '%'.$name.'%'];
+        }
+
+        $cropClassList = CropClassModel::where($where)->where('id', '<>', 0)->with('crop_class_parent')->paginate($limit)->toArray();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $cropClassList['total'];

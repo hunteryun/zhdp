@@ -8,13 +8,32 @@
  <body class="layui-layout-body">
      <div class="layui-card">
          <div class="layui-card-body">
-            <div class="layui-row">
-                <div class="layui-btn-container">
-                    <button type="button" class="layui-btn layui-btn-sm" id="refresh-page">刷新页面</button> 
-                    <button type="button" class="layui-btn layui-btn-sm" id="refresh-device-region">刷新表格</button> 
-                    <button type="button" class="layui-btn layui-btn-sm" id="add-device-region">添加作物分类</button> 
+            <form class="layui-form">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <div class="layui-btn-container">
+                            <button type="button" class="layui-btn layui-btn-sm" id="refresh-page">刷新页面</button> 
+                            <button type="button" class="layui-btn layui-btn-sm" id="refresh-device-region">刷新表格</button> 
+                            <button type="button" class="layui-btn layui-btn-sm" id="add-device-region">添加作物分类</button> 
+                        </div>
+                    </div>
                 </div>
-            </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <select name="pid" id="pid" lay-search>
+                            <option value="" selected>作物分类:加载中...</option>
+                        </select>
+                    </div>
+                    <div class="layui-inline">
+                            <input type="text" name="name" autocomplete="off" placeholder="作物名称" class="layui-input">
+                    </div>
+                    <div class="layui-inline">
+                        <div class="layui-input-inline">
+                        <button type="submit" id="submit" class="layui-btn" lay-submit="" lay-filter="formSubmit">搜索</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
             <div class="layui-row">
                 <script type="text/html" id="bar">
                     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
@@ -99,6 +118,38 @@
                         table.reload('crop_class');
                     }
                 });
+            });
+            // 获取作物分类
+            ajaxLoad3 = layer.load(1, {
+                shade: [0.8, '#393D49']
+            });
+            $.ajax({ 
+                type: "GET",
+                url: '{{url("api/user/crop_class/top")}}',
+                success: function(result){
+                    layer.close(ajaxLoad3);
+                    if (result.code > 0) {
+                        layer.msg(result.msg);
+                    } else {
+                        var html='<option value="" selected>作物分类:不限作物</option>';
+                        $.each(result.data,function(key,value){
+                            html+="<option value='"+value.id+"'>"+value.name+"</option>";
+                        })
+                        $('select[name=pid]').html(html);
+                        form.render("select");
+                    }
+                }
+            });
+            //监听搜索
+            form.on('submit(formSubmit)', function(data) {
+                // 重载 table
+                table.reload('crop_class', {
+                    where: {
+                        'pid': data.field.pid,
+                        'name': data.field.name,
+                    }
+                });
+                return false;
             });
      </script>
  </body>
