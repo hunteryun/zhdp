@@ -56,20 +56,21 @@ class DeviceController extends Base
         $device_id = $deviceModel->id;
         $productFieldModel = new ProductFieldModel;
         $productFieldList = $productFieldModel::where('product_id', $request->input('product_id'))->get()->toArray();
-        $deviceFieldModel = new DeviceFieldModel;
+        $deviceInsertData = [];
         foreach($productFieldList as $key => $value){
-            $deviceFieldModel->device_id = $device_id;
-            $deviceFieldModel->name = $value['name'];
-            $deviceFieldModel->field = $value['field'];
-            $deviceFieldModel->field_type_id = $value['field_type_id'];
-            $deviceFieldModel->field_type_length = $value['field_type_length'];
-            $deviceFieldModel->common_field = $value['common_field'];
-            $deviceFieldModel->common_field_sort = $value['common_field_sort'];
-            $deviceFieldModel->desc = $value['desc'];
-            $deviceFieldModel->sort = $value['sort'];
-            $addDeviceFieldStatus[$key] = $deviceFieldModel->save();
+            $row = [];
+            $row["device_id"] = $device_id;
+            $row["name"] = $value['name'];
+            $row["field"] = $value['field'];
+            $row["field_type_id"] = $value['field_type_id'];
+            $row["field_type_length"] = $value['field_type_length'];
+            $row["common_field"] = $value['common_field'];
+            $row["common_field_sort"] = $value['common_field_sort'];
+            $row["desc"] = $value['desc'];
+            $row["sort"] = $value['sort'];
+            $deviceInsertData[] = $row;
         }
-        if($addDeviceStatus && count(array_unique($addDeviceFieldStatus)) < 2){
+        if($addDeviceStatus && (new DeviceFieldModel)->insert($deviceInsertData)){
             DB::commit();
             return success(['msg'=>'创建成功']);
         }else{
