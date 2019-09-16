@@ -1,7 +1,10 @@
 <?php
 namespace App\Services;
 use App\Model\User as UserModel;
+use App\Model\Device as DeviceModel;
 use App\Model\DeviceFieldLog as DeviceFieldLogModel;
+use App\Model\DeviceEvent as DeviceEventModel;
+use App\Model\DeviceEventLog as DeviceEventLogModel;
 use DB;
 class UpdateDevice
 {
@@ -9,7 +12,7 @@ class UpdateDevice
     {
         
     }
-    // 记录日志
+    // 记录设备日志
     function addLog($model, $user_id){
         $DeviceFieldLogModel = new DeviceFieldLogModel;
         $DeviceFieldLogModel->user_id = $user_id;
@@ -25,6 +28,72 @@ class UpdateDevice
         $DeviceFieldLogModel->sort = $model->sort;
         $DeviceFieldLogModel->save();
     }
+    // 记录设备事件日志
+    function addDeviceEvent($deviceEventModel, $value){
+        $deviceEventLog = new DeviceEventLogModel;
+        $deviceEventLog->log_value               = $value;
+        $deviceEventLog->user_id                  = $deviceEventModel->user_id;
+        $deviceEventLog->name                  = $deviceEventModel->name;
+        $deviceEventLog->type                  = $deviceEventModel->type;
+        $deviceEventLog->value                 = $deviceEventModel->value;
+        $deviceEventLog->desc                  = $deviceEventModel->desc;
+        $deviceEventLog->device_region_id             = $deviceEventModel->device_region_id;
+        $deviceEventLog->device_room_id             = $deviceEventModel->device_room_id;
+        $deviceEventLog->device_id             = $deviceEventModel->device_id;
+        $deviceEventLog->device_field_id       = $deviceEventModel->device_field_id;
+        $deviceEventLog->associated_device_id  = $deviceEventModel->associated_device_id;
+        $deviceEventLog->associated_device_field_id  = $deviceEventModel->associated_device_field_id;
+        $deviceEventLog->operation_type        = $deviceEventModel->operation_type;
+        $deviceEventLog->save();
+    }   
+    // 设备事件
+    function deviceEvent($model, $user_id){
+        // 事件模型【获取到该设备字段的所有事件】
+        $deviceEventModel = DeviceEventModel::where('user_id', $user_id)->where('device_id', $model->device_id)->where('device_field_id', $model->id)->get();
+        // 循环判断符合哪一个事件
+        foreach($deviceEventModel as $row){
+            // 根据类型去执行事件
+            switch($row->type){
+                // 低于
+                case 0:
+                    if($model->value < $row->value){
+                        // 获取响应字段
+                        $responseField = DeviceModel::where('user_id', $user_id)->where('id', $row->associated_device_id)->firstOrFail()->device_field()->where('id', $row->associated_device_field_id)->firstOrFail();
+                        $responseField->value = $row->operation_type;
+                        $eventStatus = $responseField->save();
+                        if($eventStatus){
+                            $this->addDeviceEvent($row, $model->value);
+                        }
+                    }
+                    break;
+                // 等于
+                case 1:
+                    if($model->value == $row->value){
+                        // 获取响应字段
+                        $responseField = DeviceModel::where('user_id', $user_id)->where('id', $row->associated_device_id)->firstOrFail()->device_field()->where('id', $row->associated_device_field_id)->firstOrFail();
+                        $responseField->value = $row->operation_type;
+                        $eventStatus = $responseField->save();
+                        if($eventStatus){
+                            $this->addDeviceEvent($row, $model->value);
+                        }
+                    }
+                    break;
+                // 高于
+                case 2:
+                    if($model->value > $row->value){
+                        // 获取响应字段
+                        $responseField = DeviceModel::where('user_id', $user_id)->where('id', $row->associated_device_id)->firstOrFail()->device_field()->where('id', $row->associated_device_field_id)->firstOrFail();
+                        $responseField->value = $row->operation_type;
+                        $eventStatus = $responseField->save();
+                        if($eventStatus){
+                            $this->addDeviceEvent($row, $model->value);
+                        }
+                    }
+                    break;
+            }
+        }
+        
+    }
     // 处理bool
     function boolFun($updateValue, $model, $user_id){
         $saveStatus     = false;
@@ -34,6 +103,7 @@ class UpdateDevice
             $saveStatus = $model->save();
             if($saveStatus){
                 $this->addLog($model, $user_id);
+                $this->deviceEvent($model, $user_id);
             }
         }
         return $saveStatus;
@@ -47,6 +117,7 @@ class UpdateDevice
             $saveStatus = $model->save();
             if($saveStatus){
                 $this->addLog($model, $user_id);
+                $this->deviceEvent($model, $user_id);
             }
         }
         return $saveStatus;
@@ -60,6 +131,7 @@ class UpdateDevice
             $saveStatus = $model->save();
             if($saveStatus){
                 $this->addLog($model, $user_id);
+                $this->deviceEvent($model, $user_id);
             }
         }
         return $saveStatus;
@@ -90,8 +162,8 @@ class UpdateDevice
 
         $user_id = UserModel::where('token', $user_token)->firstOrFail(['id'])->id;
 
-        // $deviceFieldList = UserModel::where('token', $user_token)->firstOrFail()->device()->where('token', $device_token)->firstOrFail()->device_field()->with('field_type')->get();
-        $deviceFieldList = UserModel::where('token', $user_token)->firstOrFail()->device()->where('token', $device_token)->firstOrFail()->device_field()->where('updated_at', '<=', date('Y-m-d H:i:s',( time() - 60)) )->with('field_type')->get();
+        $deviceFieldList = UserModel::where('token', $user_token)->firstOrFail()->device()->where('token', $device_token)->firstOrFail()->device_field()->with('field_type')->get();
+        // $deviceFieldList = UserModel::where('token', $user_token)->firstOrFail()->device()->where('token', $device_token)->firstOrFail()->device_field()->where('updated_at', '<=', date('Y-m-d H:i:s',( time() - 60)) )->with('field_type')->get();
         
         if($deviceFieldList->isEmpty()){
             return errors(['msg'=>'请检查该设备下是否存在字段或更新过快']);
