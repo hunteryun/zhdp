@@ -19,7 +19,27 @@ class DeviceController extends Base
     public function index(Request $request)
     {
         $limit = $request->input('limit');
-        $deviceList = UserModel::where('token', $this->user_token())->firstOrFail()->device()->orderBy('id', 'desc')->with('device_room')->paginate($limit)->toArray();
+
+        $where = [];
+        // 产品
+        if($request->filled('product_id')){
+            $where['product_id'] = intval($request->product_id);
+        }
+        // 设备名
+        if($request->filled('name')){
+            $where[] = ['name', 'like', '%'.$request->name.'%'];
+        }
+
+        $deviceList = UserModel::where('token', $this->user_token())->firstOrFail()->device()->where($where)->orderBy('id', 'desc')->whereHas('device_room', function($query) use($request){
+            // 区域
+            if($request->filled('device_region_id')){
+                $query->where('device_region_id', intval($request->device_region_id));
+            }
+            // 房间
+            if($request->filled('device_room_id')){
+                $query->where('device_room_id', intval($request->device_room_id));
+            }
+        })->with('device_room')->paginate($limit)->toArray();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $deviceList['total'];

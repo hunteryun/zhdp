@@ -18,24 +18,20 @@ class ArticleController extends Base
     {
         $where = [];
         // 分类
-        $article_class_id  = $request->article_class_id;
-        if(!empty($article_class_id)){
-            $where['article_class_id'] = intval($article_class_id);
+        if($request->filled('article_class_id')){
+            $where['article_class_id'] = intval($request->article_class_id);
         }
         // 状态
-        $status = $request->status;
-        if(!empty($status)){
-            $where['status'] = intval($status);
+        if($request->filled('status')){
+            $where['status'] = intval($request->status);
         }
         // 作物
-        $crop_class_id = $request->crop_class_id;
-        if(!empty($crop_class_id)){
-            $where['crop_class_id'] = intval($crop_class_id);
+        if($request->filled('crop_class_id')){
+            $where['crop_class_id'] = intval($request->crop_class_id);
         }
         // 标题
-        $title = $request->title;
-        if(!empty($title)){
-            $where[] = ['title', 'like', '%'.$title.'%'];
+        if($request->filled('title')){
+            $where[] = ['title', 'like', '%'.$request->title.'%'];
         }
         $limit  = $request->input('limit');
         $deviceRegionList = ArticleModel::where($where)->orderBy('id','desc')->with('user', 'article_class', 'crop_class')->paginate($limit)->toArray();

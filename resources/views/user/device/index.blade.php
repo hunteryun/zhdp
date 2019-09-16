@@ -20,12 +20,12 @@
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-inline">
-                        <select name="device_region_id" id="device_region_id" lay-search>
+                        <select name="device_region_id" id="device_region_id" lay-search lay-filter="device_region_id">
                             <option value="" selected>区域:加载中...</option>
                         </select>
                     </div>
                     <div class="layui-inline">
-                        <select name="device_room_id" id="device_room_id" lay-search>
+                        <select name="device_room_id" id="device_room_id" lay-search lay-filter="device_room_id">
                             <option value="" selected>房间:请先选择区域.</option>
                         </select>
                     </div>
@@ -144,6 +144,84 @@
                         table.reload('device');
                     }
                 });
+            });
+            // 获取区域分类
+            ajaxLoad3 = layer.load(1, {
+                shade: [0.8, '#393D49']
+            });
+            $.ajax({ 
+                type: "GET",
+                url: '{{url("api/user/device_region/all")}}',
+                success: function(result){
+                    layer.close(ajaxLoad3);
+                    if (result.code > 0) {
+                        layer.msg(result.msg);
+                    } else {
+                        var html='<option value="" selected>区域分类:不限区域</option>';
+                        $.each(result.data,function(key,value){
+                            html+="<option value='"+value.id+"'>"+value.name+"</option>";
+                        })
+                        $('select[name=device_region_id]').html(html);
+                        form.render("select");
+                    }
+                }
+            });
+            // 获取产品分类
+            ajaxLoad6 = layer.load(1, {
+                shade: [0.8, '#393D49']
+            });
+            $.ajax({ 
+                type: "GET",
+                url: '{{url("api/user/product/all")}}',
+                success: function(result){
+                    layer.close(ajaxLoad6);
+                    if (result.code > 0) {
+                        layer.msg(result.msg);
+                    } else {
+                        var html='<option value="" selected>产品分类:不限产品</option>';
+                        $.each(result.data,function(key,value){
+                            html+="<option value='"+value.id+"'>"+value.name+"</option>";
+                        })
+                        $('select[name=product_id]').html(html);
+                        form.render("select");
+                    }
+                }
+            });
+            // 监听区域选择
+            form.on('select(device_region_id)', function(data){
+                ajaxLoad5 = layer.load(1, {
+                    shade: [0.8, '#393D49']
+                });
+                $.ajax({ 
+                    type: "GET",
+                    url: '{{url("api/user/device_room/all")}}?device_region_id='+data.value,
+                    success: function(result){
+                        layer.close(ajaxLoad5);
+                        if (result.code > 0) {
+                            layer.msg(result.msg);
+                        } else {
+                            var html='<option value="" selected>房间:不限房间</option>';
+                            $.each(result.data,function(key,value){
+                                html+="<option value='"+value.id+"'>"+value.name+"</option>";
+                            })
+                            $('select[name=device_room_id]').html(html);
+                            form.render("select");
+                        }
+                    }
+                });
+            });   
+            //监听搜索
+            form.on('submit(formSubmit)', function(data) {
+                // 重载 table
+                table.reload('device',{
+                    where: {
+                        'device_region_id': data.field.device_region_id,
+                        'device_room_id': data.field.device_room_id,
+                        'product_id': data.field.product_id,
+                        'name': data.field.name,
+                    }
+                });
+                return false;
             });
      </script>
  </body>

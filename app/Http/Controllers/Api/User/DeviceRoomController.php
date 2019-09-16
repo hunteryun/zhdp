@@ -32,9 +32,9 @@ class DeviceRoomController extends Base
         return success($returnData);
     }
     // 获取所有
-    public function all()
+    public function all(Request $request)
     {
-        $deviceRegionAll = UserModel::where('token', $this->user_token())->firstOrFail()->device_room()->get();
+        $deviceRegionAll = UserModel::where('token', $this->user_token())->firstOrFail()->device_room()->where('device_region_id', $request->device_region_id)->get();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $deviceRegionAll->count();
