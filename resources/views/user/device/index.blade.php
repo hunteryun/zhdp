@@ -35,7 +35,9 @@
                         </select>
                     </div>
                     <div class="layui-inline">
-                            <input type="text" name="name" autocomplete="off" placeholder="设备名称" class="layui-input">
+                        <select name="id" id="id" lay-search lay-filter="id">
+                            <option value="" selected>设备:请先选择房间</option>
+                        </select>
                     </div>
                     <div class="layui-inline">
                         <div class="layui-input-inline">
@@ -210,6 +212,29 @@
                     }
                 });
             });   
+            // 监听房间选择
+            form.on('select(device_room_id)', function(data){
+                ajaxLoad5 = layer.load(1, {
+                    shade: [0.8, '#393D49']
+                });
+                $.ajax({ 
+                    type: "GET",
+                    url: '{{url("api/user/device/all")}}?device_room_id='+data.value,
+                    success: function(result){
+                        layer.close(ajaxLoad5);
+                        if (result.code > 0) {
+                            layer.msg(result.msg);
+                        } else {
+                            var html='<option value="" selected>设备:不限设备</option>';
+                            $.each(result.data,function(key,value){
+                                html+="<option value='"+value.id+"'>"+value.name+"</option>";
+                            })
+                            $('select[name=id]').html(html);
+                            form.render("select");
+                        }
+                    }
+                });
+            });   
             //监听搜索
             form.on('submit(formSubmit)', function(data) {
                 // 重载 table
@@ -218,7 +243,7 @@
                         'device_region_id': data.field.device_region_id,
                         'device_room_id': data.field.device_room_id,
                         'product_id': data.field.product_id,
-                        'name': data.field.name,
+                        'id': data.field.id,
                     }
                 });
                 return false;

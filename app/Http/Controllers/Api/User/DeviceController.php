@@ -23,11 +23,11 @@ class DeviceController extends Base
         $where = [];
         // 产品
         if($request->filled('product_id')){
-            $where['product_id'] = intval($request->product_id);
+            $where['product_id'] = intval($request->input('product_id'));
         }
-        // 设备名
-        if($request->filled('name')){
-            $where[] = ['name', 'like', '%'.$request->name.'%'];
+        // 设备id
+        if($request->filled('id')){
+            $where['id'] = intval($request->input('id'));
         }
 
         $deviceList = UserModel::where('token', $this->user_token())->firstOrFail()->device()->where($where)->orderBy('id', 'desc')->whereHas('device_room', function($query) use($request){
