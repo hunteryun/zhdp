@@ -8,13 +8,37 @@
  <body>
      <div class="layui-card">
          <div class="layui-card-body">
-            <div class="layui-row">
-                <div class="layui-btn-container">
-                    <button type="button" class="layui-btn layui-btn-sm" id="refresh-page">刷新页面</button> 
-                    <button type="button" class="layui-btn layui-btn-sm" id="refresh-pest-warning">刷新表格</button> 
-                    <button type="button" class="layui-btn layui-btn-sm" id="add-pest-warning">添加病虫害天气预警</button> 
+            <form class="layui-form">
+                 <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <div class="layui-btn-container">
+                            <button type="button" class="layui-btn layui-btn-sm" id="refresh-page">刷新页面</button> 
+                            <button type="button" class="layui-btn layui-btn-sm" id="refresh-pest-warning">刷新表格</button> 
+                            <button type="button" class="layui-btn layui-btn-sm" id="add-pest-warning">添加病虫害天气预警</button>
+                        </div>
+                    </div>
                 </div>
-            </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <select name="type" id="type" lay-search lay-filter="type">
+                            <option value="" selected>预警类型:不限</option>
+                            <option value="0" >预警类型:病虫害预警</option>
+                            <option value="1" >预警类型:天气预警</option>
+                        </select>
+                    </div>
+                    <div class="layui-inline">
+                        <input type="text" name="title" autocomplete="off" placeholder="预警名称" class="layui-input">
+                    </div>
+                    <div class="layui-inline">
+                        <input type="text" name="warning" autocomplete="off" placeholder="预警信息" class="layui-input">
+                    </div>
+                    <div class="layui-inline">
+                        <div class="layui-input-inline">
+                        <button type="submit" id="submit" class="layui-btn" lay-submit="" lay-filter="formSubmit">搜索</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
             <div class="layui-row">
                 <script type="text/html" id="bar">
                     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
@@ -107,6 +131,18 @@
                         table.reload('pest_warning');
                     }
                 });
+            });
+            //监听搜索
+            form.on('submit(formSubmit)', function(data) {
+                // 重载 table
+                table.reload('pest_warning',{
+                    where: {
+                        'type': data.field.type,
+                        'title': data.field.title,
+                        'warning': data.field.warning,
+                    }
+                });
+                return false;
             });
      </script>
  </body>

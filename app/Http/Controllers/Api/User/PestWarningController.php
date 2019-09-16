@@ -16,7 +16,22 @@ class PestWarningController extends Base
     public function index(Request $request)
     {
         $limit = $request->input('limit');
-        $pestWarningList = PestWarningModel::orderBy("id", "desc")->paginate($limit)->toArray();
+        //
+        $where = [];
+        // 预警类型
+        if($request->filled('type')){
+            $where[] = ['type', strval(intval($request->input('type')))];
+        }
+        // 预警标题
+        if($request->filled('title')){
+            $where[] = ['title', 'like', '%'.$request->input('title').'%'];
+        }
+        // 预警信息
+        if($request->filled('warning')){
+            $where[] = ['warning', 'like', '%'.$request->input('warning').'%'];
+        }
+
+        $pestWarningList = PestWarningModel::where($where)->orderBy("id", "desc")->paginate($limit)->toArray();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $pestWarningList['total'];
