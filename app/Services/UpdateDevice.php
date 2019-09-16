@@ -65,11 +65,14 @@ class UpdateDevice
     }
     // 按照token更新设备字段
     public function updateDeviceField($request, $user_token, $device_token){
-        $updateDataField = $request->input('data.field');
-        if(empty($updateDataField)){
-            return errors(['msg'=>'请指定要更新的字段']);
+        $updateData = $request->input('data');
+
+        if(empty($updateData)){
+            return errors(['msg'=>'请指定要更新的数据']);
         }
+
         $user_id = UserModel::where('token', $user_token)->firstOrFail(['id'])->id;
+
         $deviceFieldList = UserModel::where('token', $user_token)->firstOrFail()->device()->where('token', $device_token)->firstOrFail()->device_field()->where('updated_at', '<', date('Y-m-d H:i:s',( time() - 60)) )->with('field_type')->get();
         if($deviceFieldList->isEmpty()){
             return errors(['msg'=>'请检查该设备下是否存在字段或更新过快']);
@@ -78,29 +81,29 @@ class UpdateDevice
         $saveStatus = [];
         DB::beginTransaction();
 
-        foreach($deviceFieldList as $key => $model){
-            if(array_key_exists($model->field, $updateDataField)){
-                $field_type     = $model->field_type;
-                $updateValue    = $updateDataField[$model->field];
-                switch($field_type['name']){
-                    case 'bool':
-                        // 如果是bool 0为关，1为开
-                        $saveStatus[] = $this->boolFun($updateValue, $model, $user_id);
-                        break;
-                    case 'integer':
-                        // 数值类型
-                        $saveStatus[] = $this->integerFun($updateValue, $model, $user_id);
-                        break;
-                    case 'float':
-                        // 浮点类型
-                        $saveStatus[] = $this->floatFun($updateValue, $model, $user_id);
-                        break;
+        foreach($deviceFieldList as $model){
+            foreach($updateData as $row){
+                if($row['field'] == $model->field){
+                    $field_type     = $model->field_type;
+                    $updateValue    = $row['value'];
+                    switch($field_type['name']){
+                        case 'bool':
+                            // 如果是bool 0为关，1为开
+                            $saveStatus[] = $this->boolFun($updateValue, $model, $user_id);
+                            break;
+                        case 'integer':
+                            // 数值类型
+                            $saveStatus[] = $this->integerFun($updateValue, $model, $user_id);
+                            break;
+                        case 'float':
+                            // 浮点类型
+                            $saveStatus[] = $this->floatFun($updateValue, $model, $user_id);
+                            break;
+                    }
                 }
-            }else{
-                DB::rollBack();
-                return errors(['msg'=>'更新失败']);
             }
         }
+       
         if(count(array_unique($saveStatus)) < 2 && $saveStatus['0'] != false ){
             DB::commit();
             return success(['msg'=>'更新成功']);
