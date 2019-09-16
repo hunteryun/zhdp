@@ -83,7 +83,9 @@ Route::prefix('/user')->group(function(){
         Route::post('', 'Api\\User\\DeviceController@store')->middleware('user.token'); // 新增
         Route::put('{id}', 'Api\\User\\DeviceController@update')->where('id', '[0-9]+')->middleware('user.token'); // 指定id更新(web界面操作)
         Route::delete('{id}', 'Api\\User\\DeviceController@destroy')->middleware('user.token'); // 删除
-        // 硬件
+        // 获取硬件数据
+        Route::get('{token}', 'Api\\User\\DeviceController@getDeviceField')->where('token', '[0-9a-zA-Z]{60}')->middleware('user.token'); // 指定token获取
+        // 上传硬件数据
         Route::put('{token}', 'Api\\User\\DeviceController@updateDeviceField')->where('token', '[0-9a-zA-Z]{60}')->middleware('user.token'); // 指定token更新(web界面操作)
         // 设备字段 /index.php/api/device_field
         Route::prefix('/device_field')->group(function(){

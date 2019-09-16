@@ -102,6 +102,27 @@ class DeviceController extends Base
         }
         return success(['msg'=>"设备删除成功"]);
     }
+    // 按照token获取设备字段
+    // 默认返回全部字段
+    public function getDeviceField(Request $request, $token){
+        $deviceFieldList = UserModel::where('token', $this->user_token())->firstOrFail()->device()->where('token', $token)->firstOrFail()->device_field()->get(['field','value']);
+        if($request->filled('field')){
+            // 字段以逗号分隔 field => 'top,bottom,...';
+            $getField = $request->field;
+            $getField = explode(',', $getField);
+            $returnData = [];
+            foreach($getField as $field){
+                foreach($deviceFieldList as $row){
+                    if($row->field == $field){
+                        $returnData[][$row->field] = $row->value;
+                    }
+                }
+            }
+            return success(['data'=>$returnData]);
+        }else{
+            return success(['data'=>$deviceFieldList]);
+        }
+    }
     // 按照token更新设备字段
     public function updateDeviceField(Request $request, $token){
         $user_token = $this->user_token();
