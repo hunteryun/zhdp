@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Model\User as UserModel;
 use App\Model\PestWarning as PestWarningModel;
 use App\Model\PestWarningLog as PestWarningLogModel;
+use App\Model\SystemMsg as SystemMsgModel;
 use App\Http\Requests\PestWarning\AddPestWarning as AddPestWarningRequests;
 use App\Http\Requests\PestWarning\UpdatePestWarning as UpdatePestWarningRequests;
 // 病虫害预警
@@ -54,14 +55,14 @@ class PestWarningController extends Base
         $pestWarningModel->warning = $request->input('warning');
         $pestWarningModel->content = $request->input('content');
         $addPestWarning = $pestWarningModel->save();
-        $pest_warning_id = $pestWarningModel->id;
         // 写入日志
         $date_time = date("Y-m-d H:i:s", time()); 
-        UserModel::chunk(100, function ($users) use ($pest_warning_id, $date_time){
+        UserModel::chunk(100, function ($users) use ($pestWarningModel, $date_time){
+            // 写入病虫害天气预警日志
             $logs = [];
             foreach ($users as $user) {
                 $log = [];
-                $log['pest_warning_id'] = $pest_warning_id;
+                $log['pest_warning_id'] = $pestWarningModel->id;
                 $log['user_id'] = $user->id;
                 $log['status'] = '0';
                 $log['updated_at'] = $date_time;
@@ -69,6 +70,17 @@ class PestWarningController extends Base
                 $logs[] = $log;
             }
             PestWarningLogModel::insert($logs);
+            // 写入系统消息
+            $logs = [];
+            foreach ($users as $user) {
+                $log = [];
+                $log['user_id'] = $user->id;
+                $log['type'] = $pestWarningModel->type == 1? '0' : '1';
+                $log['title'] = $pestWarningModel->title;
+                $log['content'] = $pestWarningModel->content;
+                $logs[] = $log;
+            }
+            SystemMsgModel::insert($logs);
         });
         
         if(!$addPestWarning){
