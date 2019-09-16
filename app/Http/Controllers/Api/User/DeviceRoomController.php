@@ -16,8 +16,8 @@ class DeviceRoomController extends Base
     {
         $limit = $request->input('limit');
         $deviceRegionList = UserModel::where('token', $this->user_token())->firstOrFail()->device_room()->orderBy('id', 'desc')->whereHas('device_region', function($query) use ($request){
-            if($request->filled('device_region_name')){
-                $query->where('name', 'like', '%'.$request->input('device_region_name').'%');
+            if($request->filled('device_region_id')){
+                $query->where('id', $request->input('device_region_id'));
             }
         })->whereHas('crop_class', function($query)use($request){
             if($request->filled('crop_class_pid')){

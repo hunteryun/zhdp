@@ -18,7 +18,9 @@
             <form class="layui-form">
                 <div class="layui-form-item">
                     <div class="layui-inline">
-                    <input type="text" name="device_region_name" autocomplete="off" placeholder="区域名称" class="layui-input">
+                        <select name="device_region_id" id="device_region_id" lay-search lay-filter="device_region_id">
+                            <option value="" selected>区域:加载中...</option>
+                        </select>
                     </div>
                     <div class="layui-inline">
                         <select name="crop_class_pid" id="crop_class_pid" lay-search>
@@ -136,6 +138,27 @@
                     }
                 });
             });
+            // 获取区域分类
+            ajaxLoad6 = layer.load(1, {
+                shade: [0.8, '#393D49']
+            });
+            $.ajax({ 
+                type: "GET",
+                url: '{{url("api/user/device_region/all")}}',
+                success: function(result){
+                    layer.close(ajaxLoad6);
+                    if (result.code > 0) {
+                        layer.msg(result.msg);
+                    } else {
+                        var html='<option value="" selected>区域分类:不限区域</option>';
+                        $.each(result.data,function(key,value){
+                            html+="<option value='"+value.id+"'>"+value.name+"</option>";
+                        })
+                        $('select[name=device_region_id]').html(html);
+                        form.render("select");
+                    }
+                }
+            });
             // 获取作物分类
             ajaxLoad3 = layer.load(1, {
                 shade: [0.8, '#393D49']
@@ -162,7 +185,7 @@
                 // 重载 table
                 table.reload('device_room',{
                     where: {
-                        'device_region_name': data.field.device_region_name,
+                        'device_region_id': data.field.device_region_id,
                         'crop_class_pid': data.field.crop_class_pid,
                     }
                 });
