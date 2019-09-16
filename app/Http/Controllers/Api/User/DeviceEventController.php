@@ -15,8 +15,51 @@ class DeviceEventController extends Base
     public function index(Request $request)
     {
         $limit = $request->input('limit');
-        // 
-        $deviceList = UserModel::where('token', $this->user_token())->firstOrFail()->device_event()->with("device", "device_field", "associated_device", "associated_device_field")->orderBy('id', 'desc')->paginate($limit)->toArray();
+
+        //
+        $where = [];
+        // 字段事件名称
+        if($request->filled('name')){
+            $where[] = ['name', 'like', '%'.$request->input('name').'%'];
+        }
+        // 字段事件类型
+        if($request->filled('type')){
+            $where[] = ['type', $request->input('type')];
+        }
+        $deviceList = UserModel::where('token', $this->user_token())->firstOrFail()->device_event()->where($where)->whereHas('device', function($query) use($request){
+            // 产品
+            if($request->filled('product_id')){
+                $query->where('product_id', intval($request->input('product_id')));
+            }
+            // 设备
+            if($request->filled('device_id')){
+                $query->where('id', intval($request->input('device_id')));
+            }
+        })->whereHas('device.device_room', function($query) use($request){
+            // 区域
+            if($request->filled('device_region_id')){
+                $query->where('device_region_id', intval($request->input('device_region_id')));
+            }
+            // 房间
+            if($request->filled('device_room_id')){
+                $query->where('device_room_id', intval($request->input('device_room_id')));
+            }
+        })->whereHas('device_field', function($query) use($request){
+            // 字段id
+            if($request->filled('device_field_id')){
+                $query->where('id', intval($request->input('device_field_id')));
+            }
+            // 字段名
+            if($request->filled('device_field_name')){
+                $query->where('name', 'like', '%'.$request->input('device_field_name').'%');
+            }
+            // 字段标识
+            if($request->filled('device_field_field')){
+                $query->where('field', 'like', '%'.$request->input('device_field_field').'%');
+            }
+            
+        })->with("device", "device_field", "associated_device", "associated_device_field")->orderBy('id', 'desc')->paginate($limit)->toArray();
+        
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $deviceList['total'];
