@@ -73,6 +73,15 @@
                          </dl>
                      </li>
                      <li class="layui-nav-item">
+                         <a class="" href="javascript:;">数据分析</a>
+                         <dl class="layui-nav-child">
+                             <!-- 通过百度echer进行显示 -->
+                             <dd><a class="layui-open-tab" href="">数据可视化</a></dd>
+                             <!-- 整理显示为漂亮的数据大屏 -->
+                             <dd><a class="layui-open-tab" href="">数据大屏</a></dd>
+                         </dl>
+                     </li>
+                     <li class="layui-nav-item">
                          <a class="" href="javascript:;">病虫害与天气预警管理</a>
                          <dl class="layui-nav-child">
                              <dd><a class="layui-open-tab" href="{{url('user/pest_warning')}}">病虫害天气预警管理</a></dd>
@@ -90,15 +99,6 @@
                              <dd><a class="layui-open-tab" href="{{url('user/article/my_comment')}}">我的评论</a></dd>
                              <dd><a class="layui-open-tab" href="{{url('user/article/my_collection')}}">我的收藏</a></dd>
                              <dd><a class="layui-open-tab" href="{{url('user/article/my_view')}}">最近浏览</a></dd>
-                         </dl>
-                     </li>
-                     <li class="layui-nav-item">
-                         <a class="" href="javascript:;">数据分析</a>
-                         <dl class="layui-nav-child">
-                             <!-- 通过百度echer进行显示 -->
-                             <dd><a class="layui-open-tab" href="">数据可视化</a></dd>
-                             <!-- 整理显示为漂亮的数据大屏 -->
-                             <dd><a class="layui-open-tab" href="">数据大屏</a></dd>
                          </dl>
                      </li>
                      <li class="layui-nav-item">
