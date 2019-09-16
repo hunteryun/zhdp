@@ -82,28 +82,19 @@ function get_system_config($field = ""){
  * ----
  * 根据设置组获取系统设置值
  * ----
- * @param mixed $group 组标识
+ * @param mixed $field 组标识
  * @return string/array
  */
-function get_system_group_config($group = ""){
-    // $systemSettingsGroupFieldInfo = App\Model\SystemSettingsGroup::where('field', $field)->first(['type', 'option', 'value']);
-    // if(empty($systemSettingsGroupFieldInfo)){
-    //     return "";
-    // }
-    // switch($systemSettingsGroupFieldInfo->type){
-    //     // 普通文本
-    //     case 0:
-    //     // 文本域
-    //     case 1:
-    //     // 单选[返回选择的key]
-    //     case 2:
-    //         $returnConfigValue = $systemSettingsGroupFieldInfo->value;
-    //         break;
-    //     // 多选[返回选择的key]
-    //     case 3:
-    //         $returnConfigValue = explode(',', $systemSettingsGroupFieldInfo->value);
-    //         break;
-    // }
-    // return $returnConfigValue;
+function get_system_group_config($field = ""){
+    $systemSettingsGroupInfo = App\Model\SystemSettingsGroup::where('field', $field)->first();
+    if(empty($systemSettingsGroupInfo)){
+        return "";
+    }
+    $systemSettingsGroupList = $systemSettingsGroupInfo->system_settings_group_field()->get(['field']);
+    $returnGroupConfigArray = [];
+    foreach($systemSettingsGroupList as $key => $value){
+        $returnGroupConfigArray[$value->field] = get_system_config($value->field);
+    }
+    return $returnGroupConfigArray;
 }
 

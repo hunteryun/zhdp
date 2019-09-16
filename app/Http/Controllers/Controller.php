@@ -12,4 +12,8 @@ use function Opis\Closure\unserialize;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    function __construct()
+    {
+        dd(get_system_group_config('system_config'));
+    }
 }
