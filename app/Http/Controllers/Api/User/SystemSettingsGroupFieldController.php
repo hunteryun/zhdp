@@ -14,7 +14,24 @@ class SystemSettingsGroupFieldController extends Base
     public function index(Request $request)
     {
         $limit = $request->input('limit');
-        $deviceRegionList = SystemSettingsGroupFieldModel::orderBy('id', 'desc')->with('system_settings_group')->paginate($limit)->toArray();
+
+         //
+         $where = [];
+         // 设置字段名
+         if($request->filled('name')){
+             $where[] = ['name', 'like', '%'.$request->input('name').'%'];
+         }
+         // 设置字段名唯一标识
+         if($request->filled('field')){
+             $where[] = ['field', 'like', '%'.$request->input('field').'%'];
+         }
+
+        $deviceRegionList = SystemSettingsGroupFieldModel::where($where)->orderBy('id', 'desc')->whereHas('system_settings_group',function($query)use($request){
+            // 设置组
+            if($request->filled('system_settings_group_id')){
+                $query->where('id', intval($request->input('system_settings_group_id')));
+            }
+        })->with('system_settings_group')->paginate($limit)->toArray();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $deviceRegionList['total'];

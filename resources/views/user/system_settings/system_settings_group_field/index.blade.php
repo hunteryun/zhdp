@@ -8,13 +8,35 @@
  <body>
      <div class="layui-card">
          <div class="layui-card-body">
-            <div class="layui-row">
-                <div class="layui-btn-container">
-                    <button type="button" class="layui-btn layui-btn-sm" id="refresh-page">刷新页面</button> 
+            <form class="layui-form">
+                 <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <div class="layui-btn-container">
+                        <button type="button" class="layui-btn layui-btn-sm" id="refresh-page">刷新页面</button> 
                     <button type="button" class="layui-btn layui-btn-sm" id="refresh-system-settings-group-field">刷新表格</button> 
                     <button type="button" class="layui-btn layui-btn-sm" id="add-system-settings-group-field">添加设置</button> 
+                        </div>
+                    </div>
                 </div>
-            </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <select name="system_settings_group_id" id="system_settings_group_id" lay-search lay-filter="system_settings_group_id">
+                            <option value="" selected>设置组:加载中...</option>
+                        </select>
+                    </div>
+                    <div class="layui-inline">
+                        <input type="text" name="name" autocomplete="off" placeholder="设置名" class="layui-input">
+                    </div>
+                    <div class="layui-inline">
+                        <input type="text" name="field" autocomplete="off" placeholder="唯一标识" class="layui-input">
+                    </div>
+                    <div class="layui-inline">
+                        <div class="layui-input-inline">
+                        <button type="submit" id="submit" class="layui-btn" lay-submit="" lay-filter="formSubmit">搜索</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
             <div class="layui-row">
                 <script type="text/html" id="bar">
                     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
@@ -114,6 +136,39 @@
                         table.reload('system_settings_group_field');
                     }
                 });
+            });
+            // 获取产品分类
+            ajaxLoad6 = layer.load(1, {
+                shade: [0.8, '#393D49']
+            });
+            $.ajax({ 
+                type: "GET",
+                url: '{{url("api/user/system_settings/system_settings_group/all")}}',
+                success: function(result){
+                    layer.close(ajaxLoad6);
+                    if (result.code > 0) {
+                        layer.msg(result.msg);
+                    } else {
+                        var html='<option value="" selected>设置组:所有</option>';
+                        $.each(result.data,function(key,value){
+                            html+="<option value='"+value.id+"'>"+value.name+"</option>";
+                        })
+                        $('select[name=system_settings_group_id]').html(html);
+                        form.render("select");
+                    }
+                }
+            });
+            //监听搜索
+            form.on('submit(formSubmit)', function(data) {
+                // 重载 table
+                table.reload('system_settings_group_field',{
+                    where: {
+                        'name': data.field.name,
+                        'field': data.field.field,
+                        'system_settings_group_id': data.field.system_settings_group_id,
+                    }
+                });
+                return false;
             });
      </script>
  </body>
