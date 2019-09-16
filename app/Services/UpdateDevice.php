@@ -41,7 +41,7 @@ class UpdateDevice
     function integerFun($updateValue, $model, $user_id){
         $saveStatus     = false;
         $updateValue    = intval($updateValue);
-        if(strlen($updateValue) > $model->field_type_length){
+        if(strlen($updateValue) <= $model->field_type_length){
             $model->value = $updateValue;
             $saveStatus = $model->save();
             if($saveStatus){
@@ -54,7 +54,7 @@ class UpdateDevice
     function floatFun($updateValue, $model, $user_id){
         $saveStatus     = false;
         $updateValue    = floatval($updateValue);
-        if(strlen($updateValue) > $model->field_type_length){
+        if(strlen($updateValue) <= $model->field_type_length){
             $model->value = $updateValue;
             $saveStatus = $model->save();
             if($saveStatus){
@@ -66,14 +66,32 @@ class UpdateDevice
     // 按照token更新设备字段
     public function updateDeviceField($request, $user_token, $device_token){
         $updateData = $request->input('data');
-
-        if(empty($updateData)){
+        // 检测数据格式
+        if(empty($updateData) || !is_array($updateData)){
             return errors(['msg'=>'请指定要更新的数据']);
         }
+        foreach($updateData as $row){
+            if(!is_array($row)){
+                return errors(['msg'=>'数据格式不正确0']);
+            }
+            if(!array_key_exists('field', $row)){
+                return errors(['msg'=>'数据格式不正确1']);
+            }else if(empty($row['field'])){
+                return errors(['msg'=>'数据格式不正确11']);
+            }
+            if(!array_key_exists('value', $row)){
+                return errors(['msg'=>'数据格式不正确2']);
+            }else if(empty($row['value'])){
+                return errors(['msg'=>'数据格式不正确22']);
+            }
+        }
+        
 
         $user_id = UserModel::where('token', $user_token)->firstOrFail(['id'])->id;
 
-        $deviceFieldList = UserModel::where('token', $user_token)->firstOrFail()->device()->where('token', $device_token)->firstOrFail()->device_field()->where('updated_at', '<', date('Y-m-d H:i:s',( time() - 60)) )->with('field_type')->get();
+        $deviceFieldList = UserModel::where('token', $user_token)->firstOrFail()->device()->where('token', $device_token)->firstOrFail()->device_field()->with('field_type')->get();
+        // $deviceFieldList = UserModel::where('token', $user_token)->firstOrFail()->device()->where('token', $device_token)->firstOrFail()->device_field()->where('updated_at', '<=', date('Y-m-d H:i:s',( time() - 60)) )->with('field_type')->get();
+        
         if($deviceFieldList->isEmpty()){
             return errors(['msg'=>'请检查该设备下是否存在字段或更新过快']);
         }
@@ -103,8 +121,7 @@ class UpdateDevice
                 }
             }
         }
-       
-        if(count(array_unique($saveStatus)) < 2 && $saveStatus['0'] != false ){
+        if(count(array_unique($saveStatus)) < 2 && count(array_unique($saveStatus)) == 1 && $saveStatus['0'] != false ){
             DB::commit();
             return success(['msg'=>'更新成功']);
         }else{
