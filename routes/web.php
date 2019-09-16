@@ -76,6 +76,11 @@ Route::prefix('/user')->group(function(){
             Route::view('', 'user/device/device_event_log/index'); // 事件日志管理
         });
     });
+    // 数据分析
+    Route::prefix('/data_analysis')->group(function(){
+        Route::view('visualization', 'user/data_analysis/visualization/index'); // 数据可视化
+        Route::view('big_screen', 'user/data_analysis/big_screen/index'); // 数据大屏
+    });
     // 病虫害预警管理
     Route::prefix('/pest_warning')->group(function(){
         Route::view('', 'user/pest_warning/index'); // 病虫害预警列表

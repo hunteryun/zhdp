@@ -76,9 +76,9 @@
                          <a class="" href="javascript:;">数据分析</a>
                          <dl class="layui-nav-child">
                              <!-- 通过百度echer进行显示 -->
-                             <dd><a class="layui-open-tab" href="">数据可视化</a></dd>
+                             <dd><a class="layui-open-tab" href="{{url('user/data_analysis/visualization')}}">数据可视化</a></dd>
                              <!-- 整理显示为漂亮的数据大屏 -->
-                             <dd><a class="layui-open-tab" href="">数据大屏</a></dd>
+                             <dd><a class="layui-open-tab" href="{{url('user/data_analysis/big_screen')}}">数据大屏</a></dd>
                          </dl>
                      </li>
                      <li class="layui-nav-item">
