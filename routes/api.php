@@ -204,12 +204,12 @@ Route::prefix('/user')->group(function(){
         // 即时通知
         Route::prefix('/immediate_login_notice')->group(function(){
             Route::get('', 'Api\\User\\LoginNoticeController@every_day')->middleware('user.token'); // 获取即时通知分页
-            Route::get('every_day_all', 'Api\\User\\LoginNoticeController@every_day_all')->middleware('user.token'); // 获取所有即时通知
+            Route::get('every_day_all', 'Api\\User\\LoginNoticeController@every_day_all')->middleware('user.token'); // 获取所有即时通知(index页面调用)
         });
         Route::prefix('/login_notice_log')->group(function(){
             Route::get('', 'Api\\User\\LoginNoticeLogController@index')->middleware('user.token'); // 获取历史通知(每个人查看记录的那种)
-            Route::get('unread_all', 'Api\\User\\LoginNoticeLogController@unread_all')->middleware('user.token'); // 获取所有未读通知
             Route::get('{id}', 'Api\\User\\LoginNoticeLogController@show')->where('id', '[0-9]+')->middleware('user.token'); // 获取指定id
+            Route::get('unread_all', 'Api\\User\\LoginNoticeLogController@unread_all')->middleware('user.token'); // 获取所有未读通知(index页面调用)(获取后则变为已读)
         });
     });
     // 系统消息

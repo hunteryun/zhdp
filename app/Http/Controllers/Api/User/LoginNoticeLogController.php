@@ -24,6 +24,11 @@ class LoginNoticeLogController extends Base
     public function unread_all(Request $request)
     {
         $loginNoticeLogAll = UserModel::where('token', $this->user_token())->firstOrFail()->login_notice_log()->where('status', '0')->orderBy("id", "desc")->with('login_notice')->all();
+        // 获取后变为已读
+        foreach($loginNoticeLogAll as $row){
+            $row->status = '1';
+            $row->save();
+        }
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $loginNoticeLogAll->count();

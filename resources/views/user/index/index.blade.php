@@ -271,6 +271,44 @@
         shadeMobile.on('click', function () {
             $('body').removeClass('site-mobile');
         });
+        // 登录通知(每次)
+        ajaxLoad2 = layer.load(1, {
+            shade: [0.8, '#393D49']
+        });
+        $.ajax({ 
+            type: "GET",
+            url: "{{url('api/user/login_notice/immediate_login_notice/every_day_all')}}",
+            success: function(result){
+                layer.close(ajaxLoad2);
+                var data = result.data;
+                for (let index = 0; index < data.length; index++) {
+                    layer.open({
+                        type: 1,
+                        title: data[index].title,
+                        content: '<div style="padding:20px">'+data[index].content+'</div>'
+                    });
+                }
+            }
+        });
+        // 登录通知(未读))
+        ajaxLoad2 = layer.load(1, {
+            shade: [0.8, '#393D49']
+        });
+        $.ajax({ 
+            type: "GET",
+            url: "{{url('api/user/login_notice/login_notice_log/unread_all')}}",
+            success: function(result){
+                layer.close(ajaxLoad2);
+                var data = result.data;
+                for (let index = 0; index < data.length; index++) {
+                    layer.open({
+                        type: 1,
+                        title: data[index].title,
+                        content: '<div style="padding:20px">'+data[index].content+'</div>'
+                    });
+                }
+            }
+        });
      </script>
  </body>
 
