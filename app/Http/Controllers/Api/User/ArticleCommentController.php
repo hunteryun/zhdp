@@ -40,6 +40,11 @@ class ArticleCommentController extends Base
         }
         // 更新评论数
         ArticleModel::where('id', $request->input('article_id'))->increment('comment_count');
+        // 被评论通知用户
+        $articleInfo = ArticleModel::find($request->input('article_id'));
+        if($articleInfo && $articleInfo->user_id != $user_id){
+            send_system_msg($articleInfo->user_id, '3', '文章被回复', "您的文章：《".$articleInfo->title."》有新的用户评论，请及时查看");
+        }
         // 
         return success(['msg'=>"文章评论创建成功"]);
     }      
