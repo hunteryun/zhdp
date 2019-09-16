@@ -7,22 +7,23 @@ class UpdateDevice
 {
     function __construct()
     {
-        $this->deviceFieldLogModel = new DeviceFieldLogModel;
+        
     }
     // 记录日志
     function addLog($model, $user_id){
-        $this->deviceFieldLogModel->user_id = $user_id;
-        $this->deviceFieldLogModel->device_id = $model->device_id;
-        $this->deviceFieldLogModel->name = $model->name;
-        $this->deviceFieldLogModel->field = $model->field;
-        $this->deviceFieldLogModel->field_type_id = $model->field_type_id;
-        $this->deviceFieldLogModel->value = $model->value;
-        $this->deviceFieldLogModel->field_type_length = $model->field_type_length;
-        $this->deviceFieldLogModel->common_field = $model->common_field;
-        $this->deviceFieldLogModel->common_field_sort = $model->common_field_sort;
-        $this->deviceFieldLogModel->desc = $model->desc;
-        $this->deviceFieldLogModel->sort = $model->sort;
-        $this->deviceFieldLogModel->save();
+        $DeviceFieldLogModel = new DeviceFieldLogModel;
+        $DeviceFieldLogModel->user_id = $user_id;
+        $DeviceFieldLogModel->device_id = $model->device_id;
+        $DeviceFieldLogModel->name = $model->name;
+        $DeviceFieldLogModel->field = $model->field;
+        $DeviceFieldLogModel->field_type_id = $model->field_type_id;
+        $DeviceFieldLogModel->value = $model->value;
+        $DeviceFieldLogModel->field_type_length = $model->field_type_length;
+        $DeviceFieldLogModel->common_field = $model->common_field;
+        $DeviceFieldLogModel->common_field_sort = $model->common_field_sort;
+        $DeviceFieldLogModel->desc = $model->desc;
+        $DeviceFieldLogModel->sort = $model->sort;
+        $DeviceFieldLogModel->save();
     }
     // 处理bool
     function boolFun($updateValue, $model, $user_id){
@@ -89,8 +90,8 @@ class UpdateDevice
 
         $user_id = UserModel::where('token', $user_token)->firstOrFail(['id'])->id;
 
-        $deviceFieldList = UserModel::where('token', $user_token)->firstOrFail()->device()->where('token', $device_token)->firstOrFail()->device_field()->with('field_type')->get();
-        // $deviceFieldList = UserModel::where('token', $user_token)->firstOrFail()->device()->where('token', $device_token)->firstOrFail()->device_field()->where('updated_at', '<=', date('Y-m-d H:i:s',( time() - 60)) )->with('field_type')->get();
+        // $deviceFieldList = UserModel::where('token', $user_token)->firstOrFail()->device()->where('token', $device_token)->firstOrFail()->device_field()->with('field_type')->get();
+        $deviceFieldList = UserModel::where('token', $user_token)->firstOrFail()->device()->where('token', $device_token)->firstOrFail()->device_field()->where('updated_at', '<=', date('Y-m-d H:i:s',( time() - 60)) )->with('field_type')->get();
         
         if($deviceFieldList->isEmpty()){
             return errors(['msg'=>'请检查该设备下是否存在字段或更新过快']);
@@ -121,6 +122,7 @@ class UpdateDevice
                 }
             }
         }
+
         if(count(array_unique($saveStatus)) < 2 && count(array_unique($saveStatus)) == 1 && $saveStatus['0'] != false ){
             DB::commit();
             return success(['msg'=>'更新成功']);
