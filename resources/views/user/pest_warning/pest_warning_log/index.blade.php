@@ -8,12 +8,43 @@
  <body>
      <div class="layui-card">
          <div class="layui-card-body">
-            <div class="layui-row">
-                <div class="layui-btn-container">
-                    <button type="button" class="layui-btn layui-btn-sm" id="refresh-page">刷新页面</button> 
+            <form class="layui-form">
+                 <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <div class="layui-btn-container">
+                        <button type="button" class="layui-btn layui-btn-sm" id="refresh-page">刷新页面</button> 
                     <button type="button" class="layui-btn layui-btn-sm" id="refresh-pest-warning">刷新表格</button> 
+                        </div>
+                    </div>
                 </div>
-            </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <select name="pest_warning_type" id="pest_warning_type" lay-search lay-filter="pest_warning_type">
+                            <option value="" selected>预警类型:不限</option>
+                            <option value="0" >预警类型:病虫害预警</option>
+                            <option value="1" >预警类型:天气预警</option>
+                        </select>
+                    </div>
+                    <div class="layui-inline">
+                        <input type="text" name="pest_warning_title" autocomplete="off" placeholder="预警名称" class="layui-input">
+                    </div>
+                    <div class="layui-inline">
+                        <input type="text" name="pest_warning_warning" autocomplete="off" placeholder="预警信息" class="layui-input">
+                    </div>
+                    <div class="layui-inline">
+                        <select name="status" id="status" lay-search lay-filter="status">
+                            <option value="" selected>状态:不限</option>
+                            <option value="0" >状态:未读</option>
+                            <option value="1" >状态:已读</option>
+                        </select>
+                    </div>
+                    <div class="layui-inline">
+                        <div class="layui-input-inline">
+                        <button type="submit" id="submit" class="layui-btn" lay-submit="" lay-filter="formSubmit">搜索</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
             <div class="layui-row">
                 <script type="text/html" id="bar">
                     <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="view">查看</a>
@@ -41,10 +72,10 @@
                         }
                     }}
                     ,{field: 'start_time', title: '开始时间', templet : function (d){
-                        return d.pest_warning.start_time
+                        return d.pest_warning.start_time ? d.pest_warning.start_time : '';
                     }}
                     ,{field: 'end_time', title: '结束时间', templet : function (d){
-                        return d.pest_warning.end_time
+                        return d.pest_warning.end_time ? d.pest_warning.end_time : '';
                     }}
                     ,{field: 'warning', title: '预警信息', templet : function (d){
                         return d.pest_warning.warning
@@ -99,6 +130,19 @@
             // 刷新列表
             $('#refresh-pest-warning').click(function(){
                 table.reload('pest_warning_log');
+            });
+            //监听搜索
+            form.on('submit(formSubmit)', function(data) {
+                // 重载 table
+                table.reload('pest_warning_log',{
+                    where: {
+                        'pest_warning_type': data.field.pest_warning_type,
+                        'pest_warning_title': data.field.pest_warning_title,
+                        'pest_warning_warning': data.field.pest_warning_warning,
+                        'status': data.field.status,
+                    }
+                });
+                return false;
             });
      </script>
  </body>
