@@ -31,6 +31,21 @@
                         </select>
                     </div>
                     <div class="layui-inline">
+                        <select name="time" id="time" lay-search>
+                            <option value="0.5" selected>时间:30分钟</option>
+                            <option value="1" >时间:1小时</option>
+                            <option value="5" >时间:5小时</option>
+                            <option value="8" >时间:8小时</option>
+                            <option value="12" >时间:12小时</option>
+                            <option value="24" >时间:1天</option>
+                            <option value="72" >时间:3天</option>
+                            <option value="168" >时间:7天</option>
+                            <option value="720" >时间:30天</option>
+                            <option value="2160" >时间:90天</option>
+                            <option value="8760" >时间:365天</option>
+                        </select>
+                    </div>
+                    <div class="layui-inline">
                         <div class="layui-input-inline">
                             <button type="submit" id="submit" class="layui-btn" lay-submit="" lay-filter="formSubmit">搜索</button>
                             <button type="button" class="layui-btn" id="refresh-page">刷新</button> 
@@ -186,6 +201,7 @@
                         device_room_id: data.field.device_room_id,
                         id: data.field.id,
                         product_id: data.field.product_id,
+                        time: data.field.time,
                     },
                     success: function(result){
                         console.log(result);
