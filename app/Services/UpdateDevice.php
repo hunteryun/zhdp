@@ -46,6 +46,19 @@ class UpdateDevice
         $deviceEventLog->operation_type        = $deviceEventModel->operation_type;
         $deviceEventLog->save();
     }   
+    // 验证设备事件
+    function verifyDeviceEvents($deviceFieldModel, $deviceEventModel, $user_id){
+        // 获取响应字段
+        $responseField = DeviceModel::where('user_id', $user_id)->where('id', $deviceEventModel->associated_device_id)->firstOrFail()->device_field()->where('id', $deviceEventModel->associated_device_field_id)->firstOrFail();
+        // 如果响应设备字段已经和设置的阈值相等则不再更新及写入日志
+        if($responseField->value != $deviceEventModel->operation_type){
+            $responseField->value = $deviceEventModel->operation_type;
+            $eventStatus = $responseField->save();
+            if($eventStatus){
+                $this->addDeviceEvent($deviceEventModel, $deviceFieldModel->value);
+            }
+        }
+    }
     // 设备事件
     function deviceEvent($model, $user_id){
         // 事件模型【获取到该设备字段的所有事件】
@@ -57,47 +70,19 @@ class UpdateDevice
                 // 低于
                 case 0:
                     if($model->value < $row->value){
-                        // 获取响应字段
-                        $responseField = DeviceModel::where('user_id', $user_id)->where('id', $row->associated_device_id)->firstOrFail()->device_field()->where('id', $row->associated_device_field_id)->firstOrFail();
-                        // 如果响应设备字段已经和设置的阈值相等则不再更新及写入日志
-                        if($responseField->value != $row->operation_type){
-                            $responseField->value = $row->operation_type;
-                            $eventStatus = $responseField->save();
-                            if($eventStatus){
-                                $this->addDeviceEvent($row, $model->value);
-                            }
-                        }
-                        
+                        $this->verifyDeviceEvents($model, $row, $user_id);
                     }
                     break;
                 // 等于
                 case 1:
                     if($model->value == $row->value){
-                        // 获取响应字段
-                        $responseField = DeviceModel::where('user_id', $user_id)->where('id', $row->associated_device_id)->firstOrFail()->device_field()->where('id', $row->associated_device_field_id)->firstOrFail();
-                        // 如果响应设备字段已经和设置的阈值相等则不再更新及写入日志
-                        if($responseField->value != $row->operation_type){
-                            $responseField->value = $row->operation_type;
-                            $eventStatus = $responseField->save();
-                            if($eventStatus){
-                                $this->addDeviceEvent($row, $model->value);
-                            }
-                        }
+                        $this->verifyDeviceEvents($model, $row, $user_id);
                     }
                     break;
                 // 高于
                 case 2:
                     if($model->value > $row->value){
-                        // 获取响应字段
-                        $responseField = DeviceModel::where('user_id', $user_id)->where('id', $row->associated_device_id)->firstOrFail()->device_field()->where('id', $row->associated_device_field_id)->firstOrFail();
-                        // 如果响应设备字段已经和设置的阈值相等则不再更新及写入日志
-                        if($responseField->value != $row->operation_type){
-                            $responseField->value = $row->operation_type;
-                            $eventStatus = $responseField->save();
-                            if($eventStatus){
-                                $this->addDeviceEvent($row, $model->value);
-                            }
-                        }
+                        $this->verifyDeviceEvents($model, $row, $user_id);
                     }
                     break;
             }

@@ -15,7 +15,7 @@ class DeviceEventLogController extends Base
     public function index(Request $request)
     {
         $limit = $request->input('limit');
-        $deviceList = UserModel::where('token', $this->user_token())->firstOrFail()->device_event_log()->with("device", "device_field", "associated_device", "associated_device_field")->paginate($limit)->toArray();
+        $deviceList = UserModel::where('token', $this->user_token())->firstOrFail()->device_event_log()->with("device", "device_field", "associated_device", "associated_device_field")->orderBy('id', 'desc')->paginate($limit)->toArray();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $deviceList['total'];
