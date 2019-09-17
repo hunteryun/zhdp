@@ -15,7 +15,7 @@
      <div class="layui-layout layui-layout-admin">
          <div class="layui-header header header-demo">
              <div class="layui-main">
-                 <div class="layui-logo">智慧大棚云平台</div>
+                 <div class="layui-logo">云蛙-物联网云棚后台</div>
                  <!-- 大屏幕显示区域 -->
                  <ul class="layui-nav layui-layout-left layui-hide-xs">
                      <li class="layui-nav-item"><a href="{{url('/')}}">网站首页</a></li>
