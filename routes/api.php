@@ -322,40 +322,10 @@ Route::prefix('/admin')->group(function(){
         Route::post('', 'Api\\Admin\\ArticleController@store')->middleware('admin.token'); // 添加文章列表
         Route::put('{id}', 'Api\\Admin\\ArticleController@update')->where('id', '[0-9]+')->middleware('admin.token'); // 更新文章列表
         Route::delete('{id}', 'Api\\Admin\\ArticleController@destroy')->where('id', '[0-9]+')->middleware('admin.token'); // 删除文章列表
-        Route::prefix('/my')->group(function(){
-            Route::get('', 'Api\\Admin\\ArticleController@my')->middleware('admin.token'); // 获取自己的文章列表
-        });
     });
     // 文章评论
     Route::prefix('/article_comment')->group(function(){
         Route::get('', 'Api\\Admin\\ArticleCommentController@index')->middleware('admin.token'); // 文章评论
-        Route::get('{id}', 'Api\\Admin\\ArticleCommentController@show')->where('id', '[0-9]+')->middleware('admin.token'); // 获取指定id
-        Route::post('', 'Api\\Admin\\ArticleCommentController@store')->middleware('admin.token'); // 添加文章评论
-        Route::put('{id}', 'Api\\Admin\\ArticleCommentController@update')->where('id', '[0-9]+')->middleware('admin.token'); // 更新文章评论
-        Route::delete('{id}', 'Api\\Admin\\ArticleCommentController@destroy')->where('id', '[0-9]+')->middleware('admin.token'); // 删除文章评论
-        Route::prefix('/my')->group(function(){
-            Route::get('', 'Api\\Admin\\ArticleCommentController@my')->middleware('admin.token'); // 获取自己的文章列表
-        });
-    });
-    // 文章查看表
-    Route::prefix('/article_view')->group(function(){
-        Route::get('', 'Api\\Admin\\ArticleViewController@index')->middleware('admin.token'); // 文章浏览记录
-        Route::post('', 'Api\\Admin\\ArticleViewController@store')->middleware('admin.token'); // 添加文章浏览记录
-        Route::put('{id}', 'Api\\Admin\\ArticleViewController@update')->where('id', '[0-9]+')->middleware('admin.token'); // 更新文章浏览记录
-        Route::delete('{id}', 'Api\\Admin\\ArticleViewController@destroy')->where('id', '[0-9]+')->middleware('admin.token'); // 删除文章浏览记录
-        Route::prefix('/my')->group(function(){
-            Route::get('', 'Api\\Admin\\ArticleViewController@my')->middleware('admin.token'); // 获取自己收藏的文章
-        });
-    });
-    // 文章收藏表
-    Route::prefix('/article_collection')->group(function(){
-        Route::get('', 'Api\\Admin\\ArticleCollectionController@index')->middleware('admin.token'); // 文章收藏
-        Route::get('{article_id}', 'Api\\Admin\\ArticleCollectionController@show')->where('article_id', '[0-9]+')->middleware('admin.token'); // 获取指定id是否收藏
-        Route::post('', 'Api\\Admin\\ArticleCollectionController@store')->middleware('admin.token'); // 添加文章收藏
-        Route::delete('{id}', 'Api\\Admin\\ArticleCollectionController@destroy')->where('id', '[0-9]+')->middleware('admin.token'); // 删除文章收藏
-        Route::prefix('/my')->group(function(){
-            Route::get('', 'Api\\Admin\\ArticleCollectionController@my')->middleware('admin.token'); // 获取自己收藏的文章
-        });
     });
     // 用户表
     Route::prefix('/user')->group(function(){

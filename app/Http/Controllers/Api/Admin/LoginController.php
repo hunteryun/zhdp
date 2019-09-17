@@ -20,7 +20,7 @@ class LoginController extends Base
                 ['password', '=', $request->input('password')],
             ])->firstOrFail();
         }catch(\Exception $exception){
-            throw new ModelNotFound('用户密码或账号错误');
+            throw new ModelNotFound('密码或账号错误');
         }
         $userToken = str_random(60);
         $userInfo->token = $userToken;

@@ -24,28 +24,6 @@ class LoginNoticeController extends Base
         $returnData['data']             = $loginNoticeList['data'];
         return success($returnData);
     }
-    // 获取即时通知列表
-    public function every_day(Request $request)
-    {
-        $limit = $request->input('limit');
-        $loginNoticeList = LoginNoticeModel::where('type', '0')->orderBy("id", "desc")->paginate($limit)->toArray();
-        $returnData = [];
-        $returnData['msg']              = "查询成功";
-        $returnData['count']            = $loginNoticeList['total'];
-        $returnData['current_page']     = $loginNoticeList['current_page'];
-        $returnData['data']             = $loginNoticeList['data'];
-        return success($returnData);
-    }
-    // 获取所有每次登录通知
-    public function every_day_all(Request $request)
-    {
-        $loginNoticeAll = LoginNoticeModel::orderBy("id", "desc")->where('type', '0')->get();
-        $returnData = [];
-        $returnData['msg']              = "查询成功";
-        $returnData['count']            = $loginNoticeAll->count();
-        $returnData['data']             = $loginNoticeAll->toArray();
-        return success($returnData);
-    }
     // 获取指定id
     public function show(Request $request, $id)
     {
