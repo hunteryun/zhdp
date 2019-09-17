@@ -56,7 +56,7 @@
 			</div>
 			<div class="layui-form-item">
 				<div class="" style="float:right">
-					<a href="{{url('user/login')}}" style="color:#009688">登录？</a>
+					<a href="{{url('user/login')}}" style="color:#009688">已有帐号？点击登录</a>
 				</div>
 			</div>
 			<button class="layui-btn login_btn" lay-submit="" lay-filter="formSubmit">注册</button>

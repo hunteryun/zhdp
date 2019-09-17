@@ -17,9 +17,9 @@
              <div class="layui-main">
                  <div class="layui-logo">云蛙-物联网云棚后台</div>
                  <!-- 大屏幕显示区域 -->
-                 <ul class="layui-nav layui-layout-left layui-hide-xs">
+                 <!-- <ul class="layui-nav layui-layout-left layui-hide-xs">
                      <li class="layui-nav-item"><a href="{{url('/')}}">网站首页</a></li>
-                 </ul>
+                 </ul> -->
                  <ul class="layui-nav layui-layout-right">
                      <li class="layui-nav-item">
                          <a href="javascript:;">
