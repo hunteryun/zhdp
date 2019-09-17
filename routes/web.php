@@ -184,14 +184,12 @@ Route::view('/', 'welcome');
 
 // 管理员 /index.php/admin
 Route::prefix('/admin')->group(function(){
-    Route::view('reg', 'admin/reg/index'); // 用户注册
     Route::view('login', 'admin/login/index'); // 用户登录
     Route::view('index', 'admin/index/index'); // 首页
 
     Route::prefix('/my')->group(function(){
         Route::view('', 'admin/my/index'); // 个人信息
     });
-
 
     // 字段类型管理
     Route::prefix('/field_type')->group(function(){
@@ -234,7 +232,6 @@ Route::prefix('/admin')->group(function(){
         Route::view('', 'admin/article/index'); // 文章列表
         Route::view('info', 'admin/article/info'); // 文章详情
         Route::view('add', 'admin/article/add'); // 文章添加
-        // Route::view('edit', 'admin/article/edit'); // 文章编辑
             // 文章分类管理
         Route::prefix('/class')->group(function(){
             Route::view('', 'admin/article/class/index'); // 文章分类列表
@@ -250,20 +247,14 @@ Route::prefix('/admin')->group(function(){
         // 我的评论
         Route::prefix('/my_comment')->group(function(){
             Route::view('', 'admin/article/my_comment/index'); // 我的评论列表
-            // Route::view('add', 'admin/article/my_comment/add'); // 我的评论添加
-            // Route::view('edit', 'admin/article/my_comment/edit'); // 我的评论编辑
         });
         // 我的收藏
         Route::prefix('/my_collection')->group(function(){
             Route::view('', 'admin/article/my_collection/index'); // 我的收藏列表
-            // Route::view('add', 'admin/article/my_collection/add'); // 我的收藏添加
-            // Route::view('edit', 'admin/article/my_collection/edit'); // 我的收藏编辑
         });
         // 最近浏览
         Route::prefix('/my_view')->group(function(){
             Route::view('', 'admin/article/my_view/index'); // 最近浏览列表
-            // Route::view('add', 'admin/article/my_view/add'); // 最近浏览添加
-            // Route::view('edit', 'admin/article/my_view/edit'); // 最近浏览编辑
         });
     });
     // 用户管理

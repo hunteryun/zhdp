@@ -251,7 +251,6 @@ use Illuminate\Http\Request;
 // });
 
 Route::prefix('/admin')->group(function(){
-    Route::post('reg', 'Api\\Admin\\RegController@index'); // 注册
     Route::post('login', 'Api\\Admin\\LoginController@index'); // 登录
     Route::get('out', 'Api\\Admin\\LoginController@out'); // 退出
     Route::get('my', 'Api\\Admin\\AdminController@get_my')->middleware('admin.token'); // 用户自己
