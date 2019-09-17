@@ -4,8 +4,12 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Api\Admin\Base;
 use Illuminate\Http\Request;
-use App\Model\Admin as AdminModel;
-// 数据分析
+use App\Model\Device as DeviceModel;
+use App\Model\DeviceRegion as DeviceRegionModel;
+use App\Model\DeviceFieldLog as DeviceFieldLogModel;
+use App\Model\DeviceEventLog as DeviceEventLogModel;
+
+// 数据分析d
 class DataAnalysisController extends Base
 {
     // 数据可视化
@@ -21,7 +25,7 @@ class DataAnalysisController extends Base
             $where['id'] = intval($request->input('id'));
         }
 
-        $deviceList = AdminModel::where('token', $this->admin_token())->firstOrFail()->device()->where($where)->orderBy('id', 'desc')->whereHas('device_room', function($query) use($request){
+        $deviceList = DeviceModel::where($where)->orderBy('id', 'desc')->whereHas('device_room', function($query) use($request){
             // 区域
             if($request->filled('device_region_id')){
                 $query->where('device_region_id', intval($request->input('device_region_id')));
@@ -69,7 +73,7 @@ class DataAnalysisController extends Base
     // 设备数量分布(all) 本周请求次数(天) 设备事件(24h) 设备事件分类
     public function big_screen(Request $request){
         // 获取数量分区
-        $deviceList = AdminModel::where('token', $this->admin_token())->firstOrFail()->device_region()->with(['device_room.device'=>function($query){
+        $deviceList = DeviceRegionModel::with(['device_room.device'=>function($query){
             $query->selectRaw('count(id) as device_num,device_room_id');
             $query->groupBy('device_room_id');
         }])->get(['id','name']);
@@ -94,8 +98,7 @@ class DataAnalysisController extends Base
         // 获取本周请求次数，按照天进行分组
         $startTime = date("Y-m-d", strtotime("-7 day"));
         $endTime = date("Y-m-d", time());
-        $deviceFieldLogDayList = AdminModel::where('token', $this->admin_token())->firstOrFail()->device_field_log()
-            ->whereBetween('created_at',[$startTime, $endTime])
+        $deviceFieldLogDayList = DeviceFieldLogModel::whereBetween('created_at',[$startTime, $endTime])
             ->selectRaw("DATE_FORMAT(created_at, '%Y-%m-%d') as date,COUNT(id) as num")
             ->groupBy('date')
             ->orderBy('date', 'desc')
@@ -104,8 +107,7 @@ class DataAnalysisController extends Base
 
 
         // 获取设备事件(按小时分组)
-        $deviceEventLogList = AdminModel::where('token', $this->admin_token())->firstOrFail()->device_event_log()
-            ->whereBetween('created_at',[date("Y-m-d H:i:s", strtotime("-1 day")), date('Y-m-d H:i:s', time())])
+        $deviceEventLogList = DeviceFieldLogModel::whereBetween('created_at',[date("Y-m-d H:i:s", strtotime("-1 day")), date('Y-m-d H:i:s', time())])
             ->selectRaw("DATE_FORMAT(created_at, '%Y-%m-%d %H') as date,COUNT(id) as num")
             ->groupBy('date')
             ->orderBy('date', 'desc')
@@ -115,8 +117,7 @@ class DataAnalysisController extends Base
 
 
         // 获取24小时设备事件分类
-        $deviceEventLogClassList = AdminModel::where('token', $this->admin_token())->firstOrFail()->device_event_log()
-            ->whereBetween('created_at',[date("Y-m-d H:i:s", strtotime("-1 day")), date('Y-m-d H:i:s', time())])
+        $deviceEventLogClassList = DeviceEventLogModel::whereBetween('created_at',[date("Y-m-d H:i:s", strtotime("-1 day")), date('Y-m-d H:i:s', time())])
             ->selectRaw("COUNT(id) as num,type")
             ->groupBy('type')
             ->orderBy('type', 'desc')
