@@ -3,72 +3,67 @@
 
 <head>
 	@include('public.include_head')
+	<style>
+		body {
+			overflow: hidden;
+		}
+
+		.login {
+			height: 260px;
+			width: 260px;
+			padding: 20px;
+			border-radius: 4px;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			margin: -150px 0 0 -150px;
+			z-index: 99;
+		}
+
+		.login h1 {
+			text-align: center;
+			color: black;
+			font-size: 24px;
+			margin-bottom: 20px;
+		}
+
+		.form_code {
+			position: relative;
+		}
+
+		.form_code .code {
+			position: absolute;
+			right: 0;
+			top: 1px;
+			cursor: pointer;
+		}
+
+		.login_btn {
+			width: 100%;
+		}
+	</style>
 </head>
 
 <body>
-	@include('public.top')
-	@include('public.menu')
-	<div class="layui-container fly-marginTop">
-		<div class="fly-panel fly-panel-user" pad20>
-			<div class="layui-tab layui-tab-brief" lay-filter="user">
-				<ul class="layui-tab-title">
-					<li class="layui-this">登入</li>
-					<li><a href="{{url('user/reg')}}">注册</a></li>
-				</ul>
-				<div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
-					<div class="layui-tab-item layui-show">
-						<div class="layui-form layui-form-pane">
-							<form method="post">
-								<div class="layui-form-item">
-									<label class="layui-form-label">昵称</label>
-									<div class="layui-input-inline">
-										<input type="text" id="name" name="name" required lay-verify="required" autocomplete="off" class="layui-input">
-									</div>
-								</div>
-								<div class="layui-form-item">
-									<label class="layui-form-label">密码</label>
-									<div class="layui-input-inline">
-										<input type="password" id="password" name="password" required lay-verify="required" autocomplete="off" class="layui-input">
-									</div>
-								</div>
-								<div class="layui-form-item">
-									<button class="layui-btn" lay-filter="formSubmit" lay-submit>立即登录</button>
-									<span style="padding-left:20px;">
-										<a href="forget.html">忘记密码？</a>
-									</span>
-								</div>
-								<div class="layui-form-item fly-form-app">
-									<span>或者使用社交账号登入</span>
-									<a href="" onclick="layer.msg('正在通过QQ登入', {icon:16, shade: 0.1, time:0})" class="iconfont icon-qq" title="QQ登入"></a>
-									<a href="" onclick="layer.msg('正在通过微博登入', {icon:16, shade: 0.1, time:0})" class="iconfont icon-weibo" title="微博登入"></a>
-								</div>
-							</form>
-						</div>
-					</div>
+	<div class="login">
+		<h1>云蛙-用户登录</h1>
+		<form class="layui-form">
+			<div class="layui-form-item">
+				<input class="layui-input" name="name" placeholder="用户名" lay-verify="required" type="text" autocomplete="off">
+			</div>
+			<div class="layui-form-item">
+				<input class="layui-input" name="password" placeholder="密码" lay-verify="required" type="password" autocomplete="off">
+			</div>
+			<div class="layui-form-item">
+				<div class="" style="float:right">
+					<a href="{{url('user/reg')}}" style="color:#009688">注册？</a>
 				</div>
 			</div>
-		</div>
+			<button class="layui-btn login_btn" lay-submit="" lay-filter="formSubmit">登录</button>
+		</form>
 	</div>
-	@include('public.foot')
 	@include('public.include_js')
 	<script>
-		layui.cache.page = 'user';
-		layui.cache.user = {
-			username: '游客',
-			uid: -1,
-			avatar: '{{asset("/js/fly-v3.0/res/images/avatar/00.jpg")}}',
-			experience: 83,
-			sex: '男'
-		};
-		layui.config({
-			open: '@{{',
-			close: '}}',
-			version: "3.0.0",
-			base: '{{asset("/js/fly-v3.0/res/mods/")}}/'
-		}).extend({
-			fly: 'index'
-		}).use('fly');
-		// 
 		//监听提交
 		form.on('submit(formSubmit)', function(formoObj) {
 			var field = formoObj.field;
@@ -76,14 +71,14 @@
 				shade: [0.8, '#393D49']
 			});
 			console.log(field);
-			$.ajax({ 
+			$.ajax({
 				type: "POST",
-                url: "{{url('api/user/login')}}",
+				url: "{{url('api/user/login')}}",
 				data: {
 					name: field.name,
 					password: field.password,
 				},
-				success: function(result){
+				success: function(result) {
 					layer.close(formLoad);
 					layer.msg(result.msg);
 					if (result.code == 0) {
@@ -93,7 +88,7 @@
 						});
 						window.location.href = "{{url('user/index')}}";
 					}
-		    	}
+				}
 			});
 			return false;
 		});

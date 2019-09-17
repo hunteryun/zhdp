@@ -1,6 +1,6 @@
      <meta charset="utf-8">
      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-     <title>物联网后台</title>
+     <title>云蛙-物联网云棚后台</title>
      <meta name="renderer" content="webkit">
      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -13,21 +13,5 @@
      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
      <![endif]-->
-     <script src="{{asset('/js/layui-v2.5.4/layui.all.js')}}" charset="utf-8"></script>
-     <script>
-         var $ = layui.jquery,
-            layer = layui.layer,
-            form = layui.form,
-            table = layui.table,
-            element = layui.element; 
-         $.ajaxSetup({
-            headers:{
-                  Authorization:layui.data('user_info').token, 
-            }
-         });
-     </script>
-     <script>
-        var layerLoad = layer.load(2, {shade: [0.8, '#393D49']});
-     </script>
      <link rel="stylesheet" href="{{asset('/js/layui-v2.5.4/css/layui.css')}}" media="all">
      <link rel="stylesheet" href="{{asset('/js/layui-v2.5.4/css/fly.global.css')}}" media="all">
