@@ -1,20 +1,32 @@
 <!DOCTYPE html>
- <html>
- <head>
- @include('public.include_head')
- </head>
- <body>
- @include('public.top')
- @include('public.menu')
-<div class="layui-container fly-marginTop">
-	<div class="fly-panel">
-	  <div class="fly-none">
-	    <h2><i class="iconfont icon-404"></i></h2>
-	    <p>页面或者数据被<a href="/" target="_blank"> 纸飞机 </a>运到火星了，啥都看不到了…</p>
-	  </div>
+<html>
+
+<head>
+	@include('public.include_head')
+	<style>
+		body {
+			overflow: hidden;
+		}
+		.login {
+			height: 260px;
+			width: 260px;
+			/* padding: 20px; */
+			border-radius: 4px;
+			position: absolute;
+			left: 50%;
+			top: 30%;
+			margin: -150px 0 0 -150px;
+			z-index: 99;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="fly-none login">
+		<h2><i class="iconfont icon-404"></i></h2>
 	</div>
-</div>
-@include('public.foot')
-@include('public.include_js')
- </body>
+	@include('public.include_js')
+</body>
+
 </html>
+
