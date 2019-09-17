@@ -68,7 +68,7 @@ class DataAnalysisController extends Base
     // 数据大屏
     // 显示设备数量，分布区域，权重，报警记录，我的评论，我的文章，我的收藏，
     public function big_screen(Request $request){
-
+        
     }
 
 }
