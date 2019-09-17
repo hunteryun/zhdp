@@ -19,16 +19,6 @@
                  <!-- 大屏幕显示区域 -->
                  <ul class="layui-nav layui-layout-left layui-hide-xs">
                      <li class="layui-nav-item"><a href="{{url('/')}}">网站首页</a></li>
-                     <!-- <li class="layui-nav-item"><a class="layui-open-tab" href="">商品管理</a></li>
-                     <li class="layui-nav-item"><a class="layui-open-tab" href="">用户</a></li>
-                     <li class="layui-nav-item">
-                         <a href="javascript:;">其它系统</a>
-                         <dl class="layui-nav-child">
-                             <dd><a class="layui-open-tab" href="">邮件管理</a></dd>
-                             <dd><a class="layui-open-tab" href="">消息管理</a></dd>
-                             <dd><a class="layui-open-tab" href="">授权管理</a></dd>
-                         </dl>
-                     </li> -->
                  </ul>
                  <ul class="layui-nav layui-layout-right">
                      <li class="layui-nav-item">
@@ -36,7 +26,7 @@
                              用户
                          </a>
                          <dl class="layui-nav-child">
-                             <dd><a class="layui-open-tab" href="">退出</a></dd>
+                             <dd><a class="" id="outLogin" href="">退出</a></dd>
                          </dl>
                      </li>
                  </ul>
@@ -271,6 +261,25 @@
         shadeMobile.on('click', function () {
             $('body').removeClass('site-mobile');
         });
+        // 退出登录
+        $("#outLogin").click(function(){
+            // 登录通知(每次)
+            ajaxLoad20 = layer.load(1, {
+                shade: [0.8, '#393D49']
+            });
+            $.ajax({ 
+                type: "GET",
+                url: "{{url('api/user/out')}}",
+                success: function(result){
+                    layer.close(ajaxLoad20);
+                    layer.msg("正在跳转登录页面",{
+                        shade: [0.8, '#393D49']
+                    });
+                    window.location.href = "{{url('user/login')}}";
+                }
+            });
+            return false;
+        });
         // 登录通知(每次)
         ajaxLoad2 = layer.load(1, {
             shade: [0.8, '#393D49']
@@ -280,6 +289,12 @@
             url: "{{url('api/user/login_notice/immediate_login_notice/every_day_all')}}",
             success: function(result){
                 layer.close(ajaxLoad2);
+                if(result.code > 0){
+                    // 防止登录失效 js出错
+                    return layer.msg(result.msg,{
+                        shade: [0.8, '#393D49']
+                    });
+                }
                 var data = result.data;
                 for (let index = 0; index < data.length; index++) {
                     layer.open({
@@ -299,6 +314,12 @@
             url: "{{url('api/user/login_notice/login_notice_log/unread_all')}}",
             success: function(result){
                 layer.close(ajaxLoad2);
+                if(result.code > 0){
+                    // 防止登录失效 js出错
+                    return layer.msg(result.msg,{
+                        shade: [0.8, '#393D49']
+                    });
+                }
                 var data = result.data;
                 for (let index = 0; index < data.length; index++) {
                     layer.open({

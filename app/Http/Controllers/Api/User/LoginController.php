@@ -30,4 +30,11 @@ class LoginController extends Base
         }
         return success(['msg'=>"登录成功",'token' => $userToken]);
     }
+    // 用户退出
+    public function out(Request $request){
+        $userModel = UserModel::where('token', $this->user_token())->firstOrFail();
+        $userModel->token = "";
+        $userModel->save();
+        return success(['msg'=>"退出成功"]);
+    }
 }

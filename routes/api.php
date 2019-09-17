@@ -21,6 +21,7 @@ use Illuminate\Http\Request;
 Route::prefix('/user')->group(function(){
     Route::post('reg', 'Api\\User\\RegController@index'); // 注册
     Route::post('login', 'Api\\User\\LoginController@index'); // 登录
+    Route::get('out', 'Api\\User\\LoginController@out'); // 退出
     Route::get('my', 'Api\\User\\UserController@get_my')->middleware('user.token'); // 用户自己
     Route::put('my/{id}', 'Api\\User\\UserController@update_my')->where('id', '[0-9]+')->middleware('user.token'); // 用户自己
 
