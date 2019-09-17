@@ -53,12 +53,42 @@
                     </div>
                 </div>
             </form>
-            <div class="layui-row">
-                
-            </div>
+            <div style="padding: 20px; background-color: #F2F2F2;">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <div class="layui-card">
+                            <div class="layui-card-body">
+                                <div id="main" style="height:400px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
          </div>
      </div>
      @include('user.public.include_js')
+     <!-- 引入百度图表 -->
+    <script src="{{asset('/js/echarts.min.js')}}" charset="utf-8"></script>
+    <script>
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+        // 指定图表的配置项和数据
+        var option = {
+            xAxis: {
+                type: 'category',
+                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                data: [820, 932, 901, 934, 1290, 1330, 1320],
+                type: 'line'
+            }]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
      <script>
             // 刷新页面
             $('#refresh-page').click(function(){

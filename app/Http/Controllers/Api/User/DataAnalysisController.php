@@ -46,24 +46,13 @@ class DataAnalysisController extends Base
             }else if($time < 0.5){
                 $time = 0.5;
             }
-            // 查询时间区间
+            // 查询时间区间 
+            // $query->whereBetween('created_at',[date("Y-m-d H:i:s", time() - ($time * 3600)),date("Y-m-d H:i:s", time())])->selectRaw("DATE_FORMAT(created_at, '%Y-%m-%d %H:%i') as date, id,device_id,device_field_id,name,created_at")->groupBy('date')->orderBy('date', 'desc');
             $query->whereBetween('created_at',[date("Y-m-d H:i:s", time() - ($time * 3600)),date("Y-m-d H:i:s", time())]);
-            // 按照时间进行分组 [30分钟按照分钟获取，1小时-12小时按照一刻获取,12小时-3天按照小时获取，3-7按照2小时获取，7-365按照10天获取]
-            // if($time == 0.5){
-                $query->selectRaw('date(created_at) as date,count(*) as value');
-                $query->groupBy('date');
-                // $query->selectRaw('DATE_FORMAT(created_at, "%Y-%m-%d %H:%i:%s") AS time');
-                // $query->groupBy('time');
-            // }else if($time > 0.5 && $time <= 12){
-            //     $query->selectRaw('DATE_FORMAT(created_at,"%Y-%m-%d %H:%i") as date');
-            // }else if($time > 12 && $time <= 72){
-            //     $query->selectRaw('DATE_FORMAT(created_at,"%Y-%m-%d %H") as date');
-            // }else if($time > 72 && $time <= 168){
-            //     $query->selectRaw('DATE_FORMAT(created_at,"%Y-%m-%d %H") as date');
-            // }else if($time > 168 && $time <= 8760){
-            //     $query->selectRaw('DATE_FORMAT(created_at,"%Y-%m-%d") as date');
-            // }
-
+            $query->selectRaw("DATE_FORMAT(created_at, '%Y-%m-%d %H:%i') as date, id,device_id,device_field_id,name,created_at");
+            $query->groupBy('date');
+            $query->orderBy('date', 'desc');
+            
         }])->get();
         $returnData = [];
         $returnData['msg']              = "查询成功";
