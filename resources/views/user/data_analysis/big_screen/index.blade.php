@@ -68,8 +68,10 @@
             }
         });
         function device(data){
+            title = [];
             list = [];
             for(var i in data){
+                title.push(data[i].name);
                 var row = {};
                     row.name = data[i].name,
                     row.value = data[i].device_num,
@@ -79,66 +81,40 @@
             var myChart = echarts.init(document.getElementById('device'));
             // 指定图表的配置项和数据
             var option = {
-                backgroundColor: '#2c343c',
-                title: {
-                    left: 'center',
-                    top: 20,
-                    textStyle: {
-                        color: '#ccc'
-                    }
-                },
-
-                tooltip : {
+                tooltip: {
                     trigger: 'item',
-                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    formatter: "{a} <br/>{b}: {c} ({d}%)"
                 },
-
-                visualMap: {
-                    show: false,
-                    min: 80,
-                    max: 600,
-                    inRange: {
-                        colorLightness: [0, 1]
-                    }
+                legend: {
+                    orient: 'vertical',
+                    x: 'left',
+                    data:title
                 },
-                series : [
+                series: [
                     {
-                        name:'设备分布',
+                        name:'访问来源',
                         type:'pie',
-                        radius : '55%',
-                        center: ['50%', '50%'],
-                        data:list.sort(function (a, b) { return a.value - b.value; }),
-                        roseType: 'radius',
+                        radius: ['50%', '70%'],
+                        avoidLabelOverlap: false,
                         label: {
                             normal: {
+                                show: false,
+                                position: 'center'
+                            },
+                            emphasis: {
+                                show: true,
                                 textStyle: {
-                                    color: 'rgba(255, 255, 255, 0.3)'
+                                    fontSize: '30',
+                                    fontWeight: 'bold'
                                 }
                             }
                         },
                         labelLine: {
                             normal: {
-                                lineStyle: {
-                                    color: 'rgba(255, 255, 255, 0.3)'
-                                },
-                                smooth: 0.2,
-                                length: 10,
-                                length2: 20
+                                show: false
                             }
                         },
-                        itemStyle: {
-                            normal: {
-                                color: '#c23531',
-                                shadowBlur: 200,
-                                shadowColor: 'rgba(0, 0, 0, 0.5)'
-                            }
-                        },
-
-                        animationType: 'scale',
-                        animationEasing: 'elasticOut',
-                        animationDelay: function (idx) {
-                            return Math.random() * 200;
-                        }
+                        data:list
                     }
                 ]
             };
