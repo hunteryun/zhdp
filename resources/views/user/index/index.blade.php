@@ -99,7 +99,7 @@
                         <div class="layui-card">
                             <div class="layui-card-body" style="background: #F2F2F2;">
                                <!-- 内容 -->
-                                <div class="layui-fluid">
+                                <!-- <div class="layui-fluid">
                                     <div class="layui-row layui-col-space5">
                                     <div class="layui-col-md2">
                                             <div class="layui-card">
@@ -160,7 +160,7 @@
                                         </div>
                                         </div>
                                     </div>
-                                </div>      
+                                </div>       -->
                                <!-- end -->
                             </div>
                         </div>
