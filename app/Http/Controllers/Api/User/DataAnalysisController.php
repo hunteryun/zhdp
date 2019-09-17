@@ -47,9 +47,15 @@ class DataAnalysisController extends Base
                 $time = 0.5;
             }
             // 查询时间区间 
-            // $query->whereBetween('created_at',[date("Y-m-d H:i:s", time() - ($time * 3600)),date("Y-m-d H:i:s", time())])->selectRaw("DATE_FORMAT(created_at, '%Y-%m-%d %H:%i') as date, id,device_id,device_field_id,name,created_at")->groupBy('date')->orderBy('date', 'desc');
             $query->whereBetween('created_at',[date("Y-m-d H:i:s", time() - ($time * 3600)),date("Y-m-d H:i:s", time())]);
-            $query->selectRaw("DATE_FORMAT(created_at, '%Y-%m-%d %H:%i') as date, id,device_id,device_field_id,name,created_at");
+            $query->select("*");
+            if($time <= 5){
+                $query->selectRaw("DATE_FORMAT(created_at, '%Y-%m-%d %H:%i') as date");
+            }else if($time <= 720){
+                $query->selectRaw("DATE_FORMAT(created_at, '%Y-%m-%d %H') as date");
+            }else if($time <= 8760){
+                $query->selectRaw("DATE_FORMAT(created_at, '%Y-%m-%d') as date");
+            }
             $query->groupBy('date');
             $query->orderBy('date', 'desc');
         }])->get();
