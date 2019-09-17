@@ -20,22 +20,8 @@
          </div>
      </div>
      <blockquote class="layui-elem-quote">
-         回复
+         评论
     </blockquote>
-    <div class="layui-card">
-        <div class="layui-card-body">
-            <div class="layui-form layui-form-pane">
-                <div class="layui-form-item layui-form-text">
-                    <div class="layui-input-block">
-                        <textarea type="text" class="layui-textarea" id="my-comment" name="my-comment" placeholder="评论内容"></textarea>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <button type="submit" id="submit" class="layui-btn" lay-submit="" lay-filter="formSubmit">提交</button>
-                </div>
-            </div>
-        </div>
-    </div>
     <div id="article_comment">
         评论加载中...
     </div>
