@@ -52,7 +52,6 @@ class DataAnalysisController extends Base
             $query->selectRaw("DATE_FORMAT(created_at, '%Y-%m-%d %H:%i') as date, id,device_id,device_field_id,name,created_at");
             $query->groupBy('date');
             $query->orderBy('date', 'desc');
-            
         }])->get();
         $returnData = [];
         $returnData['msg']              = "查询成功";
