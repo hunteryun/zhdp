@@ -13,7 +13,7 @@ class PestWarningLogController extends Base
     {
         $limit = $request->input('limit');
 
-        $PestWarningLogList = UserModel::where('token', $this->user_token())->firstOrFail()->pest_warning_log()->where('status', strval(intval($request->input('status'))))->whereHas('pest_warning', function($query)use($request){
+        $PestWarningLogList = UserModel::where('token', $this->admin_token())->firstOrFail()->pest_warning_log()->where('status', strval(intval($request->input('status'))))->whereHas('pest_warning', function($query)use($request){
             // 预警类型
             if($request->filled('pest_warning_type')){
                 $query->where('type', strval(intval($request->input('pest_warning_type'))));
@@ -36,7 +36,7 @@ class PestWarningLogController extends Base
     }
     // 获取单个预警信息
     public function show(Request $request, $id){
-        $pestWarningLogInfo = UserModel::where('token', $this->user_token())->firstOrFail()->pest_warning_log()->where("id", $id)->with("pest_warning")->firstOrFail();
+        $pestWarningLogInfo = UserModel::where('token', $this->admin_token())->firstOrFail()->pest_warning_log()->where("id", $id)->with("pest_warning")->firstOrFail();
         // 更新查看状态
         if($pestWarningLogInfo->status == 0){
             $pestWarningLogInfo->status = '1';

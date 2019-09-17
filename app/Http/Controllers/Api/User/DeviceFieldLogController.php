@@ -27,7 +27,7 @@ class DeviceFieldLogController extends Base
             $where['device_id'] = intval($request->device_id);
         }
 
-        $deviceFieldLogList = UserModel::where('token', $this->user_token())->firstOrFail()->device_field_log()->where($where)->whereHas('device', function($query) use($request){
+        $deviceFieldLogList = UserModel::where('token', $this->admin_token())->firstOrFail()->device_field_log()->where($where)->whereHas('device', function($query) use($request){
             // 产品
             if($request->filled('product_id')){
                 $query->where('product_id', intval($request->input('product_id')));

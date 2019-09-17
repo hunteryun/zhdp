@@ -32,7 +32,7 @@ class LoginController extends Base
     }
     // 用户退出
     public function out(Request $request){
-        $userModel = UserModel::where('token', $this->user_token())->firstOrFail();
+        $userModel = UserModel::where('token', $this->admin_token())->firstOrFail();
         $userModel->token = "";
         $userModel->save();
         return success(['msg'=>"退出成功"]);

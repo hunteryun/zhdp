@@ -15,7 +15,7 @@ class ArticleViewController extends Base
     public function index(Request $request)
     {
         $limit      = $request->input('limit');
-        $articleViewList = UserModel::where('token', $this->user_token())->firstOrFail()->article_view()->paginate($limit)->toArray();
+        $articleViewList = UserModel::where('token', $this->admin_token())->firstOrFail()->article_view()->paginate($limit)->toArray();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $articleViewList['total'];
@@ -27,7 +27,7 @@ class ArticleViewController extends Base
      public function store(Request $request)
     {
         (new AddArticleViewRequests)->verification();
-        $user_id = UserModel::where('token', $this->user_token())->firstOrFail(['id'])->id;
+        $user_id = UserModel::where('token', $this->admin_token())->firstOrFail(['id'])->id;
         $ArticleViewModel = new ArticleViewModel;
         $ArticleViewModel->user_id           = $user_id;
         $ArticleViewModel->article_id        = $request->input('article_id');
@@ -40,7 +40,7 @@ class ArticleViewController extends Base
     // 更新
     public function update(Request $request, $id){
         (new UpdateArticleViewRequests)->verification();
-        $ArticleViewInfo = UserModel::where('token', $this->user_token())->firstOrFail()->article_view()->where('id', $id)->firstOrFail();
+        $ArticleViewInfo = UserModel::where('token', $this->admin_token())->firstOrFail()->article_view()->where('id', $id)->firstOrFail();
         $ArticleViewInfo->article_id        = $request->input('article_id');
         $updateArticleView                  = $ArticleViewInfo->save();
         if(!$updateArticleView){
@@ -51,7 +51,7 @@ class ArticleViewController extends Base
     // 删除
     public function destroy(Request $request, $id){
         
-        $deletearticleViewStatus = UserModel::where('token', $this->user_token())->firstOrFail()->article_view()->where('id', $id)->firstOrFail()->delete();
+        $deletearticleViewStatus = UserModel::where('token', $this->admin_token())->firstOrFail()->article_view()->where('id', $id)->firstOrFail()->delete();
         if(!$deletearticleViewStatus){
             return errors("文章浏览记录删除失败");
         }
@@ -61,7 +61,7 @@ class ArticleViewController extends Base
     public function my(Request $request)
     {
         $limit  = $request->input('limit');
-        $deviceRegionList = UserModel::where('token', $this->user_token())->firstOrFail()->article_view()->whereHas('article', function($query){
+        $deviceRegionList = UserModel::where('token', $this->admin_token())->firstOrFail()->article_view()->whereHas('article', function($query){
             $request = request();
             $article_class_id  = $request->article_class_id;
             if(!empty($article_class_id)){

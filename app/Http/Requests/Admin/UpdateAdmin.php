@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests\Admin;
 use App\Http\Requests\Base;
 use Illuminate\Validation\Rule;
 class UpdateAdmin extends Base

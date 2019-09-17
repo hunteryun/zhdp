@@ -4,6 +4,7 @@ namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use App\Http\Middleware\CheckUserToken;
+use App\Http\Middleware\CheckAdminToken;
 class Kernel extends HttpKernel
 {
     /**
@@ -60,7 +61,8 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'user.token' => CheckUserToken::class
+        'user.token' => CheckUserToken::class,
+        'admin.token' => CheckAdminToken::class
     ];
 
     /**

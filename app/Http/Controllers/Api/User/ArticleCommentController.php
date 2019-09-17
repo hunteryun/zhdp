@@ -29,7 +29,7 @@ class ArticleCommentController extends Base
      public function store(Request $request)
     {
         (new AddArticleCommentRequests)->verification();
-        $user_id = UserModel::where('token', $this->user_token())->firstOrFail(['id'])->id;
+        $user_id = UserModel::where('token', $this->admin_token())->firstOrFail(['id'])->id;
         $articleCommentModel = new ArticleCommentModel;
         $articleCommentModel->user_id           = $user_id;
         $articleCommentModel->article_id        = $request->input('article_id');
@@ -57,7 +57,7 @@ class ArticleCommentController extends Base
     // 更新
     public function update(Request $request, $id){
         (new UpdateArticleCommentRequests)->verification();
-        $articleCommentInfo = UserModel::where('token', $this->user_token())->firstOrFail()->article_comment()->where('id', $id)->firstOrFail();
+        $articleCommentInfo = UserModel::where('token', $this->admin_token())->firstOrFail()->article_comment()->where('id', $id)->firstOrFail();
         $articleCommentInfo->article_id     = $request->input('article_id');
         $articleCommentInfo->content        = $request->input('content');
         $updateArticleComment = $articleCommentInfo->save();
@@ -69,7 +69,7 @@ class ArticleCommentController extends Base
     // 删除
     public function destroy(Request $request, $id){
         
-        $deleteDeviceRegionStatus = UserModel::where('token', $this->user_token())->firstOrFail()->article_comment()->where('id', $id)->firstOrFail()->delete();
+        $deleteDeviceRegionStatus = UserModel::where('token', $this->admin_token())->firstOrFail()->article_comment()->where('id', $id)->firstOrFail()->delete();
         if(!$deleteDeviceRegionStatus){
             return errors("文章评论删除失败");
         }
@@ -79,7 +79,7 @@ class ArticleCommentController extends Base
     public function my(Request $request)
     {
         $limit      = $request->input('limit');
-        $deviceRegionList = UserModel::where('token', $this->user_token())->firstOrFail()->article_comment()->with('user', 'article')->orderBy('id', 'desc')->paginate($limit)->toArray();
+        $deviceRegionList = UserModel::where('token', $this->admin_token())->firstOrFail()->article_comment()->with('user', 'article')->orderBy('id', 'desc')->paginate($limit)->toArray();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $deviceRegionList['total'];

@@ -48,7 +48,7 @@ class ArticleController extends Base
         $articleInfo = ArticleModel::where('id', $id)->with('user')->firstOrFail();
         // 写入查看次数
         $articleViewModel = new ArticleViewModel;
-        $user_id =  UserModel::where('token', $this->user_token())->firstOrFail(['id'])->id;
+        $user_id =  UserModel::where('token', $this->admin_token())->firstOrFail(['id'])->id;
         // 判断是否已读过
         try{
             // 查看过则只更新查看时间
@@ -70,7 +70,7 @@ class ArticleController extends Base
      public function store(Request $request)
     {
         (new AddArticleRequests)->verification();
-        $user_id = UserModel::where('token', $this->user_token())->firstOrFail(['id'])->id;
+        $user_id = UserModel::where('token', $this->admin_token())->firstOrFail(['id'])->id;
         $articleModel = new ArticleModel;
         $articleModel->user_id          = $user_id;
         $articleModel->title            = $request->input('title');
@@ -86,7 +86,7 @@ class ArticleController extends Base
     // 更新
     public function update(Request $request, $id){
         (new UpdateArticleRequests)->verification();
-        $articleInfo = UserModel::where('token', $this->user_token())->firstOrFail()->article()->where('id', $id)->firstOrFail();
+        $articleInfo = UserModel::where('token', $this->admin_token())->firstOrFail()->article()->where('id', $id)->firstOrFail();
         $articleInfo->title             = $request->input('title');
         $articleInfo->content           = $request->input('content');
         $articleInfo->crop_class_id     = $request->input('crop_class_id');
@@ -100,7 +100,7 @@ class ArticleController extends Base
     // 删除
     public function destroy(Request $request, $id){
         
-        $deleteDeviceRegionStatus = UserModel::where('token', $this->user_token())->firstOrFail()->article()->where('id', $id)->firstOrFail()->delete();
+        $deleteDeviceRegionStatus = UserModel::where('token', $this->admin_token())->firstOrFail()->article()->where('id', $id)->firstOrFail()->delete();
         if(!$deleteDeviceRegionStatus){
             return errors("文章删除失败");
         }
@@ -132,7 +132,7 @@ class ArticleController extends Base
             $where[] = ['title', 'like', '%'.$title.'%'];
         }
         $limit  = $request->input('limit');
-        $deviceRegionList = UserModel::where('token', $this->user_token())->firstOrFail()->article()->where($where)->orderBy('id','desc')->with( 'article_class', 'crop_class')->paginate($limit)->toArray();
+        $deviceRegionList = UserModel::where('token', $this->admin_token())->firstOrFail()->article()->where($where)->orderBy('id','desc')->with( 'article_class', 'crop_class')->paginate($limit)->toArray();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $deviceRegionList['total'];

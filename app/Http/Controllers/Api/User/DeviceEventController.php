@@ -26,7 +26,7 @@ class DeviceEventController extends Base
         if($request->filled('type')){
             $where[] = ['type', strval(intval($request->input('type')))];
         }
-        $deviceList = UserModel::where('token', $this->user_token())->firstOrFail()->device_event()->where($where)->whereHas('device', function($query) use($request){
+        $deviceList = UserModel::where('token', $this->admin_token())->firstOrFail()->device_event()->where($where)->whereHas('device', function($query) use($request){
             // 产品
             if($request->filled('product_id')){
                 $query->where('product_id', intval($request->input('product_id')));
@@ -67,7 +67,7 @@ class DeviceEventController extends Base
     public function store(Request $request)
     {
         (new AddDeviceEventRequests)->verification();
-        $user_id = UserModel::where('token', $this->user_token())->firstOrFail(['id'])->id;
+        $user_id = UserModel::where('token', $this->admin_token())->firstOrFail(['id'])->id;
         $deviceEvent = new DeviceEventModel;
         $deviceEvent->user_id               = $user_id;
         $deviceEvent->name                  = $request->input('name');
@@ -110,7 +110,7 @@ class DeviceEventController extends Base
     }
     // 删除
     public function destroy(Request $request, $id){
-        $deleteDeviceStatus = UserModel::where('token', $this->user_token())->firstOrFail()->device_event()->where('id', $id)->firstOrFail()->delete();
+        $deleteDeviceStatus = UserModel::where('token', $this->admin_token())->firstOrFail()->device_event()->where('id', $id)->firstOrFail()->delete();
         if(!$deleteDeviceStatus){
             return errors(['msg'=>"设备事件删除失败"]);
         }

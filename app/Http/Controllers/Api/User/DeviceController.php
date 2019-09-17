@@ -30,7 +30,7 @@ class DeviceController extends Base
             $where['id'] = intval($request->input('id'));
         }
 
-        $deviceList = UserModel::where('token', $this->user_token())->firstOrFail()->device()->where($where)->orderBy('id', 'desc')->whereHas('device_room', function($query) use($request){
+        $deviceList = UserModel::where('token', $this->admin_token())->firstOrFail()->device()->where($where)->orderBy('id', 'desc')->whereHas('device_room', function($query) use($request){
             // 区域
             if($request->filled('device_region_id')){
                 $query->where('device_region_id', intval($request->input('device_region_id')));
@@ -53,7 +53,7 @@ class DeviceController extends Base
     public function all(Request $request)
     {
         // length是前端关键字,所以重命名为lh
-        $DeviceFieldAll = UserModel::where('token', $this->user_token())->firstOrFail()->device_room()->where('id', intval($request->device_room_id))->firstOrFail()->device()->orderBy('id', 'desc')->with('device_field')->get();
+        $DeviceFieldAll = UserModel::where('token', $this->admin_token())->firstOrFail()->device_room()->where('id', intval($request->device_room_id))->firstOrFail()->device()->orderBy('id', 'desc')->with('device_field')->get();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $DeviceFieldAll->count();
@@ -63,7 +63,7 @@ class DeviceController extends Base
     // 新增
     public function store(Request $request){
         (new AddDeviceRequests)->verification($request);
-        $user_id = UserModel::where('token', $this->user_token())->firstOrFail(['id'])->id;
+        $user_id = UserModel::where('token', $this->admin_token())->firstOrFail(['id'])->id;
         DB::beginTransaction();
         $deviceModel = new DeviceModel;
         $deviceModel->user_id = $user_id;
@@ -125,7 +125,7 @@ class DeviceController extends Base
     // 按照token获取设备字段
     // 默认返回全部字段
     public function getDeviceField(Request $request, $token){
-        $deviceFieldList = UserModel::where('token', $this->user_token())->firstOrFail()->device()->where('token', $token)->firstOrFail()->device_field()->get(['field','value']);
+        $deviceFieldList = UserModel::where('token', $this->admin_token())->firstOrFail()->device()->where('token', $token)->firstOrFail()->device_field()->get(['field','value']);
         if($request->filled('field')){
             // 字段以逗号分隔 field => 'top,bottom,...';
             $getField = $request->field;
@@ -145,7 +145,7 @@ class DeviceController extends Base
     }
     // 按照token更新设备字段
     public function updateDeviceField(Request $request, $token){
-        $user_token = $this->user_token();
+        $user_token = $this->admin_token();
         return (new UpdateDevice)->updateDeviceField($request, $user_token, $token);
     }
 }
