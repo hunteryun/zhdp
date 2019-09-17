@@ -11,7 +11,7 @@
 |
 */
 // 首页
-Route::view('/', 'user/reg/index'); 
+Route::view('/', 'user/login/index'); 
 // // 用户 /index.php/user
 Route::prefix('/user')->group(function(){
     Route::view('reg', 'user/reg/index'); // 用户注册
