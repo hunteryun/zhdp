@@ -17,6 +17,12 @@ Route::prefix('/user')->group(function(){
     Route::view('reg', 'user/reg/index'); // 用户注册
     Route::view('login', 'user/login/index'); // 用户登录
     Route::view('index', 'user/index/index'); // 首页
+
+    Route::prefix('/my')->group(function(){
+        Route::view('', 'user/my/index'); // 个人信息
+    });
+
+
     // 字段类型管理
     Route::prefix('/field_type')->group(function(){
         Route::view('', 'user/field_type/index'); // 字段类型列表

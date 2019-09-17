@@ -105,6 +105,7 @@
                          <dl class="layui-nav-child">
                              <dd><a class="layui-open-tab" href="{{url('user/admin')}}">管理员管理</a></dd>
                              <dd><a class="layui-open-tab" href="{{url('user/user')}}">用户管理</a></dd>
+                             <dd><a class="layui-open-tab" href="{{url('user/my')}}">个人信息</a></dd>
                          </dl>
                      </li>
                      <li class="layui-nav-item">

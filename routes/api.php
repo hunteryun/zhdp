@@ -21,6 +21,9 @@ use Illuminate\Http\Request;
 Route::prefix('/user')->group(function(){
     Route::post('reg', 'Api\\User\\RegController@index'); // 注册
     Route::post('login', 'Api\\User\\LoginController@index'); // 登录
+    Route::get('my', 'Api\\User\\UserController@get_my')->middleware('user.token'); // 用户自己
+    Route::put('my/{id}', 'Api\\User\\UserController@update_my')->where('id', '[0-9]+')->middleware('user.token'); // 用户自己
+
     // 字段类型 /index.php/api/field_type
     Route::prefix('/field_type')->group(function(){
         Route::get('', 'Api\\User\\FieldTypeController@index')->middleware('user.token'); // 获取列表
@@ -190,6 +193,7 @@ Route::prefix('/user')->group(function(){
         Route::post('', 'Api\\User\\UserController@store')->middleware('user.token'); // 添加用户
         Route::put('{id}', 'Api\\User\\UserController@update')->where('id', '[0-9]+')->middleware('user.token'); // 更新用户
         Route::delete('{id}', 'Api\\User\\UserController@destroy')->where('id', '[0-9]+')->middleware('user.token'); // 删除用户
+
     });
     // 管理员表
     Route::prefix('/admin')->group(function(){
