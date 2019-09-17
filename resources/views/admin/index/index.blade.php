@@ -58,14 +58,9 @@
                      <!--  layui-nav-itemed 打开选项卡 -->
                      <li class="layui-nav-item">
                          <a class="" href="javascript:;">社区交流</a>
-                         <!-- <a class="" href="javascript:;">文章管理</a> -->
                          <dl class="layui-nav-child">
                              <dd><a class="layui-open-tab" href="{{url('admin/article/class')}}">分类管理</a></dd>
                              <dd><a class="layui-open-tab" href="{{url('admin/article')}}">文章浏览</a></dd>
-                             <dd><a class="layui-open-tab" href="{{url('admin/article/my')}}">我的文章</a></dd>
-                             <dd><a class="layui-open-tab" href="{{url('admin/article/my_comment')}}">我的评论</a></dd>
-                             <dd><a class="layui-open-tab" href="{{url('admin/article/my_collection')}}">我的收藏</a></dd>
-                             <dd><a class="layui-open-tab" href="{{url('admin/article/my_view')}}">最近浏览</a></dd>
                          </dl>
                      </li>
                      <li class="layui-nav-item">

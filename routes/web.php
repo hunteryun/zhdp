@@ -231,30 +231,11 @@ Route::prefix('/admin')->group(function(){
         // 文章列表
         Route::view('', 'admin/article/index'); // 文章列表
         Route::view('info', 'admin/article/info'); // 文章详情
-        Route::view('add', 'admin/article/add'); // 文章添加
             // 文章分类管理
         Route::prefix('/class')->group(function(){
             Route::view('', 'admin/article/class/index'); // 文章分类列表
             Route::view('add', 'admin/article/class/add'); // 文章分类添加
             Route::view('edit', 'admin/article/class/edit'); // 文章分类编辑
-        });
-        // 我的文章
-        Route::prefix('/my')->group(function(){
-            Route::view('', 'admin/article/my/index'); // 我的文章列表
-            Route::view('info', 'admin/article/info'); // 文章详情
-            Route::view('edit', 'admin/article/my/edit'); // 我的文章编辑
-        });
-        // 我的评论
-        Route::prefix('/my_comment')->group(function(){
-            Route::view('', 'admin/article/my_comment/index'); // 我的评论列表
-        });
-        // 我的收藏
-        Route::prefix('/my_collection')->group(function(){
-            Route::view('', 'admin/article/my_collection/index'); // 我的收藏列表
-        });
-        // 最近浏览
-        Route::prefix('/my_view')->group(function(){
-            Route::view('', 'admin/article/my_view/index'); // 最近浏览列表
         });
     });
     // 用户管理

@@ -14,7 +14,6 @@
             查看：<span id="view_count">0</span>
             评论：<span id="comment_count">0</span>
             收藏：<span id="article_collection_count">0</span>
-            <button type="button" class="layui-btn layui-btn-xs layui-btn-primary" id="article-collection">收藏</button> 
         </div>
          <div class="layui-card-body" id="content">
             文章内容加载中
@@ -37,9 +36,6 @@
             </div>
         </div>
     </div>
-     <blockquote class="layui-elem-quote">
-         评论
-    </blockquote>
     <div id="article_comment">
         评论加载中...
     </div>
@@ -70,105 +66,6 @@
                 }
             }
         });
-        // 收藏
-        $.ajax({ 
-            type: "GET",
-            url: '{{url("api/admin/article_collection")}}/' + article_id,
-            success: function(result){
-                if (result.code > 0) {
-                    $('#article-collection').text('收藏');
-                    $('#article-collection').addClass("layui-btn-primary");
-                } else {
-                    $('#article-collection').text('已收藏');
-                    $('#article-collection').removeClass("layui-btn-primary");
-                }
-                // 点击收藏事件
-                $('#article-collection').click(function(){
-                    //  获取文章详情
-                    ajaxLoad2 = layer.load(1, {
-                        shade: [0.8, '#393D49']
-                    });
-                    $.ajax({ 
-                        type: "POST",
-                        url: '{{url("api/admin/article_collection")}}?article_id=' + article_id,
-                        success: function(result){
-                            layer.close(ajaxLoad2);
-                            // status 0 取消收藏 1 收藏
-                            if(result.status > 0){
-                                // 收藏成功
-                                if (result.code > 0) {
-                                    layer.msg("收藏失败");
-                                    $('#article-collection').text('收藏');
-                                    $('#article-collection').addClass("layui-btn-primary");
-                                }else{
-                                    layer.msg("收藏成功");
-                                    $('#article-collection').text('已收藏');
-                                    $('#article-collection').removeClass("layui-btn-primary");
-                                }
-                            }else{
-                                // 取消收藏成功
-                                if (result.code > 0) {
-                                    layer.msg("取消收藏失败");
-                                    $('#article-collection').text('已收藏');
-                                    $('#article-collection').removeClass("layui-btn-primary");
-                                }else{
-                                    layer.msg("取消收藏成功");
-                                    $('#article-collection').text('收藏');
-                                    $('#article-collection').addClass("layui-btn-primary");
-                                }
-                            }
-                        }
-                    });
-                });
-            }
-        });
-
-        // 初始化编辑器
-        var layedit = layui.layedit;
-        var layeditNode = layedit.build('my-comment',{
-            tool:[  
-                'strong' //加粗
-                ,'italic' //斜体
-                ,'underline' //下划线
-                ,'del' //删除线
-                ,'|' //分割线
-                ,'left' //左对齐
-                ,'center' //居中对齐
-                ,'right' //右对齐
-                ,'link' //超链接
-                ,'unlink' //清除链接
-                ,'face' //表情
-            ],
-            height: 150
-        }); 
-         //监听评论提交
-         form.on('submit(formSubmit)', function(data) {
-             var content = layedit.getContent(layeditNode);
-             if(typeof content == "undefined" || content == null || content == ""){
-                 return layer.alert("请输入评论内容");
-             }
-             formLoad = layer.load(1, {
-                 shade: [0.8, '#393D49']
-             });
-             $.ajax({ 
-                type: "POST",
-                url: '{{url("api/admin/article_comment")}}',
-                data: {
-                    'article_id': article_id,
-                    'content': content,
-                },
-                success: function(result){
-                    if (result.code > 0) {
-                        layer.msg(result.msg);
-                    } else {
-                        // 刷新页面 
-                        window.location.reload();
-                    }
-                    layer.close(formLoad);
-                }
-            });
-             return false;
-         });
         // 文章分页
         var laypage = layui.laypage;
         laypage.render({
