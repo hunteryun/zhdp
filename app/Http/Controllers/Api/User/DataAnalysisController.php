@@ -66,9 +66,68 @@ class DataAnalysisController extends Base
         return success($returnData);
     }
     // 数据大屏
-    // 显示设备数量，分布区域，权重，报警记录，我的评论，我的文章，我的收藏，
+    // 设备数量分布(all) 本周请求次数(天) 设备事件(24h) 设备事件分类
     public function big_screen(Request $request){
-        
+        // 获取数量分区
+        $deviceList = UserModel::where('token', $this->user_token())->firstOrFail()->device_region()->with(['device_room.device'=>function($query){
+            $query->selectRaw('count(id) as device_num,device_room_id');
+            $query->groupBy('device_room_id');
+        }])->get(['id','name']);
+
+        // 组装设备分布
+        $deviceRegion = [];
+        // 区域列表
+        foreach($deviceList as $value){
+            $row = [];
+            $row['name'] = $value['name'];
+            $row['device_num'] = 0;
+            // 房间列表
+            foreach($value['device_room'] as $val){
+                // 设备列表
+                foreach($val['device'] as $v){
+                    $row['device_num'] += $v['device_num'];
+                }   
+            }
+            $deviceRegion[] = $row;
+        }
+
+        // 获取本周请求次数，按照天进行分组
+        $startTime = date("Y-m-d", strtotime("-7 day"));
+        $endTime = date("Y-m-d", time());
+        $deviceFieldLogDayList = UserModel::where('token', $this->user_token())->firstOrFail()->device_field_log()
+            ->whereBetween('created_at',[$startTime, $endTime])
+            ->selectRaw("DATE_FORMAT(created_at, '%Y-%m-%d') as date,COUNT(id) as num")
+            ->groupBy('date')
+            ->orderBy('date', 'desc')
+            ->get();
+        // dd($deviceFieldLogDayList->toArray());
+
+
+        // 获取设备事件(按小时分组)
+        $deviceEventLogList = UserModel::where('token', $this->user_token())->firstOrFail()->device_event_log()
+            ->whereBetween('created_at',[date("Y-m-d H:i:s", strtotime("-1 day")), date('Y-m-d H:i:s', time())])
+            ->selectRaw("DATE_FORMAT(created_at, '%Y-%m-%d %H') as date,COUNT(id) as num")
+            ->groupBy('date')
+            ->orderBy('date', 'desc')
+            ->get();
+        // dd($deviceEventLogList->toArray());
+
+
+
+        // 获取24小时设备事件分类
+        $deviceEventLogClassList = UserModel::where('token', $this->user_token())->firstOrFail()->device_event_log()
+            ->whereBetween('created_at',[date("Y-m-d H:i:s", strtotime("-1 day")), date('Y-m-d H:i:s', time())])
+            ->selectRaw("COUNT(id) as num,type")
+            ->groupBy('type')
+            ->orderBy('type', 'desc')
+            ->get();
+        // dd( $deviceEventLogClassList->toArray());
+        $returnData = [];
+        $returnData['deviceRegion'] = $deviceRegion;
+        $returnData['deviceFieldLogDayList'] = $deviceFieldLogDayList;
+        $returnData['deviceEventLogList'] = $deviceEventLogList;
+        $returnData['deviceEventLogClassList'] = $deviceEventLogClassList;
+        return success(['data'=>$returnData]);
     }
 
 }

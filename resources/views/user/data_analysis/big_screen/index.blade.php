@@ -51,164 +51,214 @@
      <!-- 引入百度图表 -->
     <script src="{{asset('/js/echarts.min.js')}}" charset="utf-8"></script>
      <script>
-         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('device'));
-        // 指定图表的配置项和数据
-        var option = {
-            backgroundColor: '#2c343c',
+        // 加载
+        ajaxLoad2 = layer.load(1, {
+            shade: [0.8, '#393D49']
+        });
+        $.ajax({ 
+            type: "POST",
+            url: "{{url('api/user/data_analysis/big_screen')}}",
+            success: function(result){
+                layer.close(ajaxLoad2);
+                var data = result.data;
+                device(data.deviceRegion);
+                request(data.deviceFieldLogDayList);
+                event_24(data.deviceEventLogList);
+                event_24_class(data.deviceEventLogClassList);
+            }
+        });
+        function device(data){
+            list = [];
+            for(var i in data){
+                var row = {};
+                    row.name = data[i].name,
+                    row.value = data[i].device_num,
+                    list.push(row);
+            }
+             // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('device'));
+            // 指定图表的配置项和数据
+            var option = {
+                backgroundColor: '#2c343c',
+                title: {
+                    left: 'center',
+                    top: 20,
+                    textStyle: {
+                        color: '#ccc'
+                    }
+                },
 
-            title: {
-                text: 'Customized Pie',
-                left: 'center',
-                top: 20,
-                textStyle: {
-                    color: '#ccc'
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+
+                visualMap: {
+                    show: false,
+                    min: 80,
+                    max: 600,
+                    inRange: {
+                        colorLightness: [0, 1]
+                    }
+                },
+                series : [
+                    {
+                        name:'设备分布',
+                        type:'pie',
+                        radius : '55%',
+                        center: ['50%', '50%'],
+                        data:list.sort(function (a, b) { return a.value - b.value; }),
+                        roseType: 'radius',
+                        label: {
+                            normal: {
+                                textStyle: {
+                                    color: 'rgba(255, 255, 255, 0.3)'
+                                }
+                            }
+                        },
+                        labelLine: {
+                            normal: {
+                                lineStyle: {
+                                    color: 'rgba(255, 255, 255, 0.3)'
+                                },
+                                smooth: 0.2,
+                                length: 10,
+                                length2: 20
+                            }
+                        },
+                        itemStyle: {
+                            normal: {
+                                color: '#c23531',
+                                shadowBlur: 200,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        },
+
+                        animationType: 'scale',
+                        animationEasing: 'elasticOut',
+                        animationDelay: function (idx) {
+                            return Math.random() * 200;
+                        }
+                    }
+                ]
+            };
+
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+        }
+        function request(data){
+            title = [];
+            value = [];
+            for(var i in data){
+                title.push(data[i].date);
+                value.push(data[i].num);
+            }
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('request'));
+            // 指定图表的配置项和数据
+            var option = option = {
+                legend: {},
+                tooltip: {},
+                xAxis: {
+                    type: 'category',
+                    data: title
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: value,
+                    type: 'bar'
+                }]
+            };
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+        }
+        function event_24(data){
+            title = [];
+            value = [];
+            for(var i in data){
+                title.push(data[i].date);
+                value.push(data[i].num);
+            }
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('event_24'));
+            // 指定图表的配置项和数据
+            var option = {
+                legend: {},
+                tooltip: {},
+                xAxis: {
+                    type: 'category',
+                    data: title
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: value,
+                    type: 'line'
+                }]
+            };
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+        }
+        function event_24_class(data){
+            title = [];
+            value = [];
+            for(var i in data){
+                if(data[i].type == 0){
+                    data[i].type = "低于阈值";
                 }
-            },
-
-            tooltip : {
-                trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
-            },
-
-            visualMap: {
-                show: false,
-                min: 80,
-                max: 600,
-                inRange: {
-                    colorLightness: [0, 1]
+                if(data[i].type == 1){
+                    data[i].type =  "等于阈值";
                 }
-            },
-            series : [
-                {
-                    name:'访问来源',
-                    type:'pie',
-                    radius : '55%',
-                    center: ['50%', '50%'],
-                    data:[
-                        {value:335, name:'直接访问'},
-                        {value:310, name:'邮件营销'},
-                        {value:274, name:'联盟广告'},
-                        {value:235, name:'视频广告'},
-                        {value:400, name:'搜索引擎'}
-                    ].sort(function (a, b) { return a.value - b.value; }),
-                    roseType: 'radius',
-                    label: {
-                        normal: {
-                            textStyle: {
-                                color: 'rgba(255, 255, 255, 0.3)'
+                if(data[i].type == 2){
+                    data[i].type =  "高于阈值";
+                }
+                // 
+                title.push(data[i].type);
+                var row = {};
+                    row.value = data[i].num;
+                    row.name = data[i].type;
+                value.push(row);
+            }
+           // 基于准备好的dom，初始化echarts实例
+         var myChart = echarts.init(document.getElementById('event_24_class'));
+            // 指定图表的配置项和数据
+            option = {
+                title : {
+                    x:'center'
+                },
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left',
+                    data: title
+                },
+                series : [
+                    {
+                        name: '请求类型',
+                        type: 'pie',
+                        radius : '55%',
+                        center: ['50%', '60%'],
+                        data:value,
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
                             }
                         }
-                    },
-                    labelLine: {
-                        normal: {
-                            lineStyle: {
-                                color: 'rgba(255, 255, 255, 0.3)'
-                            },
-                            smooth: 0.2,
-                            length: 10,
-                            length2: 20
-                        }
-                    },
-                    itemStyle: {
-                        normal: {
-                            color: '#c23531',
-                            shadowBlur: 200,
-                            shadowColor: 'rgba(0, 0, 0, 0.5)'
-                        }
-                    },
-
-                    animationType: 'scale',
-                    animationEasing: 'elasticOut',
-                    animationDelay: function (idx) {
-                        return Math.random() * 200;
                     }
-                }
-            ]
-        };
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
-         // 基于准备好的dom，初始化echarts实例
-         var myChart = echarts.init(document.getElementById('request'));
-        // 指定图表的配置项和数据
-        var option = option = {
-            xAxis: {
-                type: 'category',
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-            },
-            yAxis: {
-                type: 'value'
-            },
-            series: [{
-                data: [120, 200, 150, 80, 70, 110, 130],
-                type: 'bar'
-            }]
-        };
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
-         // 基于准备好的dom，初始化echarts实例
-         var myChart = echarts.init(document.getElementById('event_24'));
-        // 指定图表的配置项和数据
-        var option = {
-            xAxis: {
-                type: 'category',
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-            },
-            yAxis: {
-                type: 'value'
-            },
-            series: [{
-                data: [820, 932, 901, 934, 1290, 1330, 1320],
-                type: 'line'
-            }]
-        };
-
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
-         // 基于准备好的dom，初始化echarts实例
-         var myChart = echarts.init(document.getElementById('event_24_class'));
-        // 指定图表的配置项和数据
-        option = {
-            title : {
-                text: '某站点用户访问来源',
-                subtext: '纯属虚构',
-                x:'center'
-            },
-            tooltip : {
-                trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
-            },
-            legend: {
-                orient: 'vertical',
-                left: 'left',
-                data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
-            },
-            series : [
-                {
-                    name: '访问来源',
-                    type: 'pie',
-                    radius : '55%',
-                    center: ['50%', '60%'],
-                    data:[
-                        {value:335, name:'直接访问'},
-                        {value:310, name:'邮件营销'},
-                        {value:234, name:'联盟广告'},
-                        {value:135, name:'视频广告'},
-                        {value:1548, name:'搜索引擎'}
-                    ],
-                    itemStyle: {
-                        emphasis: {
-                            shadowBlur: 10,
-                            shadowOffsetX: 0,
-                            shadowColor: 'rgba(0, 0, 0, 0.5)'
-                        }
-                    }
-                }
-            ]
-        };
-
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
+                ]
+            };  
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+        }
+       
      </script>
  </body>
 

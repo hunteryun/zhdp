@@ -33,8 +33,7 @@
                  <ul class="layui-nav layui-layout-right">
                      <li class="layui-nav-item">
                          <a href="javascript:;">
-                             <img src="//tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" class="layui-nav-img">
-                             贤心
+                             用户
                          </a>
                          <dl class="layui-nav-child">
                              <dd><a class="layui-open-tab" href="">退出</a></dd>
@@ -219,7 +218,7 @@
          </div>
          <div class="layui-footer layui-hide-xs">
              <!-- 底部固定区域 -->
-             © layui.com - 底部固定区域
+             © zhdp
          </div>
      </div>
      @include('user.public.include_js')
