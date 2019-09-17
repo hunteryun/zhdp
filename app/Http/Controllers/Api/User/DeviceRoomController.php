@@ -15,7 +15,7 @@ class DeviceRoomController extends Base
     public function index(Request $request)
     {
         $limit = $request->input('limit');
-        $deviceRegionList = UserModel::where('token', $this->admin_token())->firstOrFail()->device_room()->orderBy('id', 'desc')->whereHas('device_region', function($query) use ($request){
+        $deviceRegionList = UserModel::where('token', $this->user_token())->firstOrFail()->device_room()->orderBy('id', 'desc')->whereHas('device_region', function($query) use ($request){
             if($request->filled('device_region_id')){
                 $query->where('id', $request->input('device_region_id'));
             }
@@ -34,7 +34,7 @@ class DeviceRoomController extends Base
     // 获取所有
     public function all(Request $request)
     {
-        $deviceRegionAll = UserModel::where('token', $this->admin_token())->firstOrFail()->device_room()->where('device_region_id', $request->device_region_id)->get();
+        $deviceRegionAll = UserModel::where('token', $this->user_token())->firstOrFail()->device_room()->where('device_region_id', $request->device_region_id)->get();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $deviceRegionAll->count();
@@ -45,7 +45,7 @@ class DeviceRoomController extends Base
      public function store(Request $request)
     {
         (new AddDeviceRoomRequests)->verification();
-        $user_id = UserModel::where('token', $this->admin_token())->firstOrFail(['id'])->id;
+        $user_id = UserModel::where('token', $this->user_token())->firstOrFail(['id'])->id;
         $deviceRoomModel = new DeviceRoomModel;
         $deviceRoomModel->user_id          = $user_id;
         $deviceRoomModel->device_region_id = $request->input('device_region_id');
@@ -62,13 +62,13 @@ class DeviceRoomController extends Base
     // 获取指定id 
       public function show($id)
     {
-        $deviceRoomInfo = UserModel::where('token', $this->admin_token())->firstOrFail()->device_room()->where('id', $id)->with('device_region')->firstOrFail();
+        $deviceRoomInfo = UserModel::where('token', $this->user_token())->firstOrFail()->device_room()->where('id', $id)->with('device_region')->firstOrFail();
         return success(['msg' => '设备房间查询成功','data' => $deviceRoomInfo]);
     }
     // 更新
     public function update(Request $request, $id){
         (new UpdateDeviceRoomRequests)->verification();
-        $deviceRoomInfo = UserModel::where('token', $this->admin_token())->firstOrFail()->device_room()->where('id', $id)->firstOrFail();
+        $deviceRoomInfo = UserModel::where('token', $this->user_token())->firstOrFail()->device_room()->where('id', $id)->firstOrFail();
         $deviceRoomInfo->device_region_id = $request->input('device_region_id');
         $deviceRoomInfo->crop_class_id       = $request->input('crop_class_id');
         $deviceRoomInfo->name             = $request->input('name');
@@ -82,7 +82,7 @@ class DeviceRoomController extends Base
     // 删除
     public function destroy(Request $request, $id){
         
-        $deleteDeviceRegionStatus = UserModel::where('token', $this->admin_token())->firstOrFail()->device_room()->where('id', $id)->firstOrFail()->delete();
+        $deleteDeviceRegionStatus = UserModel::where('token', $this->user_token())->firstOrFail()->device_room()->where('id', $id)->firstOrFail()->delete();
         if(!$deleteDeviceRegionStatus){
             return errors("设备房间删除失败");
         }

@@ -13,7 +13,7 @@ class SystemMsgController extends Base
     public function index(Request $request)
     {
         $limit = $request->input('limit');
-        $systemMsgList = UserModel::where('token', $this->admin_token())->firstOrFail()->system_msg()->orderBy("id", "desc")->paginate($limit)->toArray();
+        $systemMsgList = UserModel::where('token', $this->user_token())->firstOrFail()->system_msg()->orderBy("id", "desc")->paginate($limit)->toArray();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $systemMsgList['total'];
@@ -23,7 +23,7 @@ class SystemMsgController extends Base
     }
     // 获取单个系统消息
     public function show(Request $request, $id){
-        $systemMsgInfo = UserModel::where('token', $this->admin_token())->firstOrFail()->system_msg()->where("id", $id)->firstOrFail();
+        $systemMsgInfo = UserModel::where('token', $this->user_token())->firstOrFail()->system_msg()->where("id", $id)->firstOrFail();
         // 更新查看状态
         if($systemMsgInfo->status == 0){
             $systemMsgInfo->status = '1';

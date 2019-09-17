@@ -12,7 +12,7 @@ class LoginNoticeLogController extends Base
     public function index(Request $request)
     {
         $limit = $request->input('limit');
-        $loginNoticeLogList = UserModel::where('token', $this->admin_token())->firstOrFail()->login_notice_log()->orderBy("id", "desc")->with('login_notice')->paginate($limit)->toArray();
+        $loginNoticeLogList = UserModel::where('token', $this->user_token())->firstOrFail()->login_notice_log()->orderBy("id", "desc")->with('login_notice')->paginate($limit)->toArray();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $loginNoticeLogList['total'];
@@ -23,7 +23,7 @@ class LoginNoticeLogController extends Base
     // 获取所有未读的登录通知
     public function unread_all(Request $request)
     {
-        $loginNoticeLogAll = UserModel::where('token', $this->admin_token())->firstOrFail()->login_notice_log()->where('status', '0')->orderBy("id", "desc")->with('login_notice')->get();
+        $loginNoticeLogAll = UserModel::where('token', $this->user_token())->firstOrFail()->login_notice_log()->where('status', '0')->orderBy("id", "desc")->with('login_notice')->get();
         // 获取后变为已读
         foreach($loginNoticeLogAll as $row){
             $row->status = '1';
@@ -38,7 +38,7 @@ class LoginNoticeLogController extends Base
     // 获取指定id
     public function show(Request $request, $id)
     {
-        $loginNoticeLogInfo = UserModel::where('token', $this->admin_token())->firstOrFail()->login_notice_log()->where('id', $id)->with('login_notice')->firstOrFail();
+        $loginNoticeLogInfo = UserModel::where('token', $this->user_token())->firstOrFail()->login_notice_log()->where('id', $id)->with('login_notice')->firstOrFail();
         // 更新查看状态
         if($loginNoticeLogInfo->status == 0){
             $loginNoticeLogInfo->status = '1';

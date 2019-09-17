@@ -15,7 +15,7 @@ class DeviceRegionController extends Base
     public function index(Request $request)
     {
         $limit = $request->input('limit');
-        $deviceRegionList = UserModel::where('token', $this->admin_token())->firstOrFail()->device_region()->paginate($limit)->toArray();
+        $deviceRegionList = UserModel::where('token', $this->user_token())->firstOrFail()->device_region()->paginate($limit)->toArray();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $deviceRegionList['total'];
@@ -26,7 +26,7 @@ class DeviceRegionController extends Base
     // 获取所有
     public function all()
     {
-        $deviceRegionAll = UserModel::where('token', $this->admin_token())->firstOrFail()->device_region()->with('device_room')->get();
+        $deviceRegionAll = UserModel::where('token', $this->user_token())->firstOrFail()->device_region()->with('device_room')->get();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $deviceRegionAll->count();
@@ -36,7 +36,7 @@ class DeviceRegionController extends Base
     // 新增
     public function store(Request $request){
         (new AddDeviceRegionRequests)->verification($request);
-        $user_id = UserModel::where('token', $this->admin_token())->firstOrFail(['id'])->id;
+        $user_id = UserModel::where('token', $this->user_token())->firstOrFail(['id'])->id;
         $deviceRegionModel = new DeviceRegionModel;
         $deviceRegionModel->user_id = $user_id;
         $deviceRegionModel->name = $request->input('name');
@@ -52,7 +52,7 @@ class DeviceRegionController extends Base
     // 更新
     public function update(Request $request, $id){
         (new UpdateDeviceRegionRequests)->verification($request);
-        $deviceRegionInfo = UserModel::where('token', $this->admin_token())->firstOrFail()->device_region()->where('id', $id)->firstOrFail();
+        $deviceRegionInfo = UserModel::where('token', $this->user_token())->firstOrFail()->device_region()->where('id', $id)->firstOrFail();
         $deviceRegionInfo->name = $request->input('name');
         $deviceRegionInfo->province = $request->input('province');
         $deviceRegionInfo->city = $request->input('city');
@@ -66,7 +66,7 @@ class DeviceRegionController extends Base
     // 删除
     public function destroy(Request $request, $id){
         
-        $deleteDeviceRegionStatus = UserModel::where('token', $this->admin_token())->firstOrFail()->device_region()->where('id', $id)->firstOrFail()->delete();
+        $deleteDeviceRegionStatus = UserModel::where('token', $this->user_token())->firstOrFail()->device_region()->where('id', $id)->firstOrFail()->delete();
         if(!$deleteDeviceRegionStatus){
             return errors("设备区域删除失败");
         }

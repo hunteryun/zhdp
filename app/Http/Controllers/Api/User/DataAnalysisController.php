@@ -21,7 +21,7 @@ class DataAnalysisController extends Base
             $where['id'] = intval($request->input('id'));
         }
 
-        $deviceList = UserModel::where('token', $this->admin_token())->firstOrFail()->device()->where($where)->orderBy('id', 'desc')->whereHas('device_room', function($query) use($request){
+        $deviceList = UserModel::where('token', $this->user_token())->firstOrFail()->device()->where($where)->orderBy('id', 'desc')->whereHas('device_room', function($query) use($request){
             // 区域
             if($request->filled('device_region_id')){
                 $query->where('device_region_id', intval($request->input('device_region_id')));
@@ -69,7 +69,7 @@ class DataAnalysisController extends Base
     // 设备数量分布(all) 本周请求次数(天) 设备事件(24h) 设备事件分类
     public function big_screen(Request $request){
         // 获取数量分区
-        $deviceList = UserModel::where('token', $this->admin_token())->firstOrFail()->device_region()->with(['device_room.device'=>function($query){
+        $deviceList = UserModel::where('token', $this->user_token())->firstOrFail()->device_region()->with(['device_room.device'=>function($query){
             $query->selectRaw('count(id) as device_num,device_room_id');
             $query->groupBy('device_room_id');
         }])->get(['id','name']);
@@ -94,7 +94,7 @@ class DataAnalysisController extends Base
         // 获取本周请求次数，按照天进行分组
         $startTime = date("Y-m-d", strtotime("-7 day"));
         $endTime = date("Y-m-d", time());
-        $deviceFieldLogDayList = UserModel::where('token', $this->admin_token())->firstOrFail()->device_field_log()
+        $deviceFieldLogDayList = UserModel::where('token', $this->user_token())->firstOrFail()->device_field_log()
             ->whereBetween('created_at',[$startTime, $endTime])
             ->selectRaw("DATE_FORMAT(created_at, '%Y-%m-%d') as date,COUNT(id) as num")
             ->groupBy('date')
@@ -104,7 +104,7 @@ class DataAnalysisController extends Base
 
 
         // 获取设备事件(按小时分组)
-        $deviceEventLogList = UserModel::where('token', $this->admin_token())->firstOrFail()->device_event_log()
+        $deviceEventLogList = UserModel::where('token', $this->user_token())->firstOrFail()->device_event_log()
             ->whereBetween('created_at',[date("Y-m-d H:i:s", strtotime("-1 day")), date('Y-m-d H:i:s', time())])
             ->selectRaw("DATE_FORMAT(created_at, '%Y-%m-%d %H') as date,COUNT(id) as num")
             ->groupBy('date')
@@ -115,7 +115,7 @@ class DataAnalysisController extends Base
 
 
         // 获取24小时设备事件分类
-        $deviceEventLogClassList = UserModel::where('token', $this->admin_token())->firstOrFail()->device_event_log()
+        $deviceEventLogClassList = UserModel::where('token', $this->user_token())->firstOrFail()->device_event_log()
             ->whereBetween('created_at',[date("Y-m-d H:i:s", strtotime("-1 day")), date('Y-m-d H:i:s', time())])
             ->selectRaw("COUNT(id) as num,type")
             ->groupBy('type')

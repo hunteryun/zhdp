@@ -15,7 +15,7 @@ class ArticleCollectionController extends Base
     public function index(Request $request)
     {
         $limit      = $request->input('limit');
-        $articleCollectionList = UserModel::where('token', $this->admin_token())->firstOrFail()->article_collection()->paginate($limit)->toArray();
+        $articleCollectionList = UserModel::where('token', $this->user_token())->firstOrFail()->article_collection()->paginate($limit)->toArray();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $articleCollectionList['total'];
@@ -26,7 +26,7 @@ class ArticleCollectionController extends Base
     // 获取指定id是否收藏 
     public function show($article_id)
     {
-        $articleExists = UserModel::where('token', $this->admin_token())->firstOrFail()->article_collection()->where('article_id', $article_id)->exists();
+        $articleExists = UserModel::where('token', $this->user_token())->firstOrFail()->article_collection()->where('article_id', $article_id)->exists();
         if($articleExists){
             return success(['msg'=>"文章已收藏"]);
         }
@@ -37,9 +37,9 @@ class ArticleCollectionController extends Base
     {
         (new AddArticleCollectionRequests)->verification();
         $article_id = $request->article_id;
-        $articleExists = UserModel::where('token', $this->admin_token())->firstOrFail()->article_collection()->where('article_id', $article_id)->exists();
+        $articleExists = UserModel::where('token', $this->user_token())->firstOrFail()->article_collection()->where('article_id', $article_id)->exists();
         if($articleExists){
-            $deleteArticleCollectionStatus = UserModel::where('token', $this->admin_token())->firstOrFail()->article_collection()->where('article_id', $article_id)->firstOrFail()->delete();
+            $deleteArticleCollectionStatus = UserModel::where('token', $this->user_token())->firstOrFail()->article_collection()->where('article_id', $article_id)->firstOrFail()->delete();
             if(!$deleteArticleCollectionStatus){
                 return errors(['msg'=>"文章收藏删除失败", 'status' => 0]);
             }
@@ -47,7 +47,7 @@ class ArticleCollectionController extends Base
             ArticleModel::where('id', $article_id)->decrement('article_collection_count');
             return success(['msg'=>"文章收藏删除成功", 'status' => 0]);
         }else{
-            $user_id = UserModel::where('token', $this->admin_token())->firstOrFail(['id'])->id;
+            $user_id = UserModel::where('token', $this->user_token())->firstOrFail(['id'])->id;
             $articleCollectionModel = new ArticleCollectionModel;
             $articleCollectionModel->user_id           = $user_id;
             $articleCollectionModel->article_id        = $request->input('article_id');
@@ -62,7 +62,7 @@ class ArticleCollectionController extends Base
     }  
     // 删除
     public function destroy(Request $request, $id){
-        $deleteArticleCollectionStatus = UserModel::where('token', $this->admin_token())->firstOrFail()->article_collection()->where('id', $id)->firstOrFail()->delete();
+        $deleteArticleCollectionStatus = UserModel::where('token', $this->user_token())->firstOrFail()->article_collection()->where('id', $id)->firstOrFail()->delete();
         if(!$deleteArticleCollectionStatus){
             return errors(['msg'=>"文章收藏删除失败"]);
         }
@@ -72,7 +72,7 @@ class ArticleCollectionController extends Base
     public function my(Request $request)
     {
         $limit  = $request->input('limit');
-        $deviceRegionList = UserModel::where('token', $this->admin_token())->firstOrFail()->article_collection()->whereHas('article', function($query){
+        $deviceRegionList = UserModel::where('token', $this->user_token())->firstOrFail()->article_collection()->whereHas('article', function($query){
             $request = request();
             $article_class_id  = $request->article_class_id;
             if(!empty($article_class_id)){

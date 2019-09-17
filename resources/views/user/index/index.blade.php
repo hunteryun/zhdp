@@ -17,9 +17,6 @@
              <div class="layui-main">
                  <div class="layui-logo">云蛙-物联网云棚后台</div>
                  <!-- 大屏幕显示区域 -->
-                 <!-- <ul class="layui-nav layui-layout-left layui-hide-xs">
-                     <li class="layui-nav-item"><a href="{{url('/')}}">网站首页</a></li>
-                 </ul> -->
                  <ul class="layui-nav layui-layout-right">
                      <li class="layui-nav-item">
                          <a href="javascript:;">
@@ -38,17 +35,9 @@
                  <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
                  <ul class="layui-nav layui-nav-tree" lay-filter="test">
                     <li class="layui-nav-item">
-                         <a class="" href="javascript:;">产品管理</a>
-                         <dl class="layui-nav-child">
-                             <dd><a class="layui-open-tab" href="{{url('user/field_type')}}">字段类型管理</a></dd>
-                             <dd><a class="layui-open-tab" href="{{url('user/product')}}">产品管理</a></dd>
-                         </dl>
-                     </li>
-                    <li class="layui-nav-item">
                          <a class="" href="javascript:;">位置与作物管理</a>
                          <dl class="layui-nav-child">
                              <dd><a class="layui-open-tab" href="{{url('user/device_region')}}">区域管理</a></dd>
-                             <dd><a class="layui-open-tab" href="{{url('user/crop_class')}}">作物管理</a></dd>
                              <dd><a class="layui-open-tab" href="{{url('user/device_room')}}">房间管理</a></dd>
                          </dl>
                      </li>
@@ -70,19 +59,11 @@
                              <dd><a class="layui-open-tab" href="{{url('user/data_analysis/big_screen')}}">数据大屏</a></dd>
                          </dl>
                      </li>
-                     <li class="layui-nav-item">
-                         <a class="" href="javascript:;">病虫害与天气预警管理</a>
-                         <dl class="layui-nav-child">
-                             <dd><a class="layui-open-tab" href="{{url('user/pest_warning')}}">病虫害天气预警管理</a></dd>
-                             <dd><a class="layui-open-tab" href="{{url('user/pest_warning/pest_warning_log')}}">病虫害天气预警记录</a></dd>
-                         </dl>
-                     </li>
+                     <li class="layui-nav-item"><a class="layui-open-tab" href="{{url('user/pest_warning/pest_warning_log')}}">病虫害天气预警记录</a></li>
                      <!--  layui-nav-itemed 打开选项卡 -->
                      <li class="layui-nav-item">
                          <a class="" href="javascript:;">社区交流</a>
-                         <!-- <a class="" href="javascript:;">文章管理</a> -->
                          <dl class="layui-nav-child">
-                             <dd><a class="layui-open-tab" href="{{url('user/article/class')}}">分类管理</a></dd>
                              <dd><a class="layui-open-tab" href="{{url('user/article')}}">文章浏览</a></dd>
                              <dd><a class="layui-open-tab" href="{{url('user/article/my')}}">我的文章</a></dd>
                              <dd><a class="layui-open-tab" href="{{url('user/article/my_comment')}}">我的评论</a></dd>
@@ -90,19 +71,10 @@
                              <dd><a class="layui-open-tab" href="{{url('user/article/my_view')}}">最近浏览</a></dd>
                          </dl>
                      </li>
-                     <li class="layui-nav-item">
-                         <a class="" href="javascript:;">用户管理</a>
-                         <dl class="layui-nav-child">
-                             <dd><a class="layui-open-tab" href="{{url('user/admin')}}">管理员管理</a></dd>
-                             <dd><a class="layui-open-tab" href="{{url('user/user')}}">用户管理</a></dd>
-                             <dd><a class="layui-open-tab" href="{{url('user/my')}}">个人信息</a></dd>
-                         </dl>
-                     </li>
+                     <li class="layui-nav-item"><a class="layui-open-tab" href="{{url('user/my')}}">个人信息</a></li>
                      <li class="layui-nav-item">
                          <a class="" href="javascript:;">登录通知管理</a>
                          <dl class="layui-nav-child">
-                             <!-- 显示 -->
-                            <dd><a class="layui-open-tab" href="{{url('user/login_notice')}}">通知管理</a></dd>
                              <!-- 每次登录都要通知的通知 -->
                              <dd><a class="layui-open-tab" href="{{url('user/login_notice/immediate_login_notice')}}">即时通知</a></dd>
                              <!-- 用户只查看一次就不再显示的通知 -->
@@ -110,13 +82,6 @@
                          </dl>
                      </li>
                      <li class="layui-nav-item"><a class="layui-open-tab" href="{{url('user/system_msg')}}">系统消息</a></li>
-                     <li class="layui-nav-item">
-                         <a class="" href="javascript:;">系统设置</a>
-                         <dl class="layui-nav-child">
-                            <dd><a class="layui-open-tab" href="{{url('user/system_settings/system_settings_group')}}">设置组管理</a></dd>
-                             <dd><a class="layui-open-tab" href="{{url('user/system_settings/system_settings_group_field')}}">设置字段管理</a></dd>
-                         </dl>
-                     </li>
                  </ul>
              </div>
          </div>

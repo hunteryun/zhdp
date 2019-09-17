@@ -69,13 +69,13 @@ class UserController extends Base
     }
     // 获取自己
     public function get_my(){
-        $userInfo = UserModel::where('token', $this->admin_token())->firstOrFail(['id','name']);
+        $userInfo = UserModel::where('token', $this->user_token())->firstOrFail(['id','name']);
         return success(['data'=>$userInfo]);
     }
     // 更新自己
     public function update_my(Request $request, $id){
         (new UpdateUserRequests)->verification();
-        $userInfo = UserModel::where('token', $this->admin_token())->firstOrFail();
+        $userInfo = UserModel::where('token', $this->user_token())->firstOrFail();
         $userInfo->name = $request->input('name');
         // 没有密码则不更新
         if ($request->filled('password')) {
