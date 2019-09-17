@@ -54,14 +54,8 @@
                 </div>
             </form>
             <div style="padding: 20px; background-color: #F2F2F2;">
-                <div class="layui-row layui-col-space15">
-                    <div class="layui-col-md6">
-                        <div class="layui-card">
-                            <div class="layui-card-body">
-                                <div id="main" style="height:400px;"></div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="layui-row layui-col-space15" id="layui-html-content">
+                    
                 </div>
             </div> 
          </div>
@@ -69,26 +63,6 @@
      @include('user.public.include_js')
      <!-- 引入百度图表 -->
     <script src="{{asset('/js/echarts.min.js')}}" charset="utf-8"></script>
-    <script>
-        // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('main'));
-        // 指定图表的配置项和数据
-        var option = {
-            xAxis: {
-                type: 'category',
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-            },
-            yAxis: {
-                type: 'value'
-            },
-            series: [{
-                data: [820, 932, 901, 934, 1290, 1330, 1320],
-                type: 'line'
-            }]
-        };
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
-    </script>
      <script>
             // 刷新页面
             $('#refresh-page').click(function(){
@@ -240,12 +214,135 @@
                             layer.msg(result.msg);
                         } else {
                             var data = result.data;
-                            // 渲染
+                            //拼接数据
+                            spliceData(data);
                         }
                     }
                 });
                 return false;
             });
+            function spliceData(data){
+                // 渲染 先清空
+                $('#layui-html-content').html('');
+                for(var i = 0; i < data.length; i++){
+                    var option = {};
+                    option.title = {
+                        text: "设备:" + getName(data[i])
+                    };
+                    option.tooltip = {
+                        trigger: 'axis'
+                    };
+                    option.grid = {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    };
+                    option.legend = {
+                        data:getTopFieldName(data[i])
+                    };
+                    option.xAxis = {
+                        type: 'category',
+                        data: getDataTime(data[i])
+                    };
+                    option.yAxis = {
+                        type: 'value',
+                    };
+                    option.series =  getData(data[i]);
+                    // // 渲染图表
+                    console.log(option);
+                    renderingHtml(option);
+                }
+            }
+            // 获取设备名
+            function getName(data){
+                return data.name;
+            }
+            // 获取顶部点击按钮(字段名)
+            function getTopFieldName(data){
+                var data_top_field_name_list = [];
+                // 字段数量
+                if(data.device_field.length > 0){
+                    for(var i = 0; i< data.device_field.length; i++){
+                        data_top_field_name_list.push(data.device_field[i].name);
+                    }
+                }
+                return data_top_field_name_list;
+            }
+            // 获取数据(折线图的数据)
+            function getData(data){
+                var data_list = [];
+                // 字段数量
+                if(data.device_field.length > 0){
+                    // 循环字段
+                    for(var i = 0; i < data.device_field.length; i ++){
+                        var device_field = data.device_field[i];
+                        if(device_field.device_field_log.length > 0){
+                            var device_field_log = device_field.device_field_log;
+                            var row = {};
+                            row.name = device_field.name; 
+                            row.type = 'line'; 
+                            row.stack = '总量'; 
+                            row.data = [];
+                            for(var ii = 0; ii < device_field_log.length; ii ++){
+                                row.data.push(device_field_log[ii].value)
+                            }
+                            data_list.push(row);
+                        }
+                    }
+                }
+                console.log(data_list);
+                return data_list;
+            }
+            // 获取底部时间区间[获取第一个的][data=设备row,不是集合]
+            function getDataTime(data){
+                var data_time_list = [];
+                // 字段数量
+                if(data.device_field.length > 0){
+                    // 日志数量
+                    if(data.device_field['0'].device_field_log.length > 0){
+                        var device_field_log_list = data.device_field['0'].device_field_log;
+                        for(var i = 0; i< device_field_log_list.length; i++){
+                            data_time_list.push(device_field_log_list[i].date);
+                        }
+                    }
+                }
+                return data_time_list;
+            }
+
+            function renderingHtml(option){
+                var id = 'main'+rndNum();
+                var html = '<div class="layui-col-md6"><div class="layui-card"><div class="layui-card-body"><div id="'+id+'" style="height:400px;"></div></div></div></div>'
+                $('#layui-html-content').append(html);
+                var myChart = echarts.init(document.getElementById(id));
+                myChart.setOption(option);
+            }
+            // 生成随机id
+            function rndNum(n = 8){
+                var rnd="";
+                for(var i=0;i<n;i++)
+                    rnd+=Math.floor(Math.random()*10);
+                return rnd;
+            }
+            // var html = '<div class="layui-col-md6"><div class="layui-card"><div class="layui-card-body"><div id="main" style="height:400px;"></div></div></div></div>'
+        // // 基于准备好的dom，初始化echarts实例
+        // var myChart = echarts.init(document.getElementById('main'));
+        // // 指定图表的配置项和数据
+        // var option = {
+        //     xAxis: {
+        //         type: 'category',
+        //         data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        //     },
+        //     yAxis: {
+        //         type: 'value'
+        //     },
+        //     series: [{
+        //         data: [820, 932, 901, 934, 1290, 1330, 1320],
+        //         type: 'line'
+        //     }]
+        // };
+        // // 使用刚指定的配置项和数据显示图表。
+        // myChart.setOption(option);
      </script>
  </body>
 
