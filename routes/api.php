@@ -164,6 +164,7 @@ Route::prefix('/user')->group(function(){
     Route::prefix('/login_notice')->group(function(){
         // 即时通知
         Route::prefix('/immediate_login_notice')->group(function(){
+            Route::get('', 'Api\\User\\LoginNoticeController@index')->middleware('user.token'); // 获取所有即时通知(index页面调用)
             Route::get('every_day_all', 'Api\\User\\LoginNoticeController@every_day_all')->middleware('user.token'); // 获取所有即时通知(index页面调用)
         });
         Route::prefix('/login_notice_log')->group(function(){

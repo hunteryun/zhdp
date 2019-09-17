@@ -13,7 +13,13 @@ class PestWarningLogController extends Base
     {
         $limit = $request->input('limit');
 
-        $PestWarningLogList = UserModel::where('token', $this->user_token())->firstOrFail()->pest_warning_log()->where('status', strval(intval($request->input('status'))))->whereHas('pest_warning', function($query)use($request){
+        $where = [];
+        // 字段事件名称
+        if($request->filled('status')){
+            $where[] = ['status', strval(intval($request->input('status')))];
+        }
+
+        $PestWarningLogList = UserModel::where('token', $this->user_token())->firstOrFail()->pest_warning_log()->where($where)->whereHas('pest_warning', function($query)use($request){
             // 预警类型
             if($request->filled('pest_warning_type')){
                 $query->where('type', strval(intval($request->input('pest_warning_type'))));
