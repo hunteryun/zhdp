@@ -46,6 +46,13 @@ Route::prefix('/user')->group(function(){
         Route::put('{id}', 'Api\\User\\DeviceRegionController@update')->middleware('user.token'); // 更新设备区域列表
         Route::delete('{id}', 'Api\\User\\DeviceRegionController@destroy')->middleware('user.token'); // 删除设备区域列表
     });
+    // 作物追溯
+    Route::prefix('/crop_traceability')->group(function(){
+        Route::get('', 'Api\\User\\CropTraceabilityController@index')->middleware('user.token'); // 作物追溯列表
+        Route::post('', 'Api\\User\\CropTraceabilityController@store')->middleware('user.token'); // 添加作物追溯列表
+        Route::put('{id}', 'Api\\User\\CropTraceabilityController@update')->middleware('user.token'); // 更新作物追溯列表
+        Route::delete('{id}', 'Api\\User\\CropTraceabilityController@destroy')->middleware('user.token'); // 删除作物追溯列表
+    });
     // 作物分类
     Route::prefix('/crop_class')->group(function(){
         Route::get('all_child', 'Api\\User\\CropClassController@all_child')->middleware('user.token'); // 所有作物分类(子分类)

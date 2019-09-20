@@ -34,6 +34,12 @@ Route::prefix('/user')->group(function(){
         Route::view('edit', 'user/device_room/edit'); // 房间编辑
         Route::view('device', 'user/device_room/device/index'); // 设备字段管理
     });
+    // 作物追溯管理
+    Route::prefix('/crop_traceability')->group(function(){
+        Route::view('', 'user/crop_traceability/index'); // 作物追溯列表
+        Route::view('add', 'user/crop_traceability/add'); // 作物追溯添加
+        Route::view('edit', 'user/crop_traceability/edit'); // 作物追溯编辑
+    });
     // 设备管理
     Route::prefix('/device')->group(function(){
         Route::view('', 'user/device/index'); // 设备列表

@@ -35,12 +35,13 @@
                  <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
                  <ul class="layui-nav layui-nav-tree" lay-filter="test">
                     <li class="layui-nav-item">
-                         <a class="" href="javascript:;">位置与作物管理</a>
+                         <a class="" href="javascript:;">位置房间管理</a>
                          <dl class="layui-nav-child">
                              <dd><a class="layui-open-tab" href="{{url('user/device_region')}}">区域管理</a></dd>
                              <dd><a class="layui-open-tab" href="{{url('user/device_room')}}">房间管理</a></dd>
                          </dl>
                      </li>
+                     <li class="layui-nav-item"><a class="layui-open-tab" href="{{url('user/crop_traceability')}}">作物追溯</a></li>
                      <li class="layui-nav-item">
                          <a class="" href="javascript:;">设备管理</a>
                          <dl class="layui-nav-child">

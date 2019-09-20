@@ -79,4 +79,9 @@ class User extends Model
      {
           return $this->hasMany(SystemMsg::class);
      }
+     // 作物追溯
+     public function crop_traceability()
+     {
+          return $this->hasMany(CropTraceability::class);
+     }
 }
