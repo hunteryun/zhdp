@@ -4,6 +4,7 @@
 字段,英文名,参数,默认,描述
 id,id,,,
 用户名,name,,,
+手机号,phone,,,
 密码,password,,,
 token,token,,,每次登录都会生成的token，用来验证用户身份
 ,,,,

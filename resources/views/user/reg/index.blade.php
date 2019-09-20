@@ -17,7 +17,7 @@
 		position: absolute;
 		left: 50%;
 		top: 50%;
-		margin: -150px 0 0 -150px;
+		margin: -200px 0 0 -150px;
 		z-index: 99;
 	}
 
@@ -49,6 +49,9 @@
 		<h1>云蛙-用户注册</h1>
 		<form class="layui-form">
 			<div class="layui-form-item">
+				<input class="layui-input" name="phone" placeholder="手机号" lay-verify="required|phone|number" type="text" autocomplete="off">
+			</div>
+			<div class="layui-form-item">
 				<input class="layui-input" name="name" placeholder="用户名" lay-verify="required" type="text" autocomplete="off">
 			</div>
 			<div class="layui-form-item">
@@ -75,6 +78,7 @@
 				type: "POST",
 				url: "{{url('api/user/reg')}}",
 				data: {
+					phone: field.phone,
 					name: field.name,
 					password: field.password,
 				},

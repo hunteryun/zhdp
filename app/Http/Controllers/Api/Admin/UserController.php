@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Http\Controllers\Api\Admin\Base;
 use Illuminate\Http\Request;
 use App\Model\User as UserModel;
-use App\Http\Requests\Admin\AddUser as AddUserRequests;
-use App\Http\Requests\Admin\UpdateUser as UpdateUserRequests;
+use App\Http\Requests\User\AddUser as AddUserRequests;
+use App\Http\Requests\User\UpdateUser as UpdateUserRequests;
 // 用户
 class UserController extends Base
 {
@@ -35,6 +35,7 @@ class UserController extends Base
     public function store(Request $request){
         (new AddUserRequests)->verification($request);
         $userModel = new UserModel;
+        $userModel->phone = $request->input('phone');
         $userModel->name = $request->input('name');
         $userModel->password = $request->input('password');
         $addUser = $userModel->save();
@@ -48,6 +49,7 @@ class UserController extends Base
         (new UpdateUserRequests)->verification();
         $userInfo = UserModel::where('id', $id)->firstOrFail();
         $userInfo->name = $request->input('name');
+        $userInfo->phone = $request->input('phone');
         // 没有密码则不更新
         if ($request->filled('password')) {
             $userInfo->password = $request->input('password');

@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\User;
 use App\Http\Requests\Base;
-use Illuminate\Validation\Rule;
-class UpdateUser extends Base
+
+class RegUser extends Base
 {
     public $messages = [
         'name.required' => '用户名必填!',
@@ -15,6 +15,7 @@ class UpdateUser extends Base
         'phone.digits' => '手机号必须为11位数字!',
         'phone.unique' => '手机号已存在!',
 
+        'password.required' => '密码必填!',
         'password.between' => '密码长度需要在6-20之间!',
         'password.alpha_dash' => '密码只允许字母和数字，以及破折号和下划线!',
     ];
@@ -36,21 +37,10 @@ class UpdateUser extends Base
      */
     public function rules()
     {
-        // 看到已经通过接口继承了 request 但是获取数据获取不到，后面再进行优化把 
         return [
-            'name' => [
-                'required',
-                // 验证唯一，除了自己
-                Rule::unique('user')->ignore($this->request->id),
-                'alpha_dash',
-                'between:6,30',
-            ],
-            'password' => 'nullable|between:6,20|alpha_dash',   
-            'phone' => [
-                'required',
-                'digits:11',
-                Rule::unique('user')->ignore($this->request->id)
-            ]
+            'name' => 'required|unique:user|alpha_dash|between:6,30',
+            'password' => 'required|between:6,20|alpha_dash',   
+            'phone' => 'required|digits:11|unique:user'
         ];
     }
 }

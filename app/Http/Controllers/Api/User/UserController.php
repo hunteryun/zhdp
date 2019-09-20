@@ -69,7 +69,7 @@ class UserController extends Base
     }
     // 获取自己
     public function get_my(){
-        $userInfo = UserModel::where('token', $this->user_token())->firstOrFail(['id','name']);
+        $userInfo = UserModel::where('token', $this->user_token())->firstOrFail(['id','name','phone']);
         return success(['data'=>$userInfo]);
     }
     // 更新自己
@@ -77,6 +77,7 @@ class UserController extends Base
         (new UpdateUserRequests)->verification();
         $userInfo = UserModel::where('token', $this->user_token())->firstOrFail();
         $userInfo->name = $request->input('name');
+        $userInfo->phone = $request->input('phone');
         // 没有密码则不更新
         if ($request->filled('password')) {
             $userInfo->password = $request->input('password');

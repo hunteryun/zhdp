@@ -10,6 +10,12 @@
         <form class="layui-form layui-form-pane" action="">
             <input type="hidden" name="id">
             <div class="layui-form-item">
+                <label class="layui-form-label">手机号</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" name="phone" lay-verify="required|phone|number" autocomplete="off" placeholder="手机号">
+                </div>
+            </div>
+            <div class="layui-form-item">
                 <label class="layui-form-label">用户名称</label>
                 <div class="layui-input-inline">
                     <input type="text" class="layui-input" name="name" lay-verify="required" autocomplete="off" placeholder="用户名称">
@@ -45,6 +51,7 @@
                 } else {
                     console.log(result.data.name);
                     $("input[name='id']").val(result.data.id);
+                    $("input[name='phone']").val(result.data.phone);
                     $("input[name='name']").val(result.data.name);
                 }
             }
@@ -59,6 +66,7 @@
                 url: '{{url("api/user/my")}}/' + data.field.id,
                 data: {
                     '_method': 'PUT',
+                    'phone': data.field.phone,
                     'name': data.field.name,
                     'password': data.field.password,
                 },

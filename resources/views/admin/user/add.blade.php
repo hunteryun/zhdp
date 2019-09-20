@@ -11,6 +11,12 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">用户名称</label>
                 <div class="layui-input-inline">
+				    <input class="layui-input" name="phone" placeholder="手机号" lay-verify="required|phone|number" type="text" autocomplete="off">
+                </div>
+			</div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户名称</label>
+                <div class="layui-input-inline">
                     <input type="text" class="layui-input" name="name" lay-verify="required" autocomplete="off" placeholder="用户名称">
                 </div>
             </div>
@@ -39,6 +45,7 @@
                 type: "POST",
                 url: '{{url("api/admin/user")}}',
                 data: {
+                    'phone': data.field.phone,
                     'name': data.field.name,
                     'password': data.field.password,
                 },

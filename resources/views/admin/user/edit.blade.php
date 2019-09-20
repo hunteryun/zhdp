@@ -8,6 +8,12 @@
  <body>
     <div class="layui-container" style="padding:15px">
         <form class="layui-form layui-form-pane" action="">
+        <div class="layui-form-item">
+                <label class="layui-form-label">用户名称</label>
+                <div class="layui-input-inline">
+				    <input class="layui-input" name="phone" placeholder="手机号" lay-verify="required|phone|number" type="text" autocomplete="off">
+                </div>
+			</div>
             <div class="layui-form-item">
                 <label class="layui-form-label">用户名称</label>
                 <div class="layui-input-inline">
@@ -35,6 +41,7 @@
         var user_info =  window.parent.edit_user_info;
         //  初始化input
         $("input[name='name']").val(user_info.name);
+        $("input[name='phone']").val(user_info.phone);
          //监听提交
          form.on('submit(formSubmit)', function(data) {
              formLoad = layer.load(1, {
@@ -46,6 +53,7 @@
                 data: {
                     '_method': 'PUT',
                     'name': data.field.name,
+                    'phone': data.field.phone,
                     'password': data.field.password,
                 },
                 success: function(result){
