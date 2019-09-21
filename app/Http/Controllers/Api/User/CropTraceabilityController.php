@@ -16,11 +16,16 @@ class CropTraceabilityController extends Base
     public function index(Request $request)
     {
         $limit = $request->input('limit');
-        $cropTraceabilityList = UserModel::where('token', $this->user_token())->firstOrFail()->crop_traceability()->whereHas('device_room',function($query) use ($request){
+        $where = [];
+        if($request->filled('status')){
+            $where[] = ['status', strval(intval($request->status))];
+        }
+
+        $cropTraceabilityList = UserModel::where('token', $this->user_token())->firstOrFail()->crop_traceability()->where($where)->whereHas('device_room',function($query) use ($request){
             if($request->filled('device_region_id')){
                 $query->where('device_region_id', intval($request->device_region_id));
             }
-        })->with('device_room', 'crop_class')->paginate($limit)->toArray();
+        })->with('device_room', 'crop_class')->orderBy('id', 'desc')->paginate($limit)->toArray();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $cropTraceabilityList['total'];

@@ -27,6 +27,13 @@
                         </select>
                     </div>
                     <div class="layui-inline">
+                        <select name="status" id="status" lay-search lay-filter="status">
+                            <option value="" selected>状态:不限</option>
+                            <option value="0" >状态:进行中</option>
+                            <option value="1" >状态:已完成</option>
+                        </select>
+                    </div>
+                    <div class="layui-inline">
                         <div class="layui-input-inline">
                         <button type="submit" id="submit" class="layui-btn" lay-submit="" lay-filter="formSubmit">搜索</button>
                         </div>
@@ -200,6 +207,7 @@
                 table.reload('crop_traceability',{
                     where: {
                         'device_region_id': data.field.device_region_id,
+                        'status': data.field.status,
                     }
                 });
                 return false;
