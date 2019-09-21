@@ -57,7 +57,11 @@ class CropTraceabilityBatchController extends Base
     {
         $limit = $request->input('limit');
         $user_id = UserModel::where('token', $this->user_token())->firstOrFail()->id;
-        $CropTraceabilityBatchAll = CropTraceabilityModel::where('user_id',$user_id)->firstOrFail()->crop_traceability_batch()->where('sampling_status', '0')->with('crop_traceability', 'crop_traceability.device_room', 'crop_traceability.crop_class')->orderBy('id', 'desc')->paginate($limit)->toArray();
+        
+        $CropTraceabilityBatchAll = CropTraceabilityBatchModel::where('sampling_status', '0')->whereHas('crop_traceability', function($query) use ($user_id){
+            $query->where('user_id', $user_id);
+        })->with('crop_traceability', 'crop_traceability.device_room', 'crop_traceability.crop_class')->orderBy('id', 'desc')->paginate($limit)->toArray();
+        
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $CropTraceabilityBatchAll['total'];
@@ -70,7 +74,11 @@ class CropTraceabilityBatchController extends Base
     {
         $limit = $request->input('limit');
         $user_id = UserModel::where('token', $this->user_token())->firstOrFail()->id;
-        $CropTraceabilityBatchAll = CropTraceabilityModel::where('user_id',$user_id)->firstOrFail()->crop_traceability_batch()->where('sampling_status', '<>', '0')->with('crop_traceability', 'crop_traceability.device_room', 'crop_traceability.crop_class')->orderBy('id', 'desc')->paginate($limit)->toArray();
+        
+        $CropTraceabilityBatchAll = CropTraceabilityBatchModel::where('sampling_status', '<>', '0')->whereHas('crop_traceability', function($query) use ($user_id){
+            $query->where('user_id', $user_id);
+        })->with('crop_traceability', 'crop_traceability.device_room', 'crop_traceability.crop_class')->orderBy('id', 'desc')->paginate($limit)->toArray();
+
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $CropTraceabilityBatchAll['total'];

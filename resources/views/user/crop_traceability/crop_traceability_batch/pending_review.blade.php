@@ -58,6 +58,9 @@
                     ,{field: 'harvest_quantity', title: '收获数量', templet : function (d){
                         return d.harvest_quantity;
                     }}
+                    ,{field: 'batch', title: '收获批次', templet : function (d){
+                        return d.batch;
+                    }}
                     ,{field: 'sampling_status', title: '审核状态', templet : function (d){
                         if(d.sampling_status == '0'){
                             return '待审核';
