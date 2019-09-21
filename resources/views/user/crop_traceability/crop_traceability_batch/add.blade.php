@@ -37,6 +37,16 @@
                 </div>
             </div>
             <div class="layui-form-item">
+                <label class="layui-form-label">大棚状态</label>
+                <div class="layui-input-inline">
+                    <select id="status" name="status" lay-verify="required" lay-filter="status">
+                        <option value="0">进行中</option>
+                        <option value="1">收获完毕</option>
+                    </select> 
+                </div>
+                <div class="layui-form-mid layui-word-aux">大鹏收获完毕后才可以添加下一季作物</div>
+            </div>
+            <div class="layui-form-item">
                 <div class="layui-input-block">
                     <button type="submit" id="submit" class="layui-btn" lay-submit="" lay-filter="formSubmit">提交</button>
                     <button type="reset" id="reset" class="layui-btn layui-btn-primary">重置</button>
@@ -101,6 +111,7 @@
                     'device_room_id': data.field.device_room_id,
                     'harvest_quantity': data.field.harvest_quantity,
                     'end_time': data.field.end_time,
+                    'status': data.field.status,
                 },
                 success: function(result){
                     layer.close(formLoad);

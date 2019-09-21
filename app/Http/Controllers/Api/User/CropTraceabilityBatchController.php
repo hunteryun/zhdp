@@ -32,6 +32,12 @@ class CropTraceabilityBatchController extends Base
         $CropTraceabilityBatchModel->end_time = $request->input('end_time');
         $CropTraceabilityBatchModel->sampling_status = '0';
         $CropTraceabilityBatchModel->qr_code_path = '';
+        // 大棚状态 如果等于1则种植结束
+        if($request->filled('status') && intval($request->input('status')) == 1){
+            $cropTraceabilityInfo->end_time = date("Y-m-d H:i:s", time());
+            $cropTraceabilityInfo->status = '1';
+            $cropTraceabilityInfo->save();
+        }
         $addCropTraceabilityBatch = $CropTraceabilityBatchModel->save();
         if(!$addCropTraceabilityBatch){
             return errors(['msg'=>'创建失败']);
