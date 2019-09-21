@@ -25,13 +25,23 @@
      </div>
      @include('user.public.include_js')
      <script>
-        var id = window.parent.edit_crop_traceability_info.id;
+        //  测试url
+        //  http://code9.com:8080/user/crop_traceability/qrcode_info?token=shxDJGJ2zeg53oGqFHnxHMbimrOKr5h5Lran1Tn5T2n50PzPfoqAXsV9HpUo
+        //  获取token
+         function GetQueryString(name)
+        {
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if(r!=null)return  unescape(r[2]); return null;
+        }
+        var token = GetQueryString("token");
+
         $(function(){ 
             table.reload('crop_traceability_batch', {
-                url: '{{url("api/user/crop_traceability/crop_traceability_batch/all")}}/' + id
+                url: '{{url("api/user/crop_traceability/token_crop_traceability_batch")}}/' + token
             });
             table.reload('crop_traceability_event_log', {
-                url: '{{url("api/user/crop_traceability/crop_traceability_event_log/all")}}/' + id
+                url: '{{url("api/user/crop_traceability/token_crop_traceability_event_log")}}/' + token
             });
     　　}); 
         table.render({

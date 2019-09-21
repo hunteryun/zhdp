@@ -16,7 +16,7 @@
                             <button type="button" class="layui-btn layui-btn-sm" id="refresh-crop-traceability">刷新表格</button> 
                             <button type="button" class="layui-btn layui-btn-sm" id="add-crop-traceability">添加作物追溯</button> 
                             <button type="button" class="layui-btn layui-btn-sm" id="add-crop-traceability-event-log">添加作物事件</button> 
-                            <button type="button" class="layui-btn layui-btn-sm" id="add-crop-traceability-batch">添加作物收获记录</button> 
+                            <button type="button" class="layui-btn layui-btn-sm" id="add-crop-traceability-batch">添加作物收获记录</button>
                         </div>
                     </div>
                 </div>

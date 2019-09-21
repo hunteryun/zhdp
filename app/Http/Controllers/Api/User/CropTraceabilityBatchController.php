@@ -5,15 +5,17 @@ namespace App\Http\Controllers\Api\User;
 use App\Http\Controllers\Api\User\Base;
 use Illuminate\Http\Request;
 use App\Model\User as UserModel;
+use App\Model\CropTraceability as CropTraceabilityModel;
 use App\Model\CropTraceabilityBatch as CropTraceabilityBatchModel;
 use App\Http\Requests\CropTraceabilityBatch\AddCropTraceabilityBatch as AddCropTraceabilityBatchRequests;
+use \QrCode;
 // 作物收获批次
 class CropTraceabilityBatchController extends Base
 {
     // 获取指定房间id下的唯一进行中的追溯所有事件(每个房间只有一个唯一进行中的)
-    public function all(Request $request, $device_room_id)
+    public function all(Request $request, $id)
     {
-        $CropTraceabilityBatchAll = UserModel::where('token', $this->user_token())->firstOrFail()->device_room()->where('id', $device_room_id)->firstOrFail()->crop_traceability()->firstOrFail()->crop_traceability_batch()->get();
+        $CropTraceabilityBatchAll = CropTraceabilityModel::where('id', $id)->firstOrFail()->crop_traceability_batch()->get();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $CropTraceabilityBatchAll->count();
@@ -31,7 +33,13 @@ class CropTraceabilityBatchController extends Base
         $CropTraceabilityBatchModel->harvest_quantity = $request->input('harvest_quantity');
         $CropTraceabilityBatchModel->end_time = $request->input('end_time');
         $CropTraceabilityBatchModel->sampling_status = '0';
-        $CropTraceabilityBatchModel->qr_code_path = '';
+
+        QrCode::format('png');
+        QrCode::size(1000);
+        QrCode::generate(url('user/crop_traceability/qrcode_info?token='.$CropTraceabilityBatchModel->token), '../storage/app/public/qrcode/'.$CropTraceabilityBatchModel->token.'.svg');
+        
+        $file_path = '/storage/qrcode/'.$CropTraceabilityBatchModel->token.'.svg';
+        $CropTraceabilityBatchModel->qr_code_path = $file_path;
         // 大棚状态 如果等于1则种植结束
         if($request->filled('status') && intval($request->input('status')) == 1){
             $cropTraceabilityInfo->end_time = $request->input('end_time');

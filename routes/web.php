@@ -10,6 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
 // 首页
 Route::view('/', 'user/login/index'); 
 // // 用户 /index.php/user
@@ -42,6 +44,8 @@ Route::prefix('/user')->group(function(){
         Route::view('info', 'user/crop_traceability/info'); // 作物追溯详情
         Route::view('crop_traceability_event_log/add', 'user/crop_traceability/crop_traceability_event_log/add'); // 作物追溯事件
         Route::view('crop_traceability_batch/add', 'user/crop_traceability/crop_traceability_batch/add'); // 作物追溯事件
+        // 
+        Route::view('qrcode_info', 'user/crop_traceability/qrcode_info/index'); // 作物追溯详情扫码获取的
     });
     // 设备管理
     Route::prefix('/device')->group(function(){

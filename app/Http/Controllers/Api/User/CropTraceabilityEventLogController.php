@@ -5,15 +5,16 @@ namespace App\Http\Controllers\Api\User;
 use App\Http\Controllers\Api\User\Base;
 use Illuminate\Http\Request;
 use App\Model\User as UserModel;
+use App\Model\CropTraceability as CropTraceabilityModel;
 use App\Model\CropTraceabilityEventLog as CropTraceabilityEventLogModel;
 use App\Http\Requests\CropTraceabilityEventLog\AddCropTraceabilityEventLog as AddCropTraceabilityEventLogRequests;
 // 作物追溯
 class CropTraceabilityEventLogController extends Base
 {
     // 获取指定房间id下的唯一进行中的追溯所有事件(每个房间只有一个唯一进行中的)
-    public function all(Request $request, $device_room_id)
+    public function all(Request $request, $id)
     {
-        $cropTraceabilityEventLogAll = UserModel::where('token', $this->user_token())->firstOrFail()->device_room()->where('id', $device_room_id)->firstOrFail()->crop_traceability()->firstOrFail()->crop_traceability_event_log()->get();
+        $cropTraceabilityEventLogAll = CropTraceabilityModel::where('id', $id)->firstOrFail()->crop_traceability_event_log()->get();
         $returnData = [];
         $returnData['msg']              = "查询成功";
         $returnData['count']            = $cropTraceabilityEventLogAll->count();

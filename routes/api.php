@@ -54,14 +54,19 @@ Route::prefix('/user')->group(function(){
         Route::delete('{id}', 'Api\\User\\CropTraceabilityController@destroy')->middleware('user.token'); // 删除作物追溯列表
         // 作物追溯日志
         Route::prefix('/crop_traceability_event_log')->group(function(){
-            Route::get('all/{device_room_id}', 'Api\\User\\CropTraceabilityEventLogController@all')->where('device_room_id', '[0-9]+')->middleware('user.token'); // 作物追溯事件列表
+            Route::get('all/{id}', 'Api\\User\\CropTraceabilityEventLogController@all')->where('id', '[0-9]+')->middleware('user.token'); // 作物追溯事件列表
             Route::post('', 'Api\\User\\CropTraceabilityEventLogController@store')->middleware('user.token'); // 添加作物追溯日志
         });
         // 作物收获日志
         Route::prefix('/crop_traceability_batch')->group(function(){
-            Route::get('all/{device_room_id}', 'Api\\User\\CropTraceabilityBatchController@all')->where('device_room_id', '[0-9]+')->middleware('user.token'); // 作物收获记录
+            Route::get('all/{id}', 'Api\\User\\CropTraceabilityBatchController@all')->where('id', '[0-9]+')->middleware('user.token'); // 作物收获记录
             Route::post('', 'Api\\User\\CropTraceabilityBatchController@store')->middleware('user.token'); // 添加作物收获记录
         });
+        // 二维码作物追溯详情获取收获批次[无需验证用户身份]
+        Route::get('token_crop_traceability_batch/{token}', 'Api\\User\\CropTraceabilityController@token_crop_traceability_batch')->where('token', '[0-9a-zA-Z]{60}'); //
+        // 二维码作物追溯详情获取事件记录[无需验证用户身份]
+        Route::get('token_crop_traceability_event_log/{token}', 'Api\\User\\CropTraceabilityController@token_crop_traceability_event_log')->where('token', '[0-9a-zA-Z]{60}'); // 
+
     });
     // 作物分类
     Route::prefix('/crop_class')->group(function(){
