@@ -67,6 +67,9 @@
                             return '审核未通过';
                         }
                     }}
+                    ,{field: 'qr_code_path', title: '追溯二维码', templet : function (d){
+                        return d.qr_code_path.length > 0 ?'<img style="height:20px;" src="'+d.qr_code_path+'">' : '';
+                    }, event : 'showQrCode'}
                 ]]
             });
             // 刷新页面
@@ -98,6 +101,22 @@
                     }
                 }
             });
+            //监听工具条 
+            table.on('tool(audited)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+                var data = obj.data; //获得当前行数据
+                var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+                var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
+                if(layEvent == 'showQrCode'){
+                    layer.msg('<img style="width: 200px;height: 200px" src="'+data.qr_code_path+'">',{
+                        title:'追溯二维码',
+                        type : 1,
+                        shade: [0.8, '#393D49'],
+                        closeBtn: 1,
+                        time: 0
+                    });
+                }
+            });
+            //监听搜索
             //监听搜索
             form.on('submit(formSubmit)', function(data) {
                 // 重载 table
