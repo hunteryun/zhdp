@@ -100,7 +100,7 @@
                 $('#harvest_quantity').text(data.crop_traceability.harvest_quantity);
                 $('#end_time').text(data.crop_traceability.end_time);
                 // $('#sampling_status').text(data.crop_traceability.sampling_status);
-                switch(data.cropTraceability.status){
+                switch(data.crop_traceability.sampling_status){
                     case '0':
                         $('#sampling_status').text("未审核");
                         break;
