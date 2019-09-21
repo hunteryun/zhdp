@@ -15,6 +15,8 @@
                             <button type="button" class="layui-btn layui-btn-sm" id="refresh-page">刷新页面</button> 
                             <button type="button" class="layui-btn layui-btn-sm" id="refresh-crop-traceability">刷新表格</button> 
                             <button type="button" class="layui-btn layui-btn-sm" id="add-crop-traceability">添加作物追溯</button> 
+                            <button type="button" class="layui-btn layui-btn-sm" id="add-crop-traceability-event-log">添加作物事件</button> 
+                            <button type="button" class="layui-btn layui-btn-sm" id="add-crop-traceability-batch">添加作物收获记录</button> 
                         </div>
                     </div>
                 </div>
@@ -137,6 +139,35 @@
                     shade:0.8,
                     area:['100%','100%'],
                     content:'{{url("user/crop_traceability/add")}}',
+                    end:function(){
+                        table.reload('crop_traceability');
+                    }
+                });
+            });
+            // 添加作物追溯事件
+            $('#add-crop-traceability-event-log').click(function(){
+                layer.open({
+                    type:2,
+                    title:'添加作物追溯事件',
+                    shadeClose:true,
+                    shade:0.8,
+                    area:['100%','100%'],
+                    content:'{{url("user/crop_traceability/crop_traceability_event_log/add")}}',
+                    end:function(){
+                        table.reload('crop_traceability');
+                    }
+                });
+            });
+            // crop-traceability-batch
+            // 添加作物收获记录
+            $('#add-crop-traceability-batch').click(function(){
+                layer.open({
+                    type:2,
+                    title:'添加作物收获记录',
+                    shadeClose:true,
+                    shade:0.8,
+                    area:['100%','100%'],
+                    content:'{{url("user/crop_traceability/crop_traceability_batch/add")}}',
                     end:function(){
                         table.reload('crop_traceability');
                     }

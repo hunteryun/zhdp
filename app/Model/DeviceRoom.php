@@ -25,6 +25,11 @@ class DeviceRoom extends Model
     {
          return $this->hasMany(Device::class);
     }
+    // 关联查询房间下的追溯(进行中的只有一个，查询这一个下面的)
+    public function crop_traceability()
+    {
+         return $this->hasMany(CropTraceability::class);
+    }
     // 设置默认值 desc 字段
     public function setDescAttribute($value)
     {

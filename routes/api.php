@@ -52,6 +52,16 @@ Route::prefix('/user')->group(function(){
         Route::post('', 'Api\\User\\CropTraceabilityController@store')->middleware('user.token'); // 添加作物追溯列表
         Route::put('{id}', 'Api\\User\\CropTraceabilityController@update')->middleware('user.token'); // 更新作物追溯列表
         Route::delete('{id}', 'Api\\User\\CropTraceabilityController@destroy')->middleware('user.token'); // 删除作物追溯列表
+        // 作物追溯日志
+        Route::prefix('/crop_traceability_event_log')->group(function(){
+            Route::get('all/{device_room_id}', 'Api\\User\\CropTraceabilityEventLogController@all')->where('device_room_id', '[0-9]+')->middleware('user.token'); // 作物追溯事件列表
+            Route::post('', 'Api\\User\\CropTraceabilityEventLogController@store')->middleware('user.token'); // 添加作物追溯日志
+        });
+        // 作物收获日志
+        Route::prefix('/crop_traceability_batch')->group(function(){
+            Route::get('all/{device_room_id}', 'Api\\User\\CropTraceabilityBatchController@all')->where('device_room_id', '[0-9]+')->middleware('user.token'); // 作物收获记录
+            Route::post('', 'Api\\User\\CropTraceabilityBatchController@store')->middleware('user.token'); // 添加作物收获记录
+        });
     });
     // 作物分类
     Route::prefix('/crop_class')->group(function(){

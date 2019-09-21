@@ -56,6 +56,7 @@ id,,,,
 收获批次表,crop_traceability_batch,,,小程序扫码显示的附加信息(作物追溯可以收获多次，因为是温室大棚)
 字段,英文名,参数,默认,描述
 id,,,,
+所属追溯id,crop_traceability_id,,,
 唯一标识,token,,,通过该token找到本追溯记录
 收获批次,batch,,,数字类型
 收获数量,harvest_quantity,,,收获多少株，多少斤
@@ -66,8 +67,9 @@ id,,,,
 作物追溯事件日志表,crop_traceability_event_log,,,喷药，驱虫灯，移株、栽培
 字段,英文名,参数,默认,描述
 id,,,,
+所属追溯id,crop_traceability_id,,,
 事件名,event_name,,,喷药、去虫、栽培等
-事件描述,event_desc,,,用的什么药，治的什么病，或者对于病的治疗效果
+事件描述,event_content,,,用的什么药，治的什么病，或者对于病的治疗效果
 事件事件,event_time,,,事件发生时间
 ,,,,
 ,,,,
