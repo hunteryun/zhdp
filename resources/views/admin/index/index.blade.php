@@ -46,6 +46,13 @@
                      </li>
                      <li class="layui-nav-item"><a class="layui-open-tab" href="{{url('admin/crop_class')}}">作物管理</a></li>
                      <li class="layui-nav-item">
+                         <a class="" href="javascript:;">作物追溯管理</a>
+                         <dl class="layui-nav-child">
+                             <dd><a class="layui-open-tab" href="{{url('admin/crop_traceability/crop_traceability_batch/pending_review')}}">作物追溯待审核</a></dd>
+                             <dd><a class="layui-open-tab" href="{{url('admin/crop_traceability/crop_traceability_batch/audited')}}">作物追溯已审核</a></dd>
+                         </dl>
+                     </li>
+                     <li class="layui-nav-item">
                          <a class="" href="javascript:;">数据分析</a>
                          <dl class="layui-nav-child">
                              <!-- 通过百度echer进行显示 -->

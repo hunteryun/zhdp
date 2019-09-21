@@ -247,6 +247,15 @@ Route::prefix('/admin')->group(function(){
         Route::get('top', 'Api\\Admin\\CropClassController@topAll')->middleware('admin.token'); // 所有顶级作物分类列表
         Route::get('top/{id}', 'Api\\Admin\\CropClassController@topIdAll')->middleware('admin.token'); // 获取指定id下的作物种类
     });
+    // 作物追溯
+    Route::prefix('/crop_traceability')->group(function(){
+        // 作物收获日志
+        Route::prefix('/crop_traceability_batch')->group(function(){
+            Route::get('pending_review', 'Api\\Admin\\CropTraceabilityBatchController@pending_review')->middleware('admin.token'); // 作物追溯待审核列表
+            Route::put('review/{id}', 'Api\\Admin\\CropTraceabilityBatchController@review')->where('id', '[0-9]+')->middleware('admin.token'); // 作物追溯审核(可以审核通过和审核不用过)
+            Route::get('audited', 'Api\\Admin\\CropTraceabilityBatchController@audited')->middleware('admin.token'); // 作物追溯已审核列表
+        });
+    });
     // 数据分析
     Route::prefix('/data_analysis')->group(function(){
         // 这里的post是为了方便带上参数

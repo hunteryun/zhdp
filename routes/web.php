@@ -161,6 +161,12 @@ Route::prefix('/admin')->group(function(){
         Route::view('edit', 'admin/crop_class/edit'); // 作物分类编辑
     });
     
+    // 作物追溯管理
+    Route::prefix('/crop_traceability')->group(function(){
+        Route::view('crop_traceability_batch/pending_review', 'admin/crop_traceability/crop_traceability_batch/pending_review'); // 作物收获批次待审核
+        Route::view('crop_traceability_batch/audited', 'admin/crop_traceability/crop_traceability_batch/audited'); // 作物收获批次已审核
+    });
+
     // 数据分析
     Route::prefix('/data_analysis')->group(function(){
         Route::view('visualization', 'admin/data_analysis/visualization/index'); // 数据可视化
