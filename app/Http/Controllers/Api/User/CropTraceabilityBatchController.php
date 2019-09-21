@@ -52,4 +52,30 @@ class CropTraceabilityBatchController extends Base
         }
         return success(['msg'=>'创建成功']);
     }
+    // 作物批次待审核
+    public function pending_review(Request $request)
+    {
+        $limit = $request->input('limit');
+        $user_id = UserModel::where('token', $this->user_token())->firstOrFail()->id;
+        $CropTraceabilityBatchAll = CropTraceabilityModel::where('user_id',$user_id)->firstOrFail()->crop_traceability_batch()->where('sampling_status', '0')->with('crop_traceability', 'crop_traceability.device_room', 'crop_traceability.crop_class')->orderBy('id', 'desc')->paginate($limit)->toArray();
+        $returnData = [];
+        $returnData['msg']              = "查询成功";
+        $returnData['count']            = $CropTraceabilityBatchAll['total'];
+        $returnData['current_page']     = $CropTraceabilityBatchAll['current_page'];
+        $returnData['data']             = $CropTraceabilityBatchAll['data'];
+        return success($returnData);
+    }
+    // 作物批次已审核(包括审核通过与未通过)
+    public function audited(Request $request)
+    {
+        $limit = $request->input('limit');
+        $user_id = UserModel::where('token', $this->user_token())->firstOrFail()->id;
+        $CropTraceabilityBatchAll = CropTraceabilityModel::where('user_id',$user_id)->firstOrFail()->crop_traceability_batch()->where('sampling_status', '<>', '0')->with('crop_traceability', 'crop_traceability.device_room', 'crop_traceability.crop_class')->orderBy('id', 'desc')->paginate($limit)->toArray();
+        $returnData = [];
+        $returnData['msg']              = "查询成功";
+        $returnData['count']            = $CropTraceabilityBatchAll['total'];
+        $returnData['current_page']     = $CropTraceabilityBatchAll['current_page'];
+        $returnData['data']             = $CropTraceabilityBatchAll['data'];
+        return success($returnData);
+    }
 }

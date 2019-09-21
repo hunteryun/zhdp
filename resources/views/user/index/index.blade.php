@@ -41,7 +41,15 @@
                              <dd><a class="layui-open-tab" href="{{url('user/device_room')}}">房间管理</a></dd>
                          </dl>
                      </li>
-                     <li class="layui-nav-item"><a class="layui-open-tab" href="{{url('user/crop_traceability')}}">作物追溯</a></li>
+                     <li class="layui-nav-item">
+                         <a class="" href="javascript:;">作物追溯管理</a>
+                         <dl class="layui-nav-child">
+                             <dd><a class="layui-open-tab" href="{{url('user/crop_traceability')}}">作物追溯</a></dd>
+                             <dd><a class="layui-open-tab" href="{{url('user/crop_traceability/crop_traceability_batch/pending_review')}}">作物追溯待审核</a></dd>
+                             <dd><a class="layui-open-tab" href="{{url('user/crop_traceability/crop_traceability_batch/audited')}}">作物追溯已审核</a></dd>
+                         </dl>
+                     </li>
+                     <!-- <li class="layui-nav-item"><a class="layui-open-tab" href="{{url('user/crop_traceability')}}">作物追溯</a></li> -->
                      <li class="layui-nav-item">
                          <a class="" href="javascript:;">设备管理</a>
                          <dl class="layui-nav-child">

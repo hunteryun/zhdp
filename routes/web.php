@@ -42,8 +42,13 @@ Route::prefix('/user')->group(function(){
         Route::view('add', 'user/crop_traceability/add'); // 作物追溯添加
         Route::view('edit', 'user/crop_traceability/edit'); // 作物追溯编辑
         Route::view('info', 'user/crop_traceability/info'); // 作物追溯详情
+        // 
         Route::view('crop_traceability_event_log/add', 'user/crop_traceability/crop_traceability_event_log/add'); // 作物追溯事件
-        Route::view('crop_traceability_batch/add', 'user/crop_traceability/crop_traceability_batch/add'); // 作物追溯事件
+        // 
+        Route::view('crop_traceability_batch/add', 'user/crop_traceability/crop_traceability_batch/add'); // 作物收获批次
+        // 
+        Route::view('crop_traceability_batch/pending_review', 'user/crop_traceability/crop_traceability_batch/pending_review'); // 作物收获批次待审核
+        Route::view('crop_traceability_batch/audited', 'user/crop_traceability/crop_traceability_batch/audited'); // 作物收获批次已审核
         // 
         Route::view('qrcode_info', 'user/crop_traceability/qrcode_info/index'); // 作物追溯详情扫码获取的
     });
