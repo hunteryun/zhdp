@@ -98,11 +98,11 @@
                     window.edit_crop_traceability_info = data;
                     layer.open({
                         type:2,
-                        title:'查看作物追溯',
+                        title:'查看作物追溯详情',
                         shadeClose:true,
                         shade:0.8,
                         area:['100%','100%'],
-                        content:'{{url("user/crop_traceability/device_field")}}',
+                        content:'{{url("user/crop_traceability/info")}}',
                         end:function(){
                             table.reload('crop_traceability');
                         }

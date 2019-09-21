@@ -39,6 +39,7 @@ Route::prefix('/user')->group(function(){
         Route::view('', 'user/crop_traceability/index'); // 作物追溯列表
         Route::view('add', 'user/crop_traceability/add'); // 作物追溯添加
         Route::view('edit', 'user/crop_traceability/edit'); // 作物追溯编辑
+        Route::view('info', 'user/crop_traceability/info'); // 作物追溯详情
         Route::view('crop_traceability_event_log/add', 'user/crop_traceability/crop_traceability_event_log/add'); // 作物追溯事件
         Route::view('crop_traceability_batch/add', 'user/crop_traceability/crop_traceability_batch/add'); // 作物追溯事件
     });

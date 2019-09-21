@@ -61,7 +61,7 @@ id,,,,
 收获批次,batch,,,数字类型
 收获数量,harvest_quantity,,,收获多少株，多少斤
 收获时间,end_time,,,
-抽检状态,sampling_status,,0,如果商户的产品被平台检验过，则为1，显示为平台已抽检，0则为平台未抽检
+抽检状态,sampling_status,,0,0 未抽检 1 抽检合格 2 抽检不合格
 二维码url,qr_code_path,,,二维码存放路径
 ,,,,
 作物追溯事件日志表,crop_traceability_event_log,,,喷药，驱虫灯，移株、栽培
