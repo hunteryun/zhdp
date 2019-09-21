@@ -67,25 +67,23 @@ class CropTraceabilityController extends Base
         }
         return success(['msg'=>"作物追溯删除成功"]);
     }
-    //  http://code9.com:8080/user/crop_traceability/qrcode_info?token=shxDJGJ2zeg53oGqFHnxHMbimrOKr5h5Lran1Tn5T2n50PzPfoqAXsV9HpUo
-    // 根据事件指定 token 获取事件下的收货记录[根据收获token]
-    public function token_crop_traceability_batch(Request $request, $token)
+    //  http://code9.com:8080/user/crop_traceability/qrcode_info?token=LDCwJhMKYIctA0lZzOxoyYupKutzsesANv9IyvRWBKdJzk3YT0rW5ZOCtI09
+    // 根据 收获批次token获取所属大棚，作物信息等
+    public function qr_code_crop_traceability_info(Request $request, $token)
     {
-        $CropTraceabilityBatchAll = CropTraceabilityBatchModel::where('token', $token)->firstOrFail()->crop_traceability()->firstOrFail()->crop_traceability_batch()->get();
+        // 收获批次信息
+        $cropTraceabilityBatchInfo = CropTraceabilityBatchModel::where('token', $token)->firstOrFail();
+        // 获取批次所属追溯
+        $cropTraceability = $cropTraceabilityBatchInfo->crop_traceability()->with('device_room', 'device_room.device_region', 'crop_class')->firstOrFail();
+        // 获取事件信息
+        $cropTraceabilityEventLog = $cropTraceability->crop_traceability_event_log()->get();
         $returnData = [];
         $returnData['msg']              = "查询成功";
-        $returnData['count']            = $CropTraceabilityBatchAll->count();
-        $returnData['data']             = $CropTraceabilityBatchAll->toArray();
-        return success(['data'=> $CropTraceabilityBatchAll->toArray()]);
-    }
-    // 获取事件日志[根据收获token]
-    public function token_crop_traceability_event_log(Request $request, $token)
-    {
-        $cropTraceabilityEventLogAll = CropTraceabilityBatchModel::where('token', $token)->firstOrFail()->crop_traceability()->firstOrFail()->crop_traceability_event_log()->get();
-        $returnData = [];
-        $returnData['msg']              = "查询成功";
-        $returnData['count']            = $cropTraceabilityEventLogAll->count();
-        $returnData['data']             = $cropTraceabilityEventLogAll->toArray();
-        return success(['data'=> $cropTraceabilityEventLogAll->toArray()]);
+        $returnData['data']             = [
+            'crop_traceability' => $cropTraceabilityBatchInfo,
+            'cropTraceability' => $cropTraceability,
+            'cropTraceabilityEventLog' => $cropTraceabilityEventLog,
+        ];
+        return success($returnData);
     }
 }

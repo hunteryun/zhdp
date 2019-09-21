@@ -63,9 +63,7 @@ Route::prefix('/user')->group(function(){
             Route::post('', 'Api\\User\\CropTraceabilityBatchController@store')->middleware('user.token'); // 添加作物收获记录
         });
         // 二维码作物追溯详情获取收获批次[无需验证用户身份]
-        Route::get('token_crop_traceability_batch/{token}', 'Api\\User\\CropTraceabilityController@token_crop_traceability_batch')->where('token', '[0-9a-zA-Z]{60}'); //
-        // 二维码作物追溯详情获取事件记录[无需验证用户身份]
-        Route::get('token_crop_traceability_event_log/{token}', 'Api\\User\\CropTraceabilityController@token_crop_traceability_event_log')->where('token', '[0-9a-zA-Z]{60}'); // 
+        Route::get('qr_code_crop_traceability_info/{token}', 'Api\\User\\CropTraceabilityController@qr_code_crop_traceability_info')->where('token', '[0-9a-zA-Z]{60}'); //
 
     });
     // 作物分类
