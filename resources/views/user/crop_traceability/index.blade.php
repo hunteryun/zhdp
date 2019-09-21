@@ -49,11 +49,19 @@
                 ,page: true 
                 ,cols: [[ 
                     {field: 'id', title: 'ID', width:80, sort: true, fixed: 'left'}
-                    ,{field: 'device_room_id', title: '房间id'}
-                    ,{field: 'crop_class_id', title: '作物id'}
+                    ,{field: 'device_room.name', title: '房间', templet : function (d){
+                        return d.device_room.name;
+                    }}
+                    ,{field: 'crop_class.name', title: '作物', templet : function (d){
+                        return d.crop_class.name;
+                    }}
                     ,{field: 'crop_variety', title: '作物品种'}
                     ,{field: 'number_of_plants', title: '种植数量'}
                     ,{field: 'start_time', title: '种植时间',}
+                    ,{field: 'end_time', title: '结束时间',}
+                    ,{field: 'status', title: '状态', templet : function (d){
+                        return d.status == '0' ? '进行中' : '已完成';
+                    }}
                     // ,{field: 'start_time', title: '种植时间', templet : function (d){
                     //     return d.device_room.name;
                     // }}
@@ -158,7 +166,7 @@
             //监听搜索
             form.on('submit(formSubmit)', function(data) {
                 // 重载 table
-                table.reload('device',{
+                table.reload('crop_traceability',{
                     where: {
                         'device_region_id': data.field.device_region_id,
                     }
