@@ -55,9 +55,13 @@
 				<input class="layui-input" name="password" placeholder="密码" lay-verify="required" type="password" autocomplete="off">
 			</div>
 			<div class="layui-form-item">
-				<div class="" style="float:right">
+				<div class="" style="float:left">
 					<a href="{{url('user/reg')}}" style="color:#009688">没有账号？点击注册</a>
 				</div>
+				<div class="" style="float:right">
+					<a href="{{url('user/reg')}}" style="color:#009688">忘记密码？</a>
+				</div>
+				
 			</div>
 			<button class="layui-btn login_btn" lay-submit="" lay-filter="formSubmit">登录</button>
 		</form>
