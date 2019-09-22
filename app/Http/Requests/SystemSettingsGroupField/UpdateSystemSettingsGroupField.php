@@ -17,7 +17,7 @@ class UpdateSystemSettingsGroupField extends Base
         'field.between' => '唯一标识符长度需要在1-255之间!',
         'field.unique' => '唯一标识符重复!',
         'desc.max' => '描述最多120字符!',
-        'value.required' => '值必填!',
+        // 'value.required' => '值必填!',
         'value.max' => '值最多65535个字符!',
         'type.numeric' => '类型必须是数字!',
         'type.required' => '类型必填!',
@@ -59,7 +59,7 @@ class UpdateSystemSettingsGroupField extends Base
             ], 
             'desc'  => 'max:120',
             'value' => [
-                'required',
+                // 'required',
                 'max:65535',
             ],  
             'type' => [
