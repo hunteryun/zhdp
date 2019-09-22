@@ -93,10 +93,14 @@ Route::prefix('/user')->group(function(){
         Route::post('', 'Api\\User\\DeviceController@store')->middleware('user.token'); // 新增
         Route::put('{id}', 'Api\\User\\DeviceController@update')->where('id', '[0-9]+')->middleware('user.token'); // 指定id更新(web界面操作)
         Route::delete('{id}', 'Api\\User\\DeviceController@destroy')->middleware('user.token'); // 删除
-        // 获取硬件数据
-        Route::get('{token}', 'Api\\User\\DeviceController@getDeviceField')->where('token', '[0-9a-zA-Z]{60}')->middleware('user.token'); // 指定token获取
+
+        // 获取硬件数据[获取的时候只返回0或1] 因为用户token每次登录会被改变
+        // 需要获取数据的都是继电器
+        Route::get('{device_token}/{field}', 'Api\\User\\DeviceController@getDeviceField')->where('device_token', '[0-9a-zA-Z]{60}'); // 指定token获取
         // 上传硬件数据
-        Route::put('{token}', 'Api\\User\\DeviceController@updateDeviceField')->where('token', '[0-9a-zA-Z]{60}')->middleware('user.token'); // 指定token更新(web界面操作)
+        // 上传硬件数据的是传感器
+        Route::get('post/{device_token}', 'Api\\User\\DeviceController@updateDeviceField')->where('device_token', '[0-9a-zA-Z]{60}'); // 指定token更新(web界面操作)
+
         // 设备字段 /index.php/api/device_field
         Route::prefix('/device_field')->group(function(){
             Route::get('all', 'Api\\User\\DeviceFieldController@all')->middleware('user.token'); // 获取所有数据

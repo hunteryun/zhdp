@@ -123,29 +123,27 @@ class DeviceController extends Base
         return success(['msg'=>"设备删除成功"]);
     }
     // 按照token获取设备字段
+    // 用户token随时变化，所以不适用用户token验证
     // 默认返回全部字段
-    public function getDeviceField(Request $request, $token){
-        $deviceFieldList = UserModel::where('token', $this->user_token())->firstOrFail()->device()->where('token', $token)->firstOrFail()->device_field()->get(['field','value']);
-        if($request->filled('field')){
-            // 字段以逗号分隔 field => 'top,bottom,...';
-            $getField = $request->field;
-            $getField = explode(',', $getField);
-            $returnData = [];
-            foreach($getField as $field){
-                foreach($deviceFieldList as $row){
-                    if($row->field == $field){
-                        $returnData[][$row->field] = $row->value;
-                    }
-                }
-            }
-            return success(['data'=>$returnData]);
+    // 请求格式：http://code9.com:8080/api/user/device/ZvvatzI07t0Zolxps1BYr5HCtiYaCHqYlv9qvUvhHyzlsHFs8W49hHg9bYue/top
+    public function getDeviceField(Request $request, $device_token, $field){
+        $device_field_info = DeviceModel::where('token', $device_token)->firstOrFail()->device_field()->where('field', strval($field))->firstOrFail(['value']);
+        if(is_null($device_field_info->value)){
+            return 0;
         }else{
-            return success(['data'=>$deviceFieldList]);
+            return $device_field_info->value;
         }
     }
     // 按照token更新设备字段
-    public function updateDeviceField(Request $request, $token){
-        $user_token = $this->user_token();
-        return (new UpdateDevice)->updateDeviceField($request, $user_token, $token);
+    // 固定url http://code9.com:8080/api/user/device/post/
+    // 设备token ZvvatzI07t0Zolxps1BYr5HCtiYaCHqYlv9qvUvhHyzlsHFs8W49hHg9bYue
+    // 可以一次设置多个字段
+    // 设备字段 top
+    // 字段值 1
+    // 请求格式：http://code9.com:8080/api/user/device/post/ZvvatzI07t0Zolxps1BYr5HCtiYaCHqYlv9qvUvhHyzlsHFs8W49hHg9bYue?top=61&bottom=20
+    public function updateDeviceField(Request $request, $device_token){
+        // 根据设备获取用户id
+        $user_id = DeviceModel::where('token', $device_token)->firstOrFail(['user_id'])->user_id;
+        return (new UpdateDevice)->updateDeviceField($request, $user_id, $device_token);
     }
 }
