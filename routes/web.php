@@ -169,7 +169,7 @@ Route::prefix('/admin')->group(function(){
 
     // 数据分析
     Route::prefix('/data_analysis')->group(function(){
-        Route::view('visualization', 'admin/data_analysis/visualization/index'); // 数据可视化
+        // Route::view('visualization', 'admin/data_analysis/visualization/index'); // 数据可视化
         Route::view('big_screen', 'admin/data_analysis/big_screen/index'); // 数据大屏
     });
     // 病虫害预警管理

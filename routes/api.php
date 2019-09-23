@@ -131,7 +131,7 @@ Route::prefix('/user')->group(function(){
     // 数据分析
     Route::prefix('/data_analysis')->group(function(){
         // 这里的post是为了方便带上参数
-        Route::post('visualization', 'Api\\User\\DataAnalysisController@visualization')->middleware('user.token'); // 数据可视化
+        // Route::post('visualization', 'Api\\User\\DataAnalysisController@visualization')->middleware('user.token'); // 数据可视化
         Route::post('big_screen', 'Api\\User\\DataAnalysisController@big_screen')->middleware('user.token'); // 数据大屏
     });
     // 病虫害与天气预警
