@@ -198,7 +198,7 @@
                     shade: [0.8, '#393D49']
                 });
                 $.ajax({ 
-                    type: "GET",
+                    type: "POST",
                     url: '{{url("api/user/data_analysis/visualization")}}',
                     data: {
                         device_region_id: data.field.device_region_id,
