@@ -74,11 +74,11 @@ class UpdateProductField extends Base
                 new FieldTypeLength
             ],
             'default' => [
-                'alpha_dash',
+                // 'alpha_dash',
                 'max:255',
             ],
             'common_field' => [
-                'alpha_dash',
+                // 'alpha_dash',
                 'max:30'
             ],
             'common_field_sort' => [
