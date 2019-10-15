@@ -146,4 +146,14 @@ class DeviceController extends Base
         $user_id = DeviceModel::where('token', $device_token)->firstOrFail(['user_id'])->user_id;
         return (new UpdateDevice)->updateDeviceField($request, $user_id, $device_token);
     }
+    // 上传片
+    public function updateDeviceImg(Request $request){
+        if (!$request->hasFile('img')) {
+            return errors(['msg'=>'失败']);
+        }
+        
+        $path = 'storage/'.$request->img->store('img/'.date('Y-m-d'));
+        return success(['data'=>$path]);
+
+    }
 }

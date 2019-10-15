@@ -99,7 +99,10 @@ Route::prefix('/user')->group(function(){
         Route::get('{device_token}/{field}', 'Api\\User\\DeviceController@getDeviceField')->where('device_token', '[0-9a-zA-Z]{60}'); // 指定token获取
         // 上传硬件数据
         // 上传硬件数据的是传感器
-        Route::get('post/{device_token}', 'Api\\User\\DeviceController@updateDeviceField')->where('device_token', '[0-9a-zA-Z]{60}'); // 指定token更新(web界面操作)
+        Route::post('{device_token}', 'Api\\User\\DeviceController@updateDeviceField')->where('device_token', '[0-9a-zA-Z]{60}'); // 指定token更新(web界面操作)
+        // 上传图片
+        Route::post('{device_token}/img', 'Api\\User\\DeviceController@updateDeviceImg')->where('device_token', '[0-9a-zA-Z]{60}'); // 指定token更新(web界面操作)
+
 
         // 设备字段 /index.php/api/device_field
         Route::prefix('/device_field')->group(function(){
