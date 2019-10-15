@@ -146,14 +146,62 @@ class DeviceController extends Base
         $user_id = DeviceModel::where('token', $device_token)->firstOrFail(['user_id'])->user_id;
         return (new UpdateDevice)->updateDeviceField($request, $user_id, $device_token);
     }
-    // 上传片
-    public function updateDeviceImg(Request $request){
+    // 上传图片
+    /*
+    <input type="file" id="img"> 
+    <script src="https://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+    <script>
+        function doUpload() {  
+            var formData = new FormData();
+            formData.append("img", $('#img')[0].files[0]);
+            $.ajax({  
+                url: 'http://code9.com:8080/api/user/device/ZvvatzI07t0Zolxps1BYr5HCtiYaCHqYlv9qvUvhHyzlsHFs8W49hHg9bYue/img' ,  
+                type: 'post',  
+                data: formData,  
+                cache: false,
+                processData: false,
+                contentType: false,
+                async: true
+            }).done(function(res) {
+                
+            }).fail(function(res) {
+                
+            });
+        }
+        $('#img').on("input",function(e){
+            doUpload();
+        });
+        
+    </script>
+    */
+    // http://code9.com:8080/api/user/device/ZvvatzI07t0Zolxps1BYr5HCtiYaCHqYlv9qvUvhHyzlsHFs8W49hHg9bYue/img
+    public function updateDeviceImg(Request $request, $device_token){
         if (!$request->hasFile('img')) {
             return errors(['msg'=>'失败']);
         }
-        
         $path = 'storage/'.$request->img->store('img/'.date('Y-m-d'));
-        return success(['data'=>$path]);
-
+        // 更新value值(并写入日志)，摄像头不会有事件，所以这里不处理事件。
+        $device = DeviceModel::where('token', $device_token)->firstOrFail();
+        $device->value = $path;
+        $saveStatus = $device->save();
+        if($saveStatus){
+            $DeviceFieldLogModel = new DeviceFieldLogModel;
+            $DeviceFieldLogModel->user_id = $device->user_id;
+            $DeviceFieldLogModel->device_id = $device->device_id;
+            $DeviceFieldLogModel->device_field_id = $device->id;
+            $DeviceFieldLogModel->name = $device->name;
+            $DeviceFieldLogModel->field = $device->field;
+            $DeviceFieldLogModel->field_type_id = $device->field_type_id;
+            $DeviceFieldLogModel->value = $device->value;
+            $DeviceFieldLogModel->field_type_length = $device->field_type_length;
+            $DeviceFieldLogModel->common_field = $device->common_field;
+            $DeviceFieldLogModel->common_field_sort = $device->common_field_sort;
+            $DeviceFieldLogModel->desc = $device->desc;
+            $DeviceFieldLogModel->sort = $device->sort;
+            $DeviceFieldLogModel->save();
+            return success(['data'=>$path]);
+        }else{
+            return errors();
+        }
     }
 }

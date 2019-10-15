@@ -137,6 +137,20 @@ class UpdateDevice
         }
         return $saveStatus;
     }
+    // 处理字符串类型
+    function stringFun($updateValue, $model, $user_id){
+        $saveStatus     = false;
+        $updateValue    = strval($updateValue);
+        if(strlen($updateValue) <= $model->field_type_length){
+            $model->value = $updateValue;
+            $saveStatus = $model->save();
+            if($saveStatus){
+                $this->addLog($model, $user_id);
+                $this->deviceEvent($model, $user_id);
+            }
+        }
+        return $saveStatus;
+    }
     // 按照token更新设备字段
     public function updateDeviceField($request, $user_id, $device_token){
         $deviceFieldList = DeviceModel::where('token', $device_token)->firstOrFail()->device_field()->with('field_type')->get();
@@ -168,6 +182,10 @@ class UpdateDevice
                     case 'float':
                         // 浮点类型
                         $saveStatus[] = $this->floatFun($updateValue, $model, $user_id);
+                        break;
+                    case 'string':
+                        // 字符串类型
+                        $saveStatus[] = $this->stringFun($updateValue, $model, $user_id);
                         break;
                 }
             }

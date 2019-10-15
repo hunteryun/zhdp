@@ -8,6 +8,11 @@
  <body>
      <div class="layui-card">
          <div class="layui-card-body">
+            <blockquote class="layui-elem-quote">
+                新增字段需要在  app\Services\UpdateDevice 中添加 function {类型}Fun($updateValue, $model, $user_id) 函数。
+                <br>
+                新增字段需要在 app\Services\UpdateDevice\updateDeviceField() 中 switch($field_type['name']) 添加处理字段函数 {类型}Fun。
+            </blockquote>
             <div class="layui-row">
                 <div class="layui-btn-container">
                     <button type="button" class="layui-btn layui-btn-sm" id="refresh-page">刷新页面</button> 
